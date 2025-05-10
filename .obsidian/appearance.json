@@ -1,3 +1,6 @@
 {
-  "translucency": true
+  "translucency": true,
+  "baseFontSize": 13,
+  "cssTheme": "",
+  "accentColor": ""
 }

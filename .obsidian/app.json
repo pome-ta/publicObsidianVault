@@ -8,5 +8,24 @@
   "newFileLocation": "current",
   "newLinkFormat": "absolute",
   "showUnsupportedFiles": true,
-  "attachmentFolderPath": "./attachments"
+  "attachmentFolderPath": "./attachments",
+  "mobileToolbarCommands": [
+    "editor:paste",
+    "editor:set-heading",
+    "editor:toggle-bullet-list",
+    "editor:swap-line-up",
+    "editor:swap-line-down",
+    "editor:copy",
+    "editor:undo",
+    "editor:redo",
+    "editor:indent-list",
+    "editor:unindent-list",
+    "editor:move-caret-left",
+    "editor:move-caret-up",
+    "editor:move-caret-down",
+    "editor:move-caret-right",
+    "zk-prefixer",
+    "editor:toggle-keyboard",
+    "editor:configure-toolbar"
+  ]
 }
