@@ -1,1 +1,12 @@
-{}
+{
+  "livePreview": false,
+  "readableLineLength": false,
+  "showLineNumber": true,
+  "useTab": false,
+  "tabSize": 2,
+  "showInlineTitle": true,
+  "newFileLocation": "current",
+  "newLinkFormat": "absolute",
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "./attachments"
+}
