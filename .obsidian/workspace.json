@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505101800.md",
+                "file": "inBox/note2505101828.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505101800"
+              "title": "note2505101828"
             }
           }
         ]
@@ -170,5 +170,9 @@
     }
   },
   "active": "f63aeeeef8b4fcdb",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "README.md",
+    "inBox/note2505101828.md",
+    "inBox/note2505101800.md"
+  ]
 }
