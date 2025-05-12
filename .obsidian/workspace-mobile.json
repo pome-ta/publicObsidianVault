@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505101800.md",
+                "file": "inBox/note2505101828.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505101800"
+              "title": "note2505101828"
             }
           }
         ]
@@ -49,7 +49,7 @@
         "state": {
           "type": "search",
           "state": {
-            "query": "tag:#obsidian",
+            "query": "tag:#codemirror",
             "matchingCase": true,
             "explainSearch": false,
             "collapseAll": false,
@@ -86,7 +86,7 @@
         }
       }
     ],
-    "currentTab": 1
+    "currentTab": 0
   },
   "right": {
     "id": "f2c219007fe772e2",
@@ -131,7 +131,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "inBox/note2505101800.md",
+            "file": "inBox/note2505101828.md",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -156,10 +156,10 @@
   },
   "active": "0daaa61ddc9d2ef8",
   "lastOpenFiles": [
-    "inBox/note2505101828.md",
-    "inBox/note2505101800.md",
-    "inBox/note2505121200.md",
     "inBox/note2505102324.md",
+    "inBox/note2505121200.md",
+    "inBox/note2505101800.md",
+    "inBox/note2505101828.md",
     "inBox"
   ]
 }
