@@ -22,8 +22,8 @@
     "editor:swap-line-up",
     "editor:swap-line-down",
     "editor:redo",
-    "editor:indent-list",
     "editor:unindent-list",
+    "editor:indent-list",
     "zk-prefixer",
     "editor:toggle-keyboard",
     "editor:configure-toolbar"
