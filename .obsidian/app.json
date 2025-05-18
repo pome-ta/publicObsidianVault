@@ -27,5 +27,6 @@
     "zk-prefixer",
     "editor:toggle-keyboard",
     "editor:configure-toolbar"
-  ]
+  ],
+  "mobileQuickRibbonItem": ""
 }
