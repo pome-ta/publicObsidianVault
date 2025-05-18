@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505181752.md",
+                "file": "inBox/note2505131512.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505181752"
+              "title": "note2505131512"
             }
           },
           {
@@ -63,7 +63,7 @@
         "state": {
           "type": "search",
           "state": {
-            "query": "tag:#p5js",
+            "query": "tag:#codemirror",
             "matchingCase": true,
             "explainSearch": false,
             "collapseAll": false,
@@ -170,8 +170,8 @@
   },
   "active": "0daaa61ddc9d2ef8",
   "lastOpenFiles": [
-    "inBox/note2505101828.md",
     "inBox/note2505181752.md",
+    "inBox/note2505101828.md",
     "inBox/note2505181745.md",
     "inBox/note2505181647.md",
     "inBox/note2505161608.md",
