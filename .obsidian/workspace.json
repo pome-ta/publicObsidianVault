@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505101828.md",
+                "file": "inBox/note2505181647.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505101828"
+              "title": "note2505181647"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "18be305ff1008b95",
@@ -171,9 +172,10 @@
   },
   "active": "f63aeeeef8b4fcdb",
   "lastOpenFiles": [
+    "inBox/note2505101828.md",
+    "inBox/note2505181647.md",
     "inBox/note2505101800.md",
     "inBox/note2505161608.md",
-    "inBox/note2505101828.md",
     "inBox/note2505102324.md",
     "README.md"
   ]
