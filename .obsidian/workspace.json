@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "b73e1d740594857b",
+        "id": "78e739c6db313c8b",
         "type": "tabs",
         "children": [
           {
-            "id": "f63aeeeef8b4fcdb",
+            "id": "5c44dede35710ac6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505101828.md",
+                "file": "inBox/note2505151023.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505101828"
+              "title": "note2505151023"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#codemirror",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "inBox/note2505101800.md",
+                "file": "inBox/note2505151023.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "note2505101800へのバックリンク"
+              "title": "note2505151023へのバックリンク"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "inBox/note2505101800.md",
+                "file": "inBox/note2505151023.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "note2505101800からのアウトゴーイングリンク"
+              "title": "note2505151023からのアウトゴーイングリンク"
             }
           },
           {
@@ -142,21 +142,21 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "inBox/note2505101800.md",
+                "file": "inBox/note2505151023.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "note2505101800のアウトライン"
+              "title": "note2505151023のアウトライン"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -169,15 +169,27 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "f63aeeeef8b4fcdb",
+  "active": "5c44dede35710ac6",
   "lastOpenFiles": [
-    "inBox/note2505101800.md",
     "inBox/note2505131759.md",
     "inBox/note2505131512.md",
-    "inBox/note2505181647.md",
-    "inBox/note2505101828.md",
-    "inBox/note2505161608.md",
+    "inBox/note2505131200.md",
+    "inBox/note2505130119.md",
+    "inBox/note2505121200.md",
     "inBox/note2505102324.md",
+    "inBox/note2505101828.md",
+    "inBox/note2505101800.md",
+    "inBox/note2505151023.md",
+    "inBox/note2505161608.md",
+    "inBox/note2505181647.md",
+    "inBox/note2505181745.md",
+    "inBox/note2505181752.md",
+    "inBox/note2505210233.md",
+    "inBox/note2505190101.md",
+    "^inBox/note2505190101.md",
+    "^inBox",
+    "inBox/note2505211425.md",
+    "inBox/note2505251746.md",
     "README.md"
   ]
 }
