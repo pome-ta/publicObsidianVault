@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505251746.md",
+                "file": "inBox/note2505271154.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505251746"
+              "title": "note2505271154"
             },
             "group": "c8b55142ce9aff40"
           },
@@ -46,37 +46,14 @@
             "id": "b16fab583607f4e4",
             "type": "leaf",
             "state": {
-              "type": "localgraph",
+              "type": "markdown",
               "state": {
-                "file": "inBox/note2505251746.md",
-                "options": {
-                  "collapse-filter": true,
-                  "search": "",
-                  "localJumps": 1,
-                  "localBacklinks": true,
-                  "localForelinks": true,
-                  "localInterlinks": false,
-                  "showTags": false,
-                  "showAttachments": false,
-                  "hideUnresolved": false,
-                  "collapse-color-groups": true,
-                  "colorGroups": [],
-                  "collapse-display": true,
-                  "showArrow": false,
-                  "textFadeMultiplier": 0,
-                  "nodeSizeMultiplier": 1,
-                  "lineSizeMultiplier": 1,
-                  "collapse-forces": true,
-                  "centerStrength": 0.518713248970312,
-                  "repelStrength": 10,
-                  "linkStrength": 1,
-                  "linkDistance": 250,
-                  "scale": 1,
-                  "close": false
-                }
+                "file": "inBox/note2505271154.md",
+                "mode": "source",
+                "source": true
               },
-              "icon": "lucide-git-fork",
-              "title": "グラフビュー"
+              "icon": "lucide-file",
+              "title": "note2505271154"
             },
             "group": "c8b55142ce9aff40"
           }
@@ -215,9 +192,12 @@
   },
   "active": "0daaa61ddc9d2ef8",
   "lastOpenFiles": [
+    "inBox/note2505101828.md",
+    "inBox/note2505271154.md",
+    "inBox/note2505102324.md",
     "inBox/note2505210233.md",
     "inBox/note2505211425.md",
-    "inBox/note2505101828.md",
+    "inBox/note2505251746.md",
     "inBox/note2505101800.md",
     "inBox/note2505151023.md",
     "inBox/note2505161608.md",
@@ -230,7 +210,6 @@
     "inBox/note2505131200.md",
     "inBox/note2505130119.md",
     "inBox/note2505121200.md",
-    "inBox/note2505102324.md",
     "inBox"
   ]
 }
