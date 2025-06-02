@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505151023.md",
+                "file": "inBox/note2505271154.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505151023"
+              "title": "note2505271154"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "inBox/note2505151023.md",
+                "file": "inBox/note2505271154.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "note2505151023のアウトライン"
+              "title": "note2505271154のアウトライン"
             }
           }
         ],
@@ -171,6 +171,7 @@
   },
   "active": "5c44dede35710ac6",
   "lastOpenFiles": [
+    "inBox/note2505151023.md",
     "inBox/note2505131759.md",
     "inBox/note2505131512.md",
     "inBox/note2505131200.md",
@@ -179,7 +180,6 @@
     "inBox/note2505102324.md",
     "inBox/note2505101828.md",
     "inBox/note2505101800.md",
-    "inBox/note2505151023.md",
     "inBox/note2505161608.md",
     "inBox/note2505181647.md",
     "inBox/note2505181745.md",
