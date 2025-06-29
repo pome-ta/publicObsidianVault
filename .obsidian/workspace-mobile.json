@@ -28,12 +28,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2505271154.md",
+                "file": "inBox/note2506151659.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2505271154"
+              "title": "note2506151659"
             }
           }
         ],
@@ -86,7 +86,7 @@
         "state": {
           "type": "search",
           "state": {
-            "query": "",
+            "query": "tag:#css",
             "matchingCase": true,
             "explainSearch": false,
             "collapseAll": false,
@@ -123,7 +123,7 @@
         }
       }
     ],
-    "currentTab": 0
+    "currentTab": 1
   },
   "right": {
     "id": "f2c219007fe772e2",
@@ -191,13 +191,13 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "2441139913e0fb49",
+  "active": "269c743fca2ef3bf",
   "lastOpenFiles": [
+    "inBox/note2506172019.md",
+    "inBox/note2505271154.md",
     "inBox/note2505211425.md",
     "inBox/note2505251746.md",
-    "inBox/note2506172019.md",
     "inBox/note2505101828.md",
-    "inBox/note2505271154.md",
     "inBox/note2506151659.md",
     "inBox/note2505210233.md",
     "inBox/note2505101800.md",
