@@ -28,12 +28,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2507131542.md",
+                "file": "inBox/note2507161728.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2507131542"
+              "title": "note2507161728"
             }
           }
         ],
@@ -168,7 +168,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "inBox/note2506172019.md",
+            "file": "inBox/note2507161728.md",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -193,9 +193,12 @@
   },
   "active": "2441139913e0fb49",
   "lastOpenFiles": [
+    "inBox/note2507161736.md",
+    "inBox/note2507161728.md",
+    "inBox/note2507161735.md",
+    "inBox/note2507131542.md",
     "inBox/note2507141430.md",
     "inBox/note2507111704.md",
-    "inBox/note2507131542.md",
     "inBox/note2507092022.md",
     "inBox/note2507012353.md",
     "inBox/note2507041228.md",
@@ -216,9 +219,6 @@
     "inBox/note2506151659.md",
     "inBox/note2505101800.md",
     "inBox/note2505131200.md",
-    "inBox/note2505130119.md",
-    "inBox/note2505121200.md",
-    "inBox/note2505102324.md",
     "inBox"
   ]
 }

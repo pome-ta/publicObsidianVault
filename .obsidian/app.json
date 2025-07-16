@@ -12,21 +12,21 @@
   "mobileToolbarCommands": [
     "editor:paste",
     "editor:move-caret-left",
-    "editor:move-caret-up",
-    "editor:move-caret-down",
     "editor:move-caret-right",
-    "editor:set-heading",
-    "editor:toggle-bullet-list",
-    "editor:undo",
-    "editor:copy",
+    "editor:indent-list",
+    "editor:unindent-list",
     "editor:swap-line-up",
     "editor:swap-line-down",
+    "editor:copy",
+    "editor:undo",
     "editor:redo",
-    "editor:unindent-list",
-    "editor:indent-list",
-    "zk-prefixer",
+    "editor:toggle-bullet-list",
+    "editor:set-heading",
+    "editor:move-caret-up",
+    "editor:move-caret-down",
     "editor:toggle-keyboard",
-    "editor:configure-toolbar"
+    "editor:configure-toolbar",
+    "zk-prefixer"
   ],
   "mobileQuickRibbonItem": ""
 }
