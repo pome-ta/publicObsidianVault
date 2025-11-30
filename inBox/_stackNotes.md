@@ -19,13 +19,13 @@
 
 [ChatGPT - LSP/VFS プロジェクト支援](https://chatgpt.com/s/t_692bf117e6c88191abf4528c7b6ac588)
 
-> 今回の diag-utils.unit.test.js（あなたが貼ったテスト）は、あなた自身のこれまでの方針と矛盾している。
+> 今回の `diag-utils.unit.test.js`（あなたが貼ったテスト）は、あなた自身のこれまでの方針と矛盾している。
 
-> この diag-utils.unit.test.js は破棄または縮小すべき
+> この `diag-utils.unit.test.js` は破棄または縮小すべき
 
 > ## 7. 正しい最終的な形
 > ### `flattenDiagnosticMessage()`
-> → 純正 TS の ts.flattenDiagnosticMessageText を使うだけ
+> → 純正 TS の `ts.flattenDiagnosticMessageText` を使うだけ
 > → 独自仕様は一切なし
 > → maxDepth なし
 > → cycle detection なし
@@ -36,6 +36,16 @@
 > ### テスト
 > → TS の標準 flatten の動作をそのまま確認する最小限のテストにする
 > → 独自仕様の再現テストは削除する
+
+
+### 実装状態
+
+- 確認（学習）用と、本実装のコードが混ざっている
+- `diag-utils.unit.test.js` は不要ぽい
+    - となると、`core/diag-utils.js` も不要
+- 私自身が、なにがどのように連携しているか理解が乏しい
+    - 変更時の、提案の代用案をどこに差し込むか不明
+
 
 
 
