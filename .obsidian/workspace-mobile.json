@@ -28,12 +28,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/note2507161728.md",
+                "file": "inBox/_stackNotes.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2507161728"
+              "title": "_stackNotes"
             }
           }
         ],
@@ -196,7 +196,7 @@
   "lastOpenFiles": [
     "inBox/note2508111402.md",
     "inBox/note2510010205.md",
-    "inBox/note2507161728.md",
+    "inBox/_stackNotes.md",
     "inBox/note2507131542.md",
     "inBox/note2507141430.md",
     "inBox/note2507161736.md",
