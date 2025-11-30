@@ -47,6 +47,55 @@
     - 変更時の、提案の代用案をどこに差し込むか不明
 
 
+## 方針
+
+- 実際にコードみながら、現在の実装を把握
+- `chai` どうしようかな
+    - [https://esm.sh/chai@5.1.1](https://esm.sh/chai@5.1.1)
+    - 
+
+### 流れ
+
+1. `./test-runner.html`
+2. `./js/test/test-runner.js`
+3. `./js/test/v0.0.2/worker-lsp-multi-file.test.js` （今回は）
+    1. `./js/test/v0.0.2/test-utils.js`
+4. `./js/worker.js`
+    1. `./js/core/error-codes.js`
+    2. `./js/util/logger.js`
+5. `./js/core/vfs-core.js`
+    1. `import * as vfs from 'https://esm.sh/@typescript/vfs'`
+    2. `import ts from 'https://esm.sh/typescript'`
+    3. `./js/util/logger.js`
+    4. `./js/util/async-utils.js`
+6. `./js/core/lsp-core.js`
+    1. `import ts from 'https://esm.sh/typescript'`
+    2. `./js/core/vfs-core.js`
+
+
+### とりまメモ
+
+コード内`todo: ` として、追記記載もあり。
+
+- `util/logger.js` で、`isDebugEnabled` しちゃっていいのか？
+    - worker のログ送信なんて、テスト環境以外不要では？
+    - でも`./js/worker.js` で`postLog` する場面あるのか
+    - 
+
+- log の表記
+    - `[17:28:38.572 | WorkerLog] [Worker]`
+        - と、`Worker` 表記多いな。。。
+        - できれば、なんの処理してるかわかるといいのだけど
+            - 第2引数に、文字列投げ込むか？
+            - `[Worker]` この表記を、文字列に反映させるとか？
+            - ああでも、ログの並び上、文字列の影響でデコポコするのは読み辛いかな。。。？
+
+
+## VSCode のコード散策のメモ
+
+- `F12` (`cmd + クリック`)
+    - 定義ジャンプ
+
 
 
 # 📝 2025/11/29
