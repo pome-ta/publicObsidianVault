@@ -1,5 +1,41 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2025/12/04
+
+```
+.
+├── core
+│   ├── error-codes.js
+│   ├── lsp-core.js
+│   └── vfs-core.js
+├── main.js
+├── test
+│   ├── test-runner.js
+│   └── v0.0.2
+│       ├── notUsed
+│       │   ├── diag-chain-import.test.js
+│       │   ├── diag-chain-raw.test.js
+│       │   ├── diag-chain-related.test.js
+│       │   └── diag-utils.unit.test.js
+│       ├── test-utils.js
+│       ├── worker-diagnostics-flatten.test.js
+│       ├── worker-didChange-basic.test.js
+│       ├── worker-didChange-incremental-min.test.js
+│       ├── worker-lsp-diagnostics.test.js
+│       ├── worker-lsp-initialize.test.js
+│       ├── worker-lsp-multi-file.test.js
+│       ├── worker-ready.test.js
+│       ├── worker-vfs-cached-init.test.js
+│       ├── worker-vfs-file.test.js
+│       └── worker-vfs-init.test.js
+├── util
+│   ├── async-utils.js
+│   └── logger.js
+└── worker.js
+
+
+```
+
 # 📝 2025/11/30
 
 ## [GitHub - pome-ta/challengeTestWebWorkerLSP at ea6b63f81bb43a7abf1869b1072132c5bf100ca0](https://github.com/pome-ta/challengeTestWebWorkerLSP/tree/ea6b63f81bb43a7abf1869b1072132c5bf100ca0)
