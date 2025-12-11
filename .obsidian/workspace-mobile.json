@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agentPrompts/note2512111555.md",
+                "file": "agentPrompts/note2512120139.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2512111555"
+              "title": "note2512120139"
             }
           }
         ]
@@ -157,8 +157,9 @@
   },
   "active": "2c4a236a0aa458cd",
   "lastOpenFiles": [
-    "agentPrompts/note2512100926.md",
     "agentPrompts/note2512111555.md",
+    "agentPrompts/note2512120139.md",
+    "agentPrompts/note2512100926.md",
     "agentPrompts/note2512092347.md",
     "agentPrompts/note2512100018.md",
     "agentPrompts/note2512091645.md",
@@ -183,7 +184,6 @@
     "inBox/note2507012353.md",
     "inBox/note2507041228.md",
     "inBox/note2505131512.md",
-    "inBox/note2505131759.md",
     "inBox"
   ]
 }
