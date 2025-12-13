@@ -5,6 +5,41 @@
 chatGPT がゴリっと内容を忘れてしまってるから
 いい感じに切り分けが必要？
 
+あらためて整理が必要やな。
+
+## 何を目指して、何をしようとしていたのか？
+
+プロンプトとして、再度使えるように整理していきたい。
+
+大枠や、疑問点。現在の状況と見通し。
+
+
+## codemirror のLSP
+
+[GitHub - codemirror/dev: Development repository for the CodeMirror editor project](https://github.com/codemirror/dev)
+
+[GitHub - codemirror/lsp-client: Language server protocol client for CodeMirror](https://github.com/codemirror/lsp-client)
+
+
+[@codemirror/lsp-client - npm](https://www.npmjs.com/package/@codemirror/lsp-client)
+
+で、LSP を実現。
+
+### 実装環境（事情）
+
+ブラウザで完結。iOS Safari 。
+
+node を使わない。node を使わない（使えない）ので:
+
+- `package.json` ではなく、`importmap`
+- ビルドなし
+- サーバーを建てない
+- WebSocket ではなくWebWorker
+
+
+
+
+
 
 # 📝 2025/12/04
 
