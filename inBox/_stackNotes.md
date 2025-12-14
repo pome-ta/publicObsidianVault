@@ -1,5 +1,260 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2025/12/14
+
+a-shell
+
+iPhone だと、なぜセッションが残るのか？
+
+とか、Terminal コマンドがわからんから整理してみたい。
+
+
+```
+a-Shell is a terminal emulator for iOS, with many Unix commands: ls, pwd, tar, mkdir, grep....
+
+a-Shell can do most of the things you can do in a terminal, locally on your iPhone or iPad. You can redirect command output to a file with ">" (append with ">>") and you can pipe commands with "|".
+
+- customize appearance with config
+- pickFolder: open, bookmark and access a directory anywhere (another app, iCloud, WorkingCopy, file providers...)
+- newWindow: open a new window
+- exit: close the current window
+
+- All your files, including configuration files (.bashrc, .profile, .ssh...) are in ~/Documents/
+- Files created by Shortcuts are in ~shortcuts/
+- a-Shell executes the ~/Documents/.profile and ~/Documents/.bashrc files for each new window
+
+- Single-finger swipes move the cursor or scroll, two-finger swipes send keyboard input (up, down, escape, tab). "man gestures" for more.
+
+- Edit files with vim and pico.
+- Transfer files with curl, tar, scp and sftp.
+- Clone repositories and do version control with lg2 (similar to git)
+- Install more commands with "pkg"
+- Process files with python3, lua, jsc, clang, pdflatex, lualatex.
+- Open files in other apps with open, play sound and video with play, preview with view.
+- For network queries: nslookup, ping, host, whois, ifconfig...
+
+- bookmark the current directory with "bookmark <name>" and access it later with "cd ~name" or "jump <name>".
+- showmarks: show current list of bookmarks
+- renamemark, deletemark: change list of bookmarks
+
+User guide: https://bianshen00009.gitbook.io/a-guide-to-a-shell/
+Support: e-mail (another_shell@icloud.com), Bluesky (@a-shell-ios.bsky.social‬), github (https://github.com/holzschu/a-shell/issues) and Discord (https://discord.gg/cvYnZm69Gy).
+
+For a full list of commands, type help -l
+
+```
+
+
+> a-ShellはiOS用のターミナルエミュレータで、多くのUnixコマンドを備えています：ls、pwd、tar、mkdir、grep...
+> a-Shellは、iPhoneやiPad上でローカルに、ターミナルで実行できるほとんどの操作を実行できます。コマンドの出力をファイルにリダイレクトするには「>」を（追加するには「>>」を）、コマンドをパイプでつなぐには「|」を使用できます。
+> - 設定で外観をカスタマイズ
+- pickFolder: ディレクトリをどこでも開く、ブックマークする、アクセスする（他のアプリ、iCloud、WorkingCopy、ファイルプロバイダなど）
+- newWindow: 新しいウィンドウを開く
+- exit: 現在のウィンドウを閉じる
+
+
+```
+alias
+apropos
+awk
+base64
+basename
+bc
+blink
+bookmark
+brave
+calc
+call
+cat
+cd
+chflags
+chmod
+cksum
+clear
+compare
+composite
+compress
+config
+conjure
+convert
+cowsay
+cp
+credits
+ctags.wasm3
+curl
+cygdb
+cython
+cythonize
+dash
+date
+dc
+deactivate
+deletemark
+diff
+dig
+dirname
+downloadFile
+downloadFolder
+du
+ebong
+echo
+ed
+egrep
+env
+exit
+export
+expr
+ffmpeg
+ffprobe
+fgrep
+file.wasm3
+find
+firefox
+googlechrome
+grep
+gunzip
+gzip
+head
+help
+hideKeyboard
+hideToolbar
+history
+host
+id
+identify
+idle3
+idle3.13
+ifconfig
+import
+internalbrowser
+ipython
+ipython3
+isForeground
+jq
+jsc
+jsc_core
+jsi
+jump
+keepDirectoryAfterShortcut
+less
+lessecho
+lex
+lg2
+link
+ln
+ls
+lua
+luac
+magick
+magick-script
+man
+mandoc
+mandocdb
+md5
+mkdir
+mktemp
+mogrify
+montage
+more
+multimarkdown
+mv
+nc
+newWindow
+nslookup
+open
+openrsync
+openurl
+opera
+pbcopy
+pbpaste
+pickFolder
+pico
+ping
+ping6
+pip
+pip3
+pip3.13
+pkg
+play
+printenv
+pwd
+pydoc3
+pydoc3.13
+pygmentize
+pyproject-build
+python
+python3
+python3-config
+python3.13
+python3.13-config
+readlink
+readtags.wasm3
+realpath
+rehash
+renamemark
+repeatCommand
+rlogin
+rm
+rmdir
+rsync
+safari
+say
+scp
+sed
+setenv
+setuptools-scm
+sftp
+sh
+sha1
+sha256
+showToolbar
+showmarks
+sleep
+sort
+source
+ssh
+ssh-add
+ssh-agent
+ssh-copy-id
+ssh-keygen
+stat
+stream
+stty
+sum
+tail
+tar
+task
+tee
+telnet
+text
+touch
+tr
+tree.wasm3
+unalias
+uname
+uncompress
+uniq
+unlink
+unrar
+unsetenv
+uptime
+view
+vim
+wasm
+wasm3
+wc
+whatis
+wheel
+whoami
+whois
+wol
+xargs
+xxd
+yandexbrowser
+z
+
+```
+
 # 📝 2025/12/13
 
 chatGPT がゴリっと内容を忘れてしまってるから
