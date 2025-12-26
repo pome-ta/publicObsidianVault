@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agentPrompts/note2512221514.md",
+                "file": "agentPrompts/note2512261710.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2512221514"
+              "title": "note2512261710"
             }
           }
         ]
@@ -155,10 +155,11 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "2441139913e0fb49",
+  "active": "2c4a236a0aa458cd",
   "lastOpenFiles": [
-    "inBox/_stackNotes.md",
     "agentPrompts/note2512221514.md",
+    "agentPrompts/note2512261710.md",
+    "inBox/_stackNotes.md",
     "agentPrompts/note2512041405.md",
     "agentPrompts/note2512161654.md",
     "agentPrompts/note2512151532.md",
@@ -183,7 +184,6 @@
     "inBox/note2507141430.md",
     "inBox/note2507161736.md",
     "inBox/note2507161735.md",
-    "inBox/note2507111704.md",
     "inBox"
   ]
 }
