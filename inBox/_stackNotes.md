@@ -6,6 +6,13 @@
 
 iPhone 15 Pro にしたので、11 にはハードウェア的になかったLiDAR をrubicon-objc 経由でいじってみるか
 
+- [iPhoneのLiDARを使って撮影したデータはどのようにして3Dデータに変換されるのかっていう雑記 #QiitaEngineerFesta2022 - Qiita](https://qiita.com/nokonoko_1203/items/6a836fb0e1d2d3f6e3a6)
+- [LiDARスキャナを使って現実世界をボクセルにしてみた #iOS - Qiita](https://qiita.com/TokyoYoshida/items/1c62c01093e6a9be442e)
+- [（Swift）iPhoneのLiDARセンサーから無加工のデータを取得する](https://zenn.dev/moutend/articles/552aa982f5cefb)
+
+
+
+
 
 # 📝 2025/12/31
 
