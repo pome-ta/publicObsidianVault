@@ -10,6 +10,9 @@ iPhone 15 Pro にしたので、11 にはハードウェア的になかったLiD
 - [LiDARスキャナを使って現実世界をボクセルにしてみた #iOS - Qiita](https://qiita.com/TokyoYoshida/items/1c62c01093e6a9be442e)
 - [（Swift）iPhoneのLiDARセンサーから無加工のデータを取得する](https://zenn.dev/moutend/articles/552aa982f5cefb)
 
+## とりま、ARKit か？
+
+完全に忘れてるからいいチャンスかも
 
 
 
