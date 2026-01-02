@@ -13,8 +13,16 @@ iPhone 15 Pro にしたので、11 にはハードウェア的になかったLiD
 ## とりま、ARKit か？
 
 完全に忘れてるからいいチャンスかも
+一度ARKit やり直しもありかも？
+
+### 過去の差分
+
+- [pystaUIKitCatalogChallenge/rbedge/rootNavigationController.py at main · pome-ta/pystaUIKitCatalogChallenge · GitHub](https://github.com/pome-ta/pystaUIKitCatalogChallenge/blob/main/rbedge/rootNavigationController.py)
+- [draftPythonistaScripts/objcs/ARKit/rubiconARKit/rbedge/rootNavigationController.py at main · pome-ta/draftPythonistaScripts · GitHub](https://github.com/pome-ta/draftPythonistaScripts/blob/main/objcs/ARKit/rubiconARKit/rbedge/rootNavigationController.py)
 
 
+
+`rootNavigationController` の挙動どうしようかな。一応WKWebView 用の調整だったけども。。。
 
 
 # 📝 2025/12/31
