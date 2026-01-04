@@ -1,5 +1,39 @@
 もう面倒だから、全部書き落としていくか
 
+
+# 📝 2026/01/03
+
+## SceneKit だわ、、、
+
+[SceneKit | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit?language=objc)
+
+
+## メモ
+
+- [業務でSceneKitが必要になりそうな気配がするのでメモ](https://zenn.dev/yukichi_tech/scraps/b91fa600175e2b)
+- [ARViewとARSCNViewとRealityKitとSceneKitの違い](https://zenn.dev/adaniya/books/0e7251467ddfea/viewer/2c8e6a)
+
+
+## 勉強し直し
+
+Deprecated でレガシーなものを勉強し直すのも癪だが、仕方なし。
+
+[Pythonista3 で3DCG やろうぜ！SceneKit のプリミティブなもので遊ぶ #Mobile - Qiita](https://qiita.com/pome-ta/items/551bf5fb2448ddcacae0)
+
+
+
+
+
+# 📝 2026/01/02
+
+1. LiDAR で何かやりたい
+2. ARKit を使う
+3. rubicon でそこらへんのViewController やってないかも
+4. SceneKit からおさらいか？
+5. `SceneKit` が`Deprecated` !?
+  - [SceneKit | Apple Developer Documentation](SceneKit)
+6. RealityKit でいける？
+
 # 📝 2026/01/01
 
 ## LiDAR やってみる？
@@ -9,6 +43,7 @@ iPhone 15 Pro にしたので、11 にはハードウェア的になかったLiD
 - [iPhoneのLiDARを使って撮影したデータはどのようにして3Dデータに変換されるのかっていう雑記 #QiitaEngineerFesta2022 - Qiita](https://qiita.com/nokonoko_1203/items/6a836fb0e1d2d3f6e3a6)
 - [LiDARスキャナを使って現実世界をボクセルにしてみた #iOS - Qiita](https://qiita.com/TokyoYoshida/items/1c62c01093e6a9be442e)
 - [（Swift）iPhoneのLiDARセンサーから無加工のデータを取得する](https://zenn.dev/moutend/articles/552aa982f5cefb)
+- [ARKit と LiDAR で 3 次元空間認識して SceneKit でリアルタイム描画 - OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2021/05/06/100000)
 
 ## とりま、ARKit か？
 
