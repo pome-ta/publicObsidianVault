@@ -7,6 +7,37 @@
 
 [SceneKit | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit?language=objc)
 
+## レイアウト
+
+文字だと右左あるけど、位置だときにしなくていいか
+
+```python
+    NSLayoutConstraint.activateConstraints_([
+      showingHidingStackView.leadingAnchor.constraintEqualToAnchor_(
+        layoutMarginsGuide.leadingAnchor),
+      showingHidingStackView.trailingAnchor.constraintEqualToAnchor_(
+        layoutMarginsGuide.trailingAnchor),
+      showingHidingStackView.topAnchor.constraintEqualToAnchor_constant_(
+        safeAreaLayoutGuide.topAnchor, 8.0),
+    ])
+```
+
+```python
+    NSLayoutConstraint.activateConstraints_([
+      scnView.centerXAnchor.constraintEqualToAnchor_(
+        safeAreaLayoutGuide.centerXAnchor),
+      scnView.centerYAnchor.constraintEqualToAnchor_(
+        safeAreaLayoutGuide.centerYAnchor),
+      scnView.widthAnchor.constraintEqualToAnchor_multiplier_(
+        safeAreaLayoutGuide.widthAnchor, 1.0),
+      scnView.heightAnchor.constraintEqualToAnchor_multiplier_(
+        safeAreaLayoutGuide.heightAnchor, 1.0),
+    ])
+
+```
+
+
+
 
 ## メモ
 
