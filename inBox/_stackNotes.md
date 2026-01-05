@@ -1,5 +1,25 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/01/05
+
+
+## rubicon での、`Global Variable`
+
+- [ARSCNDebugOptionShowFeaturePoints | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/arscndebugoptionshowfeaturepoints?language=objc)
+- [ARSCNDebugOptionShowWorldOrigin | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/arscndebugoptionshowworldorigin?language=objc)
+
+
+### `Global Variable` の整理
+
+[Global variables and constants (e.g. `NSFoundationVersionNumber`) | Calling plain C functions from Python - Rubicon ObjC](https://rubicon-objc.beeware.org/en/stable/topics/c-functions/#global-variables-and-constants-eg-nsfoundationversionnumber)
+
+
+
+## RealityKit はやはり無理か？
+
+- [Does this mean that I can use Rust to build an immersive application of CompositorService on visionOS through this project? · Issue #668 · madsmtm/objc2 · GitHub](https://github.com/madsmtm/objc2/issues/668)
+- [Consider adding support for Swift interop? · Issue #524 · madsmtm/objc2 · GitHub](https://github.com/madsmtm/objc2/issues/524)
+
 
 # 📝 2026/01/03
 
@@ -38,11 +58,11 @@
 
 
 
-
 ## メモ
 
 - [業務でSceneKitが必要になりそうな気配がするのでメモ](https://zenn.dev/yukichi_tech/scraps/b91fa600175e2b)
 - [ARViewとARSCNViewとRealityKitとSceneKitの違い](https://zenn.dev/adaniya/books/0e7251467ddfea/viewer/2c8e6a)
+- [SCNTechniqueが[SceneKit] Error: can not render without programs, using defaultと言われて適用できないとき。 #Swift - Qiita](https://qiita.com/noppefoxwolf/items/73d74876bae4cc49f204)
 
 
 ## 勉強し直し
