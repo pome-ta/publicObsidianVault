@@ -3,6 +3,18 @@
 # 📝 2026/01/05
 
 
+## `enumerations.py`
+
+書き換え
+
+## `globalVariables.py`
+
+ディレクトリで分けるか
+
+
+# 📝 2026/01/05
+
+
 ## rubicon での、`Global Variable`
 
 - [ARSCNDebugOptionShowFeaturePoints | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/arscndebugoptionshowfeaturepoints?language=objc)
