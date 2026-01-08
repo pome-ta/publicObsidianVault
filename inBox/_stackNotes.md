@@ -1,5 +1,17 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/01/09
+
+[ARKit入門 / 特徴点の検出｜npaka](https://note.com/npaka/n/nbaf752f684f8)
+
+
+[（Swift）iPhoneのLiDARセンサーから無加工のデータを取得する](https://zenn.dev/moutend/articles/552aa982f5cefb)
+
+
+[AVCaptureDevice | Apple Developer Documentation](https://developer.apple.com/documentation/avfoundation/avcapturedevice?language=objc)
+
+これもあり？
+
 # 📝 2026/01/05
 
 
