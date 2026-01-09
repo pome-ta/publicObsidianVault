@@ -7,10 +7,18 @@
 
 [（Swift）iPhoneのLiDARセンサーから無加工のデータを取得する](https://zenn.dev/moutend/articles/552aa982f5cefb)
 
+## AVCaptureDevice
 
 [AVCaptureDevice | Apple Developer Documentation](https://developer.apple.com/documentation/avfoundation/avcapturedevice?language=objc)
 
 これもあり？
+
+## ARSessionDelegate
+
+[ARSessionDelegate | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/arsessiondelegate?language=objc)
+
+のちのち、継承して見通しよくできるといいな
+
 
 # 📝 2026/01/05
 
