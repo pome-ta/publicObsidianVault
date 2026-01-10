@@ -1,5 +1,14 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/01/10
+
+## ARKit とLiDAR
+
+`ARView` が使えない（RealityKit  がダメ）ので、`ARSCNView` で進めることに。
+
+しかし、RealityKit 前提のコードが多い & サンプルがどのような挙動になるかわからん。。。
+
+
 # 📝 2026/01/09
 
 [ARKit入門 / 特徴点の検出｜npaka](https://note.com/npaka/n/nbaf752f684f8)
