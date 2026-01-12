@@ -23,6 +23,8 @@
 - [Displaying a point cloud using scene depth | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-a-point-cloud-using-scene-depth?language=objc)
 
 
+## 参照するコード
+
 とりあえずで、以下の実装ができるように。。。
 
 - [ARKit と LiDAR で 3 次元空間認識して SceneKit でリアルタイム描画 - OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2021/05/06/100000)
@@ -42,6 +44,88 @@ SwiftのConvenience Initialize で、`SCNGeometry`, `SCNGeometrySource`, `SCNGeo
 rubicon でのclass のオーバーライドで考えると、ちょっと事故りそうなんよな。。。
 素直に書くか。。。
 
+### SCNGeometryElement
+
+[geometryElementWithData:primitiveType:primitiveCount:bytesPerIndex: | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scngeometryelement/init(data:primitivetype:primitivecount:bytesperindex:)?language=objc) の`data` が怪しいな。。。
+
+
+```swift
+        // Indices element
+        let faces = meshGeometry.faces
+        let facesElement = SCNGeometryElement(
+            data: Data(
+                bytesNoCopy: faces.buffer.contents(),
+                count: faces.buffer.length,
+                deallocator: .none
+            ),
+            primitiveType: .triangles,
+            primitiveCount: faces.count,
+            bytesPerIndex: faces.bytesPerIndex
+        )
+
+```
+
+`contents` が、`c_void_p` になるから、これをうまい感じにどうにかしなきゃ。。。
+
+### ARMeshGeometry を深追い
+
+[ARMeshGeometry | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/armeshgeometry?language=objc)
+
+#### `.faces`
+
+[faces | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/armeshgeometry/faces?language=objc)
+
+```swift
+extension ARMeshGeometry {
+    func vertexIndicesOf(faceWithIndex index: Int) -> [Int] {
+        let indicesPerFace = faces.indexCountPerPrimitive
+        let facesPointer = faces.buffer.contents()
+        var vertexIndices = [Int]()
+        for offset in 0..<indicesPerFace {
+            let vertexIndexAddress = facesPointer.advanced(by: (index * indicesPerFace + offset) * MemoryLayout<UInt32>.size)
+            vertexIndices.append(Int(vertexIndexAddress.assumingMemoryBound(to: UInt32.self).pointee))
+        }
+        return vertexIndices
+    }
+}
+```
+
+```swift
+let facesPointer = faces.buffer.contents()
+```
+
+[contents() | Apple Developer Documentation](https://developer.apple.com/documentation/metal/mtlbuffer/contents()?language=objc)
+
+
+
+```
+<AGXG16PFamilyBuffer: 0x12ba53900>
+    label = <none> 
+    length = 4096 
+    cpuCacheMode = MTLCPUCacheModeDefaultCache 
+    storageMode = MTLStorageModeShared 
+    hazardTrackingMode = MTLHazardTrackingModeTracked 
+    resourceOptions = MTLResourceCPUCacheModeDefaultCache MTLResourceStorageModeShared MTLResourceHazardTrackingModeTracked  
+    purgeableState = MTLPurgeableStateNonVolatile
+```
+
+これ、metal か何かでやったっけか？
+
+
+```
+<AGXG16PFamilyBuffer: 0x158006700>
+    label = <none> 
+    length = 256 
+    cpuCacheMode = MTLCPUCacheModeDefaultCache 
+    storageMode = MTLStorageModeShared 
+    hazardTrackingMode = MTLHazardTrackingModeTracked 
+    resourceOptions = MTLResourceCPUCacheModeDefaultCache MTLResourceStorageModeShared MTLResourceHazardTrackingModeTracked  
+    purgeableState = MTLPurgeableStateNonVolatile
+
+
+```
+
+[pystaMetalStudy/src/everythingAboutTheMetalAPI/chapter05/__main__.py at 476f24b20c2710ca2661b5f23eab14ee7291e0a4 · pome-ta/pystaMetalStudy · GitHub](https://github.com/pome-ta/pystaMetalStudy/blob/476f24b20c2710ca2661b5f23eab14ee7291e0a4/src/everythingAboutTheMetalAPI/chapter05/__main__.py#L133)
 
 
 
