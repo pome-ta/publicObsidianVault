@@ -12,6 +12,19 @@
 何をしたいのか明確にステップ決めて行った方がいいな
 
 
+日本語だと、なんかcss うまく当たってない？
+
+- [Metalを利用したAR体験の表示 - 日本語ドキュメント - Apple Developer](https://developer.apple.com/jp/documentation/arkit/displaying_an_ar_experience_with_metal/)
+- [Displaying an AR Experience with Metal | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-an-ar-experience-with-metal?language=objc)
+
+
+これになるのかな？
+
+- [Displaying a point cloud using scene depth | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-a-point-cloud-using-scene-depth?language=objc)
+
+
+
+
 # 📝 2026/01/09
 
 [ARKit入門 / 特徴点の検出｜npaka](https://note.com/npaka/n/nbaf752f684f8)
