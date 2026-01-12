@@ -23,6 +23,27 @@
 - [Displaying a point cloud using scene depth | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-a-point-cloud-using-scene-depth?language=objc)
 
 
+とりあえずで、以下の実装ができるように。。。
+
+- [ARKit と LiDAR で 3 次元空間認識して SceneKit でリアルタイム描画 - OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2021/05/06/100000)
+
+SwiftのConvenience Initialize で、`SCNGeometry`, `SCNGeometrySource`, `SCNGeometryElement` まるっと生成している。。。
+
+- [SCNGeometry | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scngeometry?language=objc)
+- [SCNGeometrySource | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scngeometrysource?language=objc)
+    - [init(buffer:vertexFormat:semantic:vertexCount:dataOffset:dataStride:) | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scngeometrysource/init(buffer:vertexformat:semantic:vertexcount:dataoffset:datastride:)?language=objc)
+        - [SCNGeometrySourceSemanticVertex | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scngeometrysource/semantic-swift.struct/vertex?language=objc)
+- [SCNGeometryElement | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scngeometryelement?language=objc)
+    - [init(data:primitiveType:primitiveCount:bytesPerIndex:) | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scngeometryelement/init(data:primitivetype:primitivecount:bytesperindex:)?language=objc)
+        - [initWithBytesNoCopy:length:deallocator: | Apple Developer Documentation](https://developer.apple.com/documentation/foundation/nsdata/init(bytesnocopy:length:deallocator:)?language=objc)
+        - [initWithBytesNoCopy:length: | Apple Developer Documentation](https://developer.apple.com/documentation/foundation/nsdata/init(bytesnocopy:length:)?language=objc)
+            - [init(bytesNoCopy:count:deallocator:) | Apple Developer Documentation](https://developer.apple.com/documentation/foundation/data/init(bytesnocopy:count:deallocator:))
+
+rubicon でのclass のオーバーライドで考えると、ちょっと事故りそうなんよな。。。
+素直に書くか。。。
+
+
+
 
 
 # 📝 2026/01/09
