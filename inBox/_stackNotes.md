@@ -1,5 +1,31 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/01/13
+
+## まーた`SIMD` さんですか？
+
+[simdTransform | Apple Developer Documentation](https://developer.apple.com/documentation/scenekit/scnnode/simdtransform?language=objc)
+
+[transform | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/aranchor/transform?language=objc)
+
+[simd_float4x4 | Apple Developer Documentation](https://developer.apple.com/documentation/simd/simd_float4x4?language=objc)
+
+
+```
+["ObjCClass('NSObject')", "ObjCClass('ARAnchor')", "ObjCClass('ARMeshAnchor')"]
+<ObjCInstance: ARMeshAnchor at 0x12eacfd00: <ARMeshAnchor: 0x1592c3e80 identifier="2AEC1C54-6543-45F5-9692-540932D73690" geometry="<ARMeshGeometry: 0x15aaf4e70 vertices="<ARGeometrySource: 0x15b2e8a40 count="587">" normals="<ARGeometrySource: 0x15b2e9d40 count="587">" faces="<ARGeometryElement: 0x15aaf5230 count="823">">" transform=<translation=(0.132272 -0.596969 -0.096379) rotation=(-0.00° -93.02° 0.00°)>>>
+```
+
+```
+["ObjCClass('NSObject')", "ObjCClass('ARAnchor')", "ObjCClass('ARMeshAnchor')"]
+<ObjCInstance: ARMeshAnchor at 0x12385ce20: <ARMeshAnchor: 0x1592c1040 identifier="E32410D4-B2EC-45E5-8158-ADB95DE4F5AF" geometry="<ARMeshGeometry: 0x15aaf4330 vertices="<ARGeometrySource: 0x15b2e8b80 count="643">" normals="<ARGeometrySource: 0x15b2e9380 count="643">" faces="<ARGeometryElement: 0x15aaf6670 count="1128">">" transform=<translation=(0.252113 0.003031 -0.090184) rotation=(-0.00° -93.02° 0.00°)>>>
+```
+
+```
+["ObjCClass('NSObject')", "ObjCClass('ARAnchor')", "ObjCClass('ARMeshAnchor')"]
+<ObjCInstance: ARMeshAnchor at 0x1279e1000: <ARMeshAnchor: 0x14e0e8a00 identifier="49D419B2-942B-43D6-ACD9-5D562E746FD6" geometry="<ARMeshGeometry: 0x14cd6ab80 vertices="<ARGeometrySource: 0x14f7930c0 count="85">" normals="<ARGeometrySource: 0x14f793100 count="85">" faces="<ARGeometryElement: 0x14cec50b0 count="70">">" transform=<translation=(-0.303127 0.007237 -0.354261) rotation=(-0.00° -91.01° 0.00°)>>>
+```
+
 # 📝 2026/01/10
 
 ## ARKit とLiDAR
