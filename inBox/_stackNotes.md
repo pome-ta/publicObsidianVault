@@ -1,5 +1,55 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/01/14
+
+## Depth にする
+
+mesh の`node.setSimdTransform_(anchor.transform)` がダメなため。
+
+`transform` を呼べない。
+
+[ARKitのLiDAR Depth API](https://zenn.dev/shu223/articles/arkit-lidar-depth)
+
+
+
+```
+ "ObjCClass('ARDepthData')": [
+    "adCameraCalibration",
+    "cameraIntrinsics",
+    "confidenceBuffer",
+    "confidenceMap",
+    "dealloc",
+    "depthMap",
+    "depthSensorsState",
+    "deviceTransform",
+    "encodeWithCoder_",
+    "extrinsicsToAppNode",
+    "initWithCoder_",
+    "initWithDepthMap_confidenceMap_",
+    "isValid",
+    "normalsBuffer",
+    "setAdCameraCalibration_",
+    "setCameraIntrinsics_",
+    "setConfidenceBuffer_",
+    "setConfidenceMap_",
+    "setDepthMap_",
+    "setDepthSensorsState_",
+    "setDeviceTransform_",
+    "setExtrinsicsToAppNode_",
+    "setIsValid_",
+    "setNormalsBuffer_",
+    "setTimestamp_",
+    "timestamp",
+    "tracingEntry"
+  ]
+```
+
+```
+["ObjCClass('NSObject')", "ObjCClass('ARDepthData')"]
+<ObjCInstance: ARDepthData at 0x13d8f01c0: <ARDepthData: 0x12b255e00>>
+
+```
+
 # 📝 2026/01/13
 
 ## まーた`SIMD` さんですか？
