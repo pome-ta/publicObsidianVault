@@ -50,6 +50,11 @@ mesh の`node.setSimdTransform_(anchor.transform)` がダメなため。
 
 ```
 
+## いや、ワンチャンあるか？
+
+[SceneKitLiDARMesh.swift · GitHub](https://gist.github.com/eospi/b54e412afde3f07942240e0e306a32f2)
+
+
 # 📝 2026/01/13
 
 ## まーた`SIMD` さんですか？
