@@ -1,5 +1,18 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/01/18
+
+## ドキュメントを読む
+
+[Displaying a point cloud using scene depth | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-a-point-cloud-using-scene-depth?language=objc)
+
+
+`PointCloudDepthSample.swift` とりま、これがentry point 。ファイル内は、超簡潔。
+
+
+
+
+
 # 📝 2026/01/14
 
 ## Depth にする
@@ -53,6 +66,19 @@ mesh の`node.setSimdTransform_(anchor.transform)` がダメなため。
 ## いや、ワンチャンあるか？
 
 [SceneKitLiDARMesh.swift · GitHub](https://gist.github.com/eospi/b54e412afde3f07942240e0e306a32f2)
+
+
+### あった
+
+コードがちょっとアレだったが（実装意図もわからず）できたやも？
+
+[draftPythonistaScripts/objcs/ARKit/rubiconARKit/rendererSceneKitLiDARMesh.py at main · pome-ta/draftPythonistaScripts · GitHub](https://github.com/pome-ta/draftPythonistaScripts/blob/main/objcs/ARKit/rubiconARKit/rendererSceneKitLiDARMesh.py)
+
+
+### mesh のいろつけ
+
+[swift - SceneKitのSCNGeometryで線を描いた時に色をつけることができない。 - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/53124/scenekit%E3%81%AEscngeometry%E3%81%A7%E7%B7%9A%E3%82%92%E6%8F%8F%E3%81%84%E3%81%9F%E6%99%82%E3%81%AB%E8%89%B2%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84)
+
 
 
 # 📝 2026/01/13
