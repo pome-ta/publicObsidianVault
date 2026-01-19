@@ -10,7 +10,7 @@
 `PointCloudDepthSample.swift` とりま、これがentry point 。ファイル内は、超簡潔。
 
 
-
+view のstack 処理は、色々な見せ方の場合分け？
 
 
 # 📝 2026/01/14
