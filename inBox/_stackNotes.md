@@ -1,5 +1,12 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/01/29
+
+
+[【Swift】画面の向き（縦横）が変わったことを検知する方法 | Swift Note](https://naoya-ono.com/swift/swift-orientation/)
+
+
+
 # 📝 2026/01/27
 
 ## depth
@@ -7,6 +14,15 @@
 [ExampleOfiOSLiDAR/ExampleOfiOSLiDAR/Samples/PointCloud/PointCloudViewController.swift at main · TokyoYoshida/ExampleOfiOSLiDAR · GitHub](https://github.com/TokyoYoshida/ExampleOfiOSLiDAR/blob/main/ExampleOfiOSLiDAR/Samples/PointCloud/PointCloudViewController.swift)
 
 こっちにするか、SwiftUI 読み解きは少し辛い
+
+[ARKit 4のLiDAR Depth API #Swift - Qiita](https://qiita.com/shu223/items/722077b4bbe868f58ddc)
+後にこれか？
+
+
+
+[ここから始まるお手軽地形計測 iPhoneへLiDARスキャナ搭載【ARKit】 - aptpod Tech Blog](https://tech.aptpod.co.jp/entry/2020/12/22/100000)
+
+
 
 
 
