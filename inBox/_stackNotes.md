@@ -6,6 +6,9 @@
 
 [Displaying a point cloud using scene depth | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-a-point-cloud-using-scene-depth?language=objc)
 
+うーんSwiftUI だから、読み解きづらい、、、
+
+
 
 
 
