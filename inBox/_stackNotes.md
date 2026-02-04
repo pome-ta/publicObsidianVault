@@ -1,5 +1,27 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/02/03
+
+再挑戦
+
+[Displaying a point cloud using scene depth | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-a-point-cloud-using-scene-depth?language=objc)
+
+
+
+
+# 📝 2026/01/30
+
+## `CGAffineTransform`
+
+[CGAffineTransform | Apple Developer Documentation](https://developer.apple.com/documentation/coregraphics/cgaffinetransform?language=objc)
+
+`CGAffineTransform(scaleX: 1.0/captureSize.width, y: 1.0/captureSize.height)`
+
+イニシャライザで、`scaleX` とあるから、
+
+[CGAffineTransformMakeScale | Apple Developer Documentation](https://developer.apple.com/documentation/coregraphics/cgaffinetransformmakescale(_:_:)?language=objc)
+
+
 # 📝 2026/01/29
 
 
