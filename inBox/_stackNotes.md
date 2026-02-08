@@ -1,5 +1,29 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/02/08
+
+
+`objc.types._Anonymous`
+
+
+
+# 📝 2026/02/05
+
+[Displaying a point cloud using scene depth | Apple Developer Documentation](https://developer.apple.com/documentation/arkit/displaying-a-point-cloud-using-scene-depth?language=objc)
+
+これ、ビルドしたら、なんか変？（iPhone 15 Pro）
+
+
+## なんとなくやっていき
+
+### `UIViewController` がファットになりそう
+
+継承を想定していくか？
+
+ん？View って継承したとして、必須なメソッドってある？
+
+
+
 # 📝 2026/02/03
 
 再挑戦
