@@ -3,7 +3,37 @@
 # 📝 2026/02/08
 
 
-`objc.types._Anonymous`
+## BeginningMetal/02_GettingStarted
+
+久々の写経
+
+[pystaRubiconObjcSandBox/playground/Metal/BeginningMetal/memo.md at main · pome-ta/pystaRubiconObjcSandBox · GitHub](https://github.com/pome-ta/pystaRubiconObjcSandBox/blob/main/playground/Metal/BeginningMetal/memo.md)
+
+### MTLClearColor やMTLClearColorMake
+
+make に関しては、Metal Framework からfunction みつからん。
+
+view 上で型を作ってなげても、元が`objc.types._Anonymous` の型になっているので、エラー。
+
+とりあえず、簡単にtuple 投げるようにしてる。
+
+[toga/iOS/src/toga_iOS/libs/mapkit.py at afac874cf430f13679b9d05e9ba370e18258d15f · beeware/toga · GitHub](https://github.com/beeware/toga/blob/afac874cf430f13679b9d05e9ba370e18258d15f/iOS/src/toga_iOS/libs/mapkit.py#L37) ここでどうにかなるんか？知らんけど
+
+`@with_preferred_encoding` と`@with_encoding` ？多分違う気がする
+
+### MTKViewDelegate
+
+`drawInMTKView_` だけではだめ、`mtkView_drawableSizeWillChange_` も定義（中は空）してあげんと落ちるで。
+
+
+### formatter 用のコメントなんだっけ？
+
+配列をガガーっと書きそうなので、強制的に整理しないコメント
+
+`# yapf: disable`
+
+過去に、使ってたけど、忘れっちゃたので、ここに
+
 
 
 
