@@ -21,6 +21,10 @@ view 上で型を作ってなげても、元が`objc.types._Anonymous` の型に
 
 `@with_preferred_encoding` と`@with_encoding` ？多分違う気がする
 
+↑ 正解でした
+[pystaRubiconObjcSandBox/modules/objc_frameworks/Metal/MTLRenderPass.py at 02fce42c97087acad6ebdac37e40495c22b90099 · pome-ta/pystaRubiconObjcSandBox](https://github.com/pome-ta/pystaRubiconObjcSandBox/blob/02fce42c97087acad6ebdac37e40495c22b90099/modules/objc_frameworks/Metal/MTLRenderPass.py#L6)
+
+
 ### MTKViewDelegate
 
 `drawInMTKView_` だけではだめ、`mtkView_drawableSizeWillChange_` も定義（中は空）してあげんと落ちるで。
