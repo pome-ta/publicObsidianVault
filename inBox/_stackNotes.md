@@ -1,5 +1,178 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/02/13
+
+## a-shell でMetal だめか？
+
+
+```lifeCycle.py
+import asyncio
+from pyrubicon.objc.eventloop import RubiconEventLoop, EventLoopPolicy
+
+__all__ = [
+  'loop',
+]
+
+try:
+  print('try s: loop')
+  loop = asyncio.get_running_loop()
+  print('try e: loop')
+except RuntimeError as e:
+  print(f'RuntimeError: {e}')
+  print('except s: loop')
+  loop = RubiconEventLoop()
+  asyncio.set_event_loop(loop)
+  print('except e: loop')
+```
+
+### Pythonista3
+
+#### Metal 1 回目
+
+```
+try s: loop
+RuntimeError: no running event loop
+except s: loop
+except e: loop
+--- --- start
+init
+s: set_rootViewController
+e: set_rootViewController
+main
+present
+app s: run
+RootNavigationController: loadView
+    - MainViewController: loadView
+    - MainViewController: viewDidLoad
+v
+    - MainViewController: viewWillDisappear_
+RootNavigationController: viewWillDisappear_
+    - MainViewController: viewDidDisappear_
+RootNavigationController: viewDidDisappear_
+- RootNavigationController: dealloc
+stop
+app e: run
+app s: close
+app e: close
+main.present
+
+
+```
+
+#### Metal 2回目
+
+```
+--- --- start
+init
+s: set_rootViewController
+e: set_rootViewController
+main
+present
+app s: run
+RootNavigationController: loadView
+    - MainViewController_2: loadView
+    - MainViewController_2: viewDidLoad
+v
+    - MainViewController_2: viewWillDisappear_
+RootNavigationController: viewWillDisappear_
+    - MainViewController_2: viewDidDisappear_
+RootNavigationController: viewDidDisappear_
+- RootNavigationController: dealloc
+stop
+app e: run
+app s: close
+app e: close
+main.present
+	 - MainViewController: dealloc
+
+
+```
+
+#### UIView 1回目
+
+```
+try s: loop
+RuntimeError: no running event loop
+except s: loop
+except e: loop
+init
+s: set_rootViewController
+e: set_rootViewController
+present
+app s: run
+RootNavigationController: loadView
+    - MainViewController: loadView
+    - MainViewController: viewDidLoad
+RootNavigationController: viewWillDisappear_
+    - MainViewController: viewDidDisappear_
+RootNavigationController: viewDidDisappear_
+- RootNavigationController: dealloc
+stop
+app e: run
+app s: close
+app e: close
+
+
+```
+
+#### UIView 2回目
+
+```
+init
+s: set_rootViewController
+e: set_rootViewController
+present
+app s: run
+RootNavigationController: loadView
+    - MainViewController_2: loadView
+    - MainViewController_2: viewDidLoad
+RootNavigationController: viewWillDisappear_
+    - MainViewController_2: viewDidDisappear_
+RootNavigationController: viewDidDisappear_
+- RootNavigationController: dealloc
+stop
+app e: run
+app s: close
+app e: close
+	 - MainViewController: dealloc
+
+
+```
+
+
+### a-shell
+
+うまくコピーできんかったけど、
+
+`RuntimeError: no running event loop` まいかい走ってる
+
+```
+try s: loop
+RuntimeError: no running event loop
+except s: loop
+except e: loop
+--- --- start
+init
+s: set_rootViewController
+e: set_rootViewController
+main
+present
+app s: run
+RootNavigationController: loadView
+    - MainViewController: loadView
+    - MainViewController: viewDidLoad
+v
+    - MainViewController: viewWillDisappear_
+RootNavigationController: viewWillDisappear_
+    - MainViewController: viewDidDisappear_
+RootNavigationController: viewDidDisappear_
+
+```
+
+
+あと`s: set_rootViewController` ここで止まるかも
+
+
 # 📝 2026/02/10
 
 `:%s/hoge.*huga/置換後文字列/g`
