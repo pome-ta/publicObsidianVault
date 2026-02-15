@@ -1,5 +1,67 @@
 もう面倒だから、全部書き落としていくか
 
+
+# 📝 2026/02/15
+
+## コード
+
+```python
+UIApplication = ObjCClass('UIApplication')
+
+sharedApplication = UIApplication.sharedApplication
+
+
+for scene in sharedApplication.connectedScenes.allObjects():
+  pdbr.state(scene)
+```
+
+## a-shell
+
+
+```
+["ObjCClass('NSObject')",
+ "ObjCClass('UIResponder')",
+ "ObjCClass('UIScene')",
+ "ObjCClass('UIWindowScene')",
+ "ObjCClass('NSKVONotifying_UIWindowScene')"]
+<ObjCInstance: NSKVONotifying_UIWindowScene at 0x1270b7d90: <UIWindowScene: 0x106764000; role: UIWindowSceneSessionRoleApplication; activationState: UISceneActivationStateForegroundActive> {
+    session = <UISceneSession: 0x10659dfe0; persistentIdentifier: 327CBD3C-9EDE-4C0B-B363-C7B4FF5A2754> {
+        configuration = <UISceneConfiguration: 0x142110a00; name: "Default Configuration">;
+    };
+    delegate = <a_Shell_mini.SceneDelegate: 0x101d9f060>;
+    effectiveGeometry = <UIWindowSceneGeometry: 0x106799130; coordinateSpace.bounds: {{0, 0}, {393, 852}}; interfaceOrientation: portrait (1); isInteractivelyResizing: NO>;
+    screen = <UIScreen: 0x1064d0780; bounds: {{0, 0}, {393, 852}}; mode: <UIScreenMode: 0x1244a5e40; size = 1179.000000 x 2556.000000>>;
+    windows = {
+        <UIWindow: 0x101da03e0; frame = (0 0; 393 852); autoresize = W+H; gestureRecognizers = <NSArray: 0x124884240>; layer = <UIWindowLayer: 0x106425440>>;
+        <UITextEffectsWindow: 0x119604000; frame = (0 0; 393 852); opaque = NO; autoresize = W+H; gestureRecognizers = <NSArray: 0x14217aaf0>; layer = <UIWindowLayer: 0x1196016c0>>;
+    }
+}>
+
+```
+
+
+## Pythonista3
+
+```
+["ObjCClass('NSObject')",
+ "ObjCClass('UIResponder')",
+ "ObjCClass('UIScene')",
+ "ObjCClass('UIWindowScene')"]
+<ObjCInstance: UIWindowScene at 0x122997fd0: <UIWindowScene: 0x101629500; role: UIWindowSceneSessionRoleApplication; activationState: UISceneActivationStateForegroundActive> {
+    session = <UISceneSession: 0x106194550; persistentIdentifier: E386F5EB-87BA-433E-8B31-3C33870E36F9> {
+        configuration = <UISceneConfiguration: 0x1222f7570; name: 0x0>;
+    };
+    delegate = (nil);
+    effectiveGeometry = <UIWindowSceneGeometry: 0x106194960; coordinateSpace.bounds: {{0, 0}, {393, 852}}; interfaceOrientation: portrait (1); isInteractivelyResizing: NO>;
+    screen = <UIScreen: 0x1060e0780; bounds: {{0, 0}, {393, 852}}; mode: <UIScreenMode: 0x1204256a0; size = 1179.000000 x 2556.000000>>;
+    windows = {
+        <PA3PythonistaWindow: 0x101632e30; baseClass = UIWindow; frame = (0 0; 393 852); autoresize = W+H; gestureRecognizers = <NSArray: 0x1221bd320>; layer = <UIWindowLayer: 0x1061f9f00>>;
+        <UITextEffectsWindow: 0x109bd7700; frame = (0 0; 393 852); opaque = NO; autoresize = W+H; gestureRecognizers = <NSArray: 0x1174c8ee0>; layer = <UIWindowLayer: 0x120703580>>;
+    }
+}>
+
+```
+
 # 📝 2026/02/13
 
 ## a-shell でMetal だめか？
