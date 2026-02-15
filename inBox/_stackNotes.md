@@ -3,7 +3,13 @@
 
 # 📝 2026/02/15
 
-## コード
+
+## a-shell のコマンドで、View が出るやつの確認
+
+[`pickFolder` | a-Shell/SceneDelegate.swift](https://github.com/holzschu/a-shell/blob/9013425d35cd406da535cae40c80159caab4667b/a-Shell/SceneDelegate.swift#L2014)
+[`@_cdecl("pickFolder")` | a-Shell/ExtraCommands.swift](https://github.com/holzschu/a-shell/blob/9013425d35cd406da535cae40c80159caab4667b/a-Shell/ExtraCommands.swift#L249)
+
+### コード
 
 ```python
 UIApplication = ObjCClass('UIApplication')
@@ -15,7 +21,7 @@ for scene in sharedApplication.connectedScenes.allObjects():
   pdbr.state(scene)
 ```
 
-## a-shell
+### a-shell
 
 
 ```
@@ -40,7 +46,7 @@ for scene in sharedApplication.connectedScenes.allObjects():
 ```
 
 
-## Pythonista3
+### Pythonista3
 
 ```
 ["ObjCClass('NSObject')",
@@ -61,6 +67,17 @@ for scene in sharedApplication.connectedScenes.allObjects():
 }>
 
 ```
+
+
+うーん、調査的にはあまり意味なさそう。。。
+
+## a-shell でMetal が動かない
+
+- 2回目が起動View すら出ず止まる
+- `commandBuffer.commit()` のように、レンダリングすると、初回からだめ
+- 事前に裏で走っていて連動していないか？
+    - 一回のみのレンダリングでもダメっぽい
+
 
 # 📝 2026/02/13
 
