@@ -1,5 +1,21 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/02/20
+
+a-shell Metal 問題は、（もしかしたら）shader のpath 指定が間違えていただけかも、、、
+（Pythonista3 に慣れまくっていて、path 扱いが雑だった。。。）
+
+## とはいえ、調査
+
+ChatGPT とGemini に色々と（嘘の）アドバイス貰っているので、この際に確認するでもいいかも
+
+- `dispatch_semaphore`
+- `autoreleasepool`
+- lifeCycle
+- onMainThread
+
+整理して、理解が深まればいいかも
+
 
 # 📝 2026/02/16
 
