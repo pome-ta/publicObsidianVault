@@ -26,6 +26,7 @@ ChatGPT とGemini に色々と（嘘の）アドバイス貰っているので�
 - onMainThread
 - `dispatch_semaphore`
 - `autoreleasepool`
+    - なんかちゃんと動いてるっぽい
 
 整理して、理解が深まればいいかも
 
