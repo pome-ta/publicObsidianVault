@@ -5,14 +5,27 @@
 a-shell Metal 問題は、（もしかしたら）shader のpath 指定が間違えていただけかも、、、
 （Pythonista3 に慣れまくっていて、path 扱いが雑だった。。。）
 
+1. path 指定
+    - Pythonista3
+        - `Path('./Shader.metal')` 
+    - a-shell とPythonista3
+        - `Path(Path(__file__).parent, 'Shader.metal')`
+2. ~`metalView.delegate` 定義位置~
+    - `metalView.delegate = self`
+    - `drawInMTKView_` ループいか以外での設定を終えた後で定義する位置にする
+
+
+違う、path 指定の問題ですた。。。エラーが出ないから、気がつけなかったのか、、、
+
+
 ## とはいえ、調査
 
 ChatGPT とGemini に色々と（嘘の）アドバイス貰っているので、この際に確認するでもいいかも
 
-- `dispatch_semaphore`
-- `autoreleasepool`
 - lifeCycle
 - onMainThread
+- `dispatch_semaphore`
+- `autoreleasepool`
 
 整理して、理解が深まればいいかも
 
