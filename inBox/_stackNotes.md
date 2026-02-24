@@ -1,5 +1,35 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/02/24
+
+## Pythonista のフォーマッター
+
+[GitHub - google/yapf: A formatter for Python files](https://github.com/google/yapf) なのだが、
+
+バージョンが`0.32.0` と古い、最新は今現在`0.43.0` 。
+
+### `match` `case` がフォーマットできない
+
+多分バージョンが古く、Python バージョンの文法と合ってない気がする。
+
+本来は、Switch 文なんて、あまり書かない方がいいのだろうが、
+対応していない。というのもずいぶん気持ち悪い。
+
+### 無理やり対応させるか。。。
+
+Pythonista にはpip がない。なるべくプレーンにyapf を入れていきたい
+
+[pythonista_reformat.py at main · pome-ta/draftPythonistaScripts · GitHub](https://github.com/pome-ta/draftPythonistaScripts/blob/main/Pythonista3App/modulesMaster/app/pythonista_reformat.py)
+
+これが走るので、
+
+
+[site-packages/yapf at main · pome-ta/draftPythonistaScripts · GitHub](https://github.com/pome-ta/draftPythonistaScripts/tree/main/Pythonista3App/modulesMaster/site-packages/yapf)
+
+これと見比べならが、やっていく。
+
+
+
 # 📝 2026/02/21
 
 ## モジュール間のpath 連携
