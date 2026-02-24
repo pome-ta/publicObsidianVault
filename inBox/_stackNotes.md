@@ -2,9 +2,38 @@
 
 # 📝 2026/02/21
 
-モジュール間のpath 連携
+## モジュール間のpath 連携
 
 05 については、初手の時点では、view 実行のみを想定したpath にする
+
+## メモリ
+
+この沼忘れてた
+
+```
+// 16
+print(MemoryLayout<float3>.stride)
+
+// float2 = 8
+// float3 = 16
+// float4 = 16
+
+dump(MemoryLayout<float2>.size) //  8
+dump(MemoryLayout<float3>.size) //  16
+dump(MemoryLayout<float4>.size) //  16
+
+// 32
+print(MemoryLayout<Vertex>.stride)
+// .size => 32
+
+
+
+
+print(vertices.count)   // 4
+print(MemoryLayout<Vertex>.stride)  //32
+print(vertices.count * MemoryLayout<Vertex>.stride)  // 128
+```
+
 
 
 # 📝 2026/02/20
