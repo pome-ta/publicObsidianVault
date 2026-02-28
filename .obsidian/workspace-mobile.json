@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agentPrompts/note2602281757.md",
+                "file": "inBox/_stackNotes.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2602281757"
+              "title": "_stackNotes"
             }
           }
         ]
@@ -157,8 +157,8 @@
   },
   "active": "2441139913e0fb49",
   "lastOpenFiles": [
-    "inBox/_stackNotes.md",
     "agentPrompts/note2602281757.md",
+    "inBox/_stackNotes.md",
     "agentPrompts/note2601211550.md",
     "agentPrompts/note2512281441.md",
     "agentPrompts/note2512281239.md",
