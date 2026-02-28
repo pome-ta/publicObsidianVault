@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/_stackNotes.md",
+                "file": "agentPrompts/note2602281757.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "_stackNotes"
+              "title": "note2602281757"
             }
           }
         ]
@@ -145,20 +145,21 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:新規ベースを作成": false,
       "switcher:クイックスイッチャーを開く": false,
       "graph:グラフビューを開く": false,
       "canvas:新規キャンバスを作成": false,
       "daily-notes:今日のデイリーノートを開く": false,
       "templates:テンプレートを挿入": false,
       "command-palette:コマンドパレットを開く": false,
-      "zk-prefixer:新規ユニークノートの作成": false,
-      "bases:Create new base": false
+      "zk-prefixer:新規ユニークノートの作成": false
     }
   },
   "active": "2441139913e0fb49",
   "lastOpenFiles": [
-    "agentPrompts/note2601211550.md",
     "inBox/_stackNotes.md",
+    "agentPrompts/note2602281757.md",
+    "agentPrompts/note2601211550.md",
     "agentPrompts/note2512281441.md",
     "agentPrompts/note2512281239.md",
     "agentPrompts/note2512261710.md",
@@ -183,7 +184,6 @@
     "agentPrompts",
     "inBox/note2508111402.md",
     "inBox/note2510010205.md",
-    "inBox/note2507131542.md",
     "inBox"
   ]
 }
