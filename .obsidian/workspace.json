@@ -156,7 +156,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,7 +171,7 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "487930215babb0e7",
+  "active": "c14126a5377b85ef",
   "lastOpenFiles": [
     "inBox/_stackNotes.md",
     "inBox/無題のファイル.base",
