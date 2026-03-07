@@ -4,6 +4,19 @@
 
 simd まできた、、、やはり面倒かもしれん
 
+
+```python
+from ctypes import Structure, c_float
+
+class simd_float3(Structure):
+    _fields_ = [
+        ("x", c_float),
+        ("y", c_float),
+        ("z", c_float),
+        ("_pad", c_float),   # ← padding
+    ]
+```
+
 # 📝 2026/03/01
 
 protocol と、Swift とPython(rubicon) でのinit の違いにぐぬぬぬ
