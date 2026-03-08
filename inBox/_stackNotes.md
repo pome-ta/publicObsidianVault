@@ -17,6 +17,7 @@ class simd_float3(Structure):
     ]
 ```
 
+
 # 📝 2026/03/01
 
 protocol と、Swift とPython(rubicon) でのinit の違いにぐぬぬぬ
