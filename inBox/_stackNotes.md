@@ -4,6 +4,8 @@
 
 simd まできた、、、やはり面倒かもしれん
 
+## simd の前に
+
 
 ```python
 from ctypes import Structure, c_float
@@ -16,6 +18,9 @@ class simd_float3(Structure):
         ("_pad", c_float),   # ← padding
     ]
 ```
+
+
+`simd_float3` のpadding テストをやる
 
 
 # 📝 2026/03/01
