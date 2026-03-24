@@ -1,5 +1,77 @@
 もう面倒だから、全部書き落としていくか
 
+
+# 📝 2026/03/23
+
+
+metal をrubicon でやってき！途中のまとめができてない、、、
+
+
+## `readonly_properties`
+
+getter として、簡略化
+
+
+## 単体のテスト
+
+`import` 関係値的に怪しくなってる？
+
+テストをやりやすくしたいけども、、、
+
+とりあえず、`/tests` として、`final` か、`challenge` を呼ぶことにする？
+
+### テンプレート
+
+雑だけどこんな感じか？
+
+```template.py
+_TOP_DIR_NAME = 'pystaRubiconObjcSandBox'
+_MODULES_DIR_NAME = 'modules'
+
+# todo: `./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME}` にあるpackage のimport 準備
+if __name__ == '__main__' and not __file__[:__file__.rfind('/')].endswith(
+    _TOP_DIR_NAME):
+  import pathlib
+  import sys
+  __parents = pathlib.Path(__file__).resolve().parents
+  for __dir_path in __parents:
+    if __dir_path.name == _TOP_DIR_NAME and (__modules_path := __dir_path /
+                                             _MODULES_DIR_NAME).exists():
+      sys.path.insert(0, str(__modules_path))
+      break
+  else:
+    import warnings
+    with warnings.catch_warnings():
+      warnings.simplefilter('always', ImportWarning)
+      __warning_message = f'./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME} not found in parent directories'
+      warnings.warn(__warning_message, ImportWarning)
+
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent))
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / 'final'))
+#sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / 'challenge'))
+
+#from final.renderer import Renderer
+from final.nodes.plane import Plane
+
+if __name__ == '__main__':
+  from objc_frameworks.Metal import MTLCreateSystemDefaultDevice
+
+  from objc_frameworks.ModelIO import MDLVertexAttributePosition
+  from rbedge import pdbr
+
+  #renderer = Renderer.alloc().initWithDevice_(MTLCreateSystemDefaultDevice())
+
+  p = Plane.alloc().initWithDevice_(MTLCreateSystemDefaultDevice())
+
+  print(str(MDLVertexAttributePosition))
+  
+```
+
+`sys.path.insert(0, str(pathlib.Path(__file__).parent.parent))` これは必須で、`final` か、`challenge` を呼び分ける。
+
+
+
+
 # 📝 2026/03/14
 
 simd まわりを強化中
