@@ -1,5 +1,33 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/03/29
+
+## rubicon でのFunction やらの呼び出し
+
+```python
+def MTLCreateSystemDefaultDevice() -> ObjCInstance:
+  _function = Metal.MTLCreateSystemDefaultDevice
+  _function.restype = ctypes.c_void_p
+  return ObjCInstance(_function())
+```
+
+
+こんなのだと、毎回呼び出しとなるので、次回以降キャッシュ的に処理
+
+### `arc4random_uniform` やら`drand48` やら
+
+framework でもないし、、、ということで、暫定的にどこに置くか、、、
+
+
+
+# 📝 2026/03/25
+
+## assets
+
+一つにまとめて、`glob` の取り回しの方に楽を取るか、、、
+
+
+
 
 # 📝 2026/03/23
 

@@ -131,7 +131,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "agentPrompts/note2603131238.md",
+            "file": "inBox/_stackNotes.md",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -157,6 +157,7 @@
   },
   "active": "2441139913e0fb49",
   "lastOpenFiles": [
+    "agentPrompts/note2603261655.md",
     "agentPrompts/note2603131238.md",
     "inBox/_stackNotes.md",
     "agentPrompts/note2603101352.md",
@@ -182,7 +183,6 @@
     "agentPrompts/note2512071310.md",
     "agentPrompts/note2512051042.md",
     "agentPrompts/note2512050106.md",
-    "inBox/note2512041405.md",
     "agentPrompts",
     "inBox"
   ]
