@@ -1,5 +1,22 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/03/31
+
+## diff 表現とシンタックスハイライト
+
+```diff py:ファイル.py
++ import difflib
+- import filecmp
+> from pathlib import Path
+< extension = 'swift'
+
+ def read_text(p: Path) -> str:
+   return p.read_text(encoding='utf-8').splitlines(keepends=True)
+
+```
+
+
+
 # 📝 2026/03/29
 
 ## rubicon でのFunction やらの呼び出し
@@ -17,6 +34,8 @@ def MTLCreateSystemDefaultDevice() -> ObjCInstance:
 ### `arc4random_uniform` やら`drand48` やら
 
 framework でもないし、、、ということで、暫定的にどこに置くか、、、
+
+とりま、`stdlib` と、しておくか、、、
 
 
 
