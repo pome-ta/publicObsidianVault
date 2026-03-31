@@ -4,15 +4,13 @@
 
 ## diff 表現とシンタックスハイライト
 
-```diff py:ファイル.py
+```diff py
 + import difflib
 - import filecmp
-> from pathlib import Path
-< extension = 'swift'
-
- def read_text(p: Path) -> str:
-   return p.read_text(encoding='utf-8').splitlines(keepends=True)
-
+from pathlib import Path
+ 
+ 
+extension = 'swift'
 ```
 
 
