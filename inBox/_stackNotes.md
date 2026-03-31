@@ -4,7 +4,7 @@
 
 ## diff 表現とシンタックスハイライト
 
-```diff_python
+```diff python
 + import difflib
 - import filecmp
 from pathlib import Path
