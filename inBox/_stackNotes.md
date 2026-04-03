@@ -1,8 +1,109 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/04
+
+## 差分 : `11 - Ambient Lighting/Final/`
+
+### Instance.swift
+
+- File Diff: `10 - Instances/Challenge/Instance.swift` vs `11 - Ambient Lighting/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 10 - Instances/Challenge/Instance.swift
++++ 11 - Ambient Lighting/Final/Instance.swift
+@@ -67,0 +68,2 @@
++  
++
+@@ -74 +75,0 @@
+-    
+@@ -85 +85,0 @@
+-    
+@@ -88 +87,0 @@
+-    
+```
+
+
+### LightingScene.swift
+
+- new file
+
+
+### Model.swift
+
+- File Diff: `10 - Instances/Challenge/Model.swift` vs `11 - Ambient Lighting/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 10 - Instances/Challenge/Model.swift
++++ 11 - Ambient Lighting/Final/Model.swift
+@@ -69 +69 @@
+-      fragmentFunctionName = "textured_fragment"
++      fragmentFunctionName = "lit_textured_fragment"
+@@ -71 +70,0 @@
+-    
+@@ -109 +107,0 @@
+-    
+```
+
+
+### Scene.swift
+
+- File Diff: `10 - Instances/Challenge/Scene.swift` vs `11 - Ambient Lighting/Final/Scene.swift`
+
+```diff Scene.swift:swift
+--- 10 - Instances/Challenge/Scene.swift
++++ 11 - Ambient Lighting/Final/Scene.swift
+@@ -29,0 +30 @@
++  var light = Light()
+@@ -44,0 +46,4 @@
++    commandEncoder.setFragmentBytes(&light,
++                                    length: MemoryLayout<Light>.stride,
++                                    at: 3)
++    
+```
+
+
+### Types.swift
+
+- File Diff: `10 - Instances/Challenge/Types.swift` vs `11 - Ambient Lighting/Final/Types.swift`
+
+```diff Types.swift:swift
+--- 10 - Instances/Challenge/Types.swift
++++ 11 - Ambient Lighting/Final/Types.swift
+@@ -38,0 +39,7 @@
++
++struct Light {
++  var color = float3(1)
++  var ambientIntensity: Float = 1.0
++}
++
++
+```
+
+
+### ViewController.swift
+
+- File Diff: `10 - Instances/Challenge/ViewController.swift` vs `11 - Ambient Lighting/Final/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- 10 - Instances/Challenge/ViewController.swift
++++ 11 - Ambient Lighting/Final/ViewController.swift
+@@ -51 +51 @@
+-    metalView.clearColor =  Colors.skyBlue
++    metalView.clearColor =  Colors.wenderlichGreen
+@@ -53 +53 @@
+-    renderer?.scene = LandscapeScene(device: device, size: view.bounds.size)
++    renderer?.scene = LightingScene(device: device, size: view.bounds.size)
+```
+
+
+
+
+
 # 📝 2026/04/03
 
 ## 差分 : `10 - Instances/Challenge/`
+
+今回はpdf 確認しながらステップバイステップでいきたいかもな
 
 
 ### Instance.swift
