@@ -1,5 +1,181 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/07
+
+## 差分 : `11 - Ambient Lighting/Challenge/`
+
+### GameScene.swift
+
+- File Diff: `Final/GameScene.swift` vs `Challenge/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- Final/GameScene.swift
++++ Challenge/GameScene.swift
+@@ -40,0 +41 @@
++  
+```
+
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -68,2 +67,0 @@
+-  
+-
+```
+
+
+### LightingScene.swift
+
+- File Diff: `Final/LightingScene.swift` vs `Challenge/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- Final/LightingScene.swift
++++ Challenge/LightingScene.swift
+@@ -27,0 +28 @@
++  var previousTouchLocation: CGPoint = .zero
+@@ -39 +39,0 @@
+-    
+@@ -43,0 +44,19 @@
++  
++  override func touchesBegan(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    previousTouchLocation = touch.location(in: view)
++  }
++  
++  override func touchesMoved(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    let touchLocation = touch.location(in: view)
++    
++    let delta = CGPoint(x: previousTouchLocation.x - touchLocation.x,
++                        y: previousTouchLocation.y - touchLocation.y)
++    let sensitivity: Float = 0.01
++    mushroom.rotation.x += Float(delta.y) * sensitivity
++    mushroom.rotation.y += Float(delta.x) * sensitivity
++    previousTouchLocation = touchLocation
++  }
+```
+
+
+### Model.swift
+
+- File Diff: `Final/Model.swift` vs `Challenge/Model.swift`
+
+```diff Model.swift:swift
+--- Final/Model.swift
++++ Challenge/Model.swift
+@@ -70,0 +71 @@
++    
+```
+
+
+### Primitive.swift
+
+- File Diff: `Final/Primitive.swift` vs `Challenge/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- Final/Primitive.swift
++++ Challenge/Primitive.swift
+@@ -28 +27,0 @@
+-  
+```
+
+
+### Renderer.swift
+
+- File Diff: `Final/Renderer.swift` vs `Challenge/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- Final/Renderer.swift
++++ Challenge/Renderer.swift
+@@ -53,0 +54 @@
++    
+@@ -65,0 +67,2 @@
++    
++    
+@@ -67,0 +71 @@
++    
+@@ -68,0 +73 @@
++
+@@ -70,0 +76 @@
++    
+@@ -76,0 +83,2 @@
++    
++    
+```
+
+
+### Scene.swift
+
+- File Diff: `Final/Scene.swift` vs `Challenge/Scene.swift`
+
+```diff Scene.swift:swift
+--- Final/Scene.swift
++++ Challenge/Scene.swift
+@@ -61,0 +62,13 @@
++  
++  func touchesBegan(_ view: UIView, touches: Set<UITouch>,
++                    with event: UIEvent?) {}
++  
++  func touchesMoved(_ view: UIView, touches: Set<UITouch>,
++                    with event: UIEvent?) {}
++  
++  func touchesEnded(_ view: UIView, touches: Set<UITouch>,
++                    with event: UIEvent?) {}
++  
++  func touchesCancelled(_ view: UIView, touches: Set<UITouch>,
++                        with event: UIEvent?) {}
++
+```
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -55,0 +56,24 @@
++
++  override func touchesBegan(_ touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    renderer?.scene?.touchesBegan(view, touches:touches,
++                                  with: event)
++  }
++  
++  override func touchesMoved(_ touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    renderer?.scene?.touchesMoved(view, touches: touches,
++                                  with: event)
++  }
++  
++  override func touchesEnded(_ touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    renderer?.scene?.touchesEnded(view, touches: touches,
++                                  with: event)
++  }
++  
++  override func touchesCancelled(_ touches: Set<UITouch>,
++                                 with event: UIEvent?) {
++    renderer?.scene?.touchesCancelled(view, touches: touches,
++                                      with: event)
++  }
+@@ -57,0 +82,2 @@
++
++
+```
+
+
+
+
+
 # 📝 2026/04/04
 
 ## 差分 : `11 - Ambient Lighting/Final/`
