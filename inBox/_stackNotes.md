@@ -1,5 +1,143 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/09
+
+## 差分 : `12 - DiffuseSpecularLighting/Final/`
+
+### AppDelegate.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/AppDelegate.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/AppDelegate.swift`
+
+```diff AppDelegate.swift:swift
+--- 11 - Ambient Lighting/Challenge/AppDelegate.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/AppDelegate.swift
+@@ -29,0 +30 @@
++
+```
+
+
+### GameScene.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/GameScene.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- 11 - Ambient Lighting/Challenge/GameScene.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/GameScene.swift
+@@ -41 +40,0 @@
+-  
+```
+
+
+### Instance.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Instance.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 11 - Ambient Lighting/Challenge/Instance.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Instance.swift
+@@ -67,0 +68,2 @@
++  
++
+```
+
+
+### LightingScene.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/LightingScene.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- 11 - Ambient Lighting/Challenge/LightingScene.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/LightingScene.swift
+@@ -38,2 +38,4 @@
+-    light.color = float3(0, 0, 1)
+-    light.ambientIntensity = 0.5
++    light.color = float3(1, 1, 1)
++    light.ambientIntensity = 0.2
++    light.diffuseIntensity = 0.8
++    light.direction = float3(0, 0, -1)
+```
+
+
+### Model.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Model.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 11 - Ambient Lighting/Challenge/Model.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Model.swift
+@@ -108,0 +109 @@
++    
+@@ -115,0 +117 @@
++    modelConstants.normalMatrix = modelViewMatrix.upperLeft3x3()
+```
+
+
+### Renderer.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Renderer.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- 11 - Ambient Lighting/Challenge/Renderer.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Renderer.swift
+@@ -67,2 +66,0 @@
+-    
+-    
+@@ -71 +68,0 @@
+-    
+@@ -73 +69,0 @@
+-
+@@ -76 +71,0 @@
+-    
+@@ -79 +73,0 @@
+-    
+@@ -83,2 +76,0 @@
+-    
+-    
+```
+
+
+### Scene.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Scene.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Scene.swift`
+
+```diff Scene.swift:swift
+--- 11 - Ambient Lighting/Challenge/Scene.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Scene.swift
+@@ -74 +73,0 @@
+-
+```
+
+
+### Types.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Types.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Types.swift`
+
+```diff Types.swift:swift
+--- 11 - Ambient Lighting/Challenge/Types.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Types.swift
+@@ -33,0 +34 @@
++  var normalMatrix = matrix_identity_float3x3
+@@ -42,0 +44,2 @@
++  var diffuseIntensity: Float = 1.0
++  var direction = float3(0)
+```
+
+
+### ViewController.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/ViewController.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- 11 - Ambient Lighting/Challenge/ViewController.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/ViewController.swift
+@@ -54,0 +55 @@
++    
+```
+
+
+
+
+
 # 📝 2026/04/07
 
 ## 差分 : `11 - Ambient Lighting/Challenge/`
