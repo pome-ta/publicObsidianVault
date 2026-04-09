@@ -1,6 +1,138 @@
 もう面倒だから、全部書き落としていくか
 
+
+
+
 # 📝 2026/04/09
+
+
+## 差分 : `12 - DiffuseSpecularLighting/Challenge/`
+
+### AppDelegate.swift
+
+- File Diff: `Final/AppDelegate.swift` vs `Challenge/AppDelegate.swift`
+
+```diff AppDelegate.swift:swift
+--- Final/AppDelegate.swift
++++ Challenge/AppDelegate.swift
+@@ -30 +29,0 @@
+-
+```
+
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -68,2 +67,0 @@
+-  
+-
+```
+
+
+### LightingScene.swift
+
+- File Diff: `Final/LightingScene.swift` vs `Challenge/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- Final/LightingScene.swift
++++ Challenge/LightingScene.swift
+@@ -34,0 +35,2 @@
++    mushroom.specularIntensity = 0.2
++    mushroom.shininess = 2.0
+@@ -57 +58,0 @@
+-    
+```
+
+
+### Model.swift
+
+- File Diff: `Final/Model.swift` vs `Challenge/Model.swift`
+
+```diff Model.swift:swift
+--- Final/Model.swift
++++ Challenge/Model.swift
+@@ -101 +100,0 @@
+-    
+@@ -109 +107,0 @@
+-    
+@@ -117,0 +116,2 @@
++    modelConstants.shininess = shininess
++    modelConstants.specularIntensity = specularIntensity
+@@ -144,2 +143,0 @@
+-
+-
+```
+
+
+### Node.swift
+
+- File Diff: `Final/Node.swift` vs `Challenge/Node.swift`
+
+```diff Node.swift:swift
+--- Final/Node.swift
++++ Challenge/Node.swift
+@@ -27,0 +28,3 @@
++  var specularIntensity: Float = 1
++  var shininess: Float = 1
++  
+```
+
+
+### Primitive.swift
+
+- File Diff: `Final/Primitive.swift` vs `Challenge/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- Final/Primitive.swift
++++ Challenge/Primitive.swift
+@@ -27,0 +28 @@
++  
+```
+
+
+### Renderer.swift
+
+- File Diff: `Final/Renderer.swift` vs `Challenge/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- Final/Renderer.swift
++++ Challenge/Renderer.swift
+@@ -54 +53,0 @@
+-    
+```
+
+
+### Types.swift
+
+- File Diff: `Final/Types.swift` vs `Challenge/Types.swift`
+
+```diff Types.swift:swift
+--- Final/Types.swift
++++ Challenge/Types.swift
+@@ -34,0 +35,2 @@
++  var specularIntensity: Float = 1
++  var shininess: Float = 1
+```
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -55 +54,0 @@
+-    
+```
+
+
+
+
 
 ## 差分 : `12 - DiffuseSpecularLighting/Final/`
 
