@@ -1,6 +1,202 @@
 もう面倒だから、全部書き落としていくか
 
 
+# 📝 2026/04/10
+
+## 差分 : `13-BeginningMetal-MakingAGamePart1/Final/
+
+### GameScene.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/GameScene.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/GameScene.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/GameScene.swift
+@@ -25,0 +26,12 @@
++  
++  enum Constants {
++    static let gameHeight: Float = 48
++    static let gameWidth: Float = 27
++    static let bricksPerRow = 8
++    static let bricksPerColumn = 8
++  }
++  
++  let ball: Model
++  let paddle: Model
++  
++  let bricks: Instance
+@@ -27,2 +38,0 @@
+-  let mushroom: Model
+-  
+@@ -30 +40,5 @@
+-    mushroom = Model(device: device, modelName: "mushroom")
++    ball =  Model(device: device, modelName: "ball")
++    paddle = Model(device: device, modelName: "paddle")
++    
++    bricks = Instance(device: device, modelName: "brick",
++                      instances: Constants.bricksPerRow * Constants.bricksPerColumn)
+@@ -33 +47,7 @@
+-    add(childNode: mushroom)
++
++    camera.position.z = -sceneOffset(height: Constants.gameHeight,
++                                     fov: camera.fovRadians)
++    camera.position.x = -Constants.gameWidth / 2
++    camera.position.y = -Constants.gameHeight / 2
++    camera.rotation.x = radians(fromDegrees: 20)
++    camera.position.y = -Constants.gameHeight / 2 + 5
+@@ -35 +55,40 @@
+-    camera.position.z = -6
++    light.color = float3(1, 1, 1)
++    light.ambientIntensity = 0.3
++    light.diffuseIntensity = 0.8
++    light.direction = float3(0, -1, -1)
++    setupScene()
++  }
++  
++  func setupScene() {
++    ball.position.x = Constants.gameWidth / 2
++    ball.position.y = Constants.gameHeight * 0.1
++    ball.materialColor = float4(0.5, 0.9, 0, 1)
++    add(childNode: ball)
++    
++    paddle.position.x = Constants.gameWidth / 2
++    paddle.position.y = Constants.gameHeight * 0.05
++    paddle.materialColor = float4(1, 0, 0, 1)
++    add(childNode: paddle)
++    
++    let border = Model(device: device, modelName: "border")
++    border.position.x = Constants.gameWidth/2
++    border.position.y = Constants.gameHeight/2
++    border.materialColor = float4(0.51, 0.24, 0, 1)
++    add(childNode: border)
++    
++    let colors = generateColors(number: Constants.bricksPerRow)
++    
++    let margin = Constants.gameWidth * 0.11
++    let startY = Constants.gameHeight * 0.5
++    
++    for row in 0..<Constants.bricksPerRow {
++      for column in 0..<Constants.bricksPerColumn {
++        var position = float3(0)
++        position.x = margin + (margin * Float(row))
++        position.y = startY + (margin * Float(column))
++        let index = row * Constants.bricksPerColumn + column
++        bricks.nodes[index].position = position
++        bricks.nodes[index].materialColor = colors[row]
++      }
++    }
++    add(childNode: bricks)
+@@ -39 +98,8 @@
+-    mushroom.rotation.y += deltaTime
++    for brick in bricks.nodes {
++      brick.rotation.y += π / 4 * deltaTime
++      brick.rotation.z += π / 4 * deltaTime
++    }
++  }
++  
++  func sceneOffset(height: Float, fov: Float) -> Float {
++    return (height / 2) / tan(fov / 2)
+```
+
+
+### Instance.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Instance.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Instance.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Instance.swift
+@@ -78,0 +79,3 @@
++      pointer.pointee.normalMatrix = matrix_multiply(modelViewMatrix, node.modelMatrix).upperLeft3x3()
++      pointer.pointee.shininess = node.shininess
++      pointer.pointee.specularIntensity = node.specularIntensity
+```
+
+
+### LightingScene.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/LightingScene.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/LightingScene.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/LightingScene.swift
+@@ -34,0 +35 @@
++    mushroom.position.y = -1
+@@ -37 +37,0 @@
+-    mushroom.position.y = -1
+@@ -39 +39 @@
+-    
++
+@@ -58,0 +59 @@
++    
+```
+
+
+### Model.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Model.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Model.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Model.swift
+@@ -100,0 +101 @@
++    
+@@ -107,0 +109 @@
++    
+@@ -143,0 +146,2 @@
++
++
+```
+
+
+### Primitive.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Primitive.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Primitive.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Primitive.swift
+@@ -28 +27,0 @@
+-  
+```
+
+
+### Renderer.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Renderer.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Renderer.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Renderer.swift
+@@ -53,0 +54 @@
++    
+```
+
+
+### Utilities.swift
+
+- new file
+
+
+### ViewController.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/ViewController.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/ViewController.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/ViewController.swift
+@@ -53 +53 @@
+-    renderer?.scene = LightingScene(device: device, size: view.bounds.size)
++    renderer?.scene = GameScene(device: device, size: view.bounds.size)
+@@ -54,0 +55 @@
++    
+@@ -55,0 +57,2 @@
++  
++  override var prefersStatusBarHidden: Bool { return true }
+```
+
+
+
 
 
 # 📝 2026/04/09
