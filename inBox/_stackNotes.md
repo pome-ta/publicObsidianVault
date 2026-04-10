@@ -3,7 +3,8 @@
 
 # 📝 2026/04/10
 
-## 差分 : `13-BeginningMetal-MakingAGamePart1/Final/
+## 差分 : `13-BeginningMetal-MakingAGamePart1/Final/`
+
 
 ### GameScene.swift
 
