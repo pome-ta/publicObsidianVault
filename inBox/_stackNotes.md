@@ -1,5 +1,47 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/13
+
+## 差分 : `13-BeginningMetal-MakingAGamePart1/Challenge/`
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -73,0 +74 @@
++    
+@@ -78,0 +80 @@
++      
+@@ -81,0 +84 @@
++      
+```
+
+
+### SoundController.swift
+
+- new file
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -55,0 +56,2 @@
++    SoundController.shared.playBackgroundMusic("bulletstorm_bg_v1.mp3")
++    
+```
+
+
+
+
+
+
 
 # 📝 2026/04/10
 
