@@ -1,5 +1,192 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/14
+
+## 差分 : `14-BeginningMetal-MakingAGamePart2/Final/`
+
+### GameScene.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/GameScene.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/GameScene.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/GameScene.swift
+@@ -37,0 +38,6 @@
++  
++  var previousTouchLocation: CGPoint = .zero
++  
++  var ballVelocityX: Float = 0
++  var ballVelocityY: Float = 0
++  
+@@ -62,0 +69,3 @@
++    ballVelocityX = 20
++    ballVelocityY = 15
++    
+@@ -97,0 +107,3 @@
++    
++    var bounced = false
++    
+@@ -100,0 +113,45 @@
++    }
++    ball.position.x += ballVelocityX * deltaTime
++    ball.position.y += ballVelocityY * deltaTime
++    if ball.position.y > Constants.gameHeight {
++      ball.position.y = Constants.gameHeight
++      ballVelocityY = -ballVelocityY
++      bounced = true
++    }
++    if ball.position.x < 0 {
++      ball.position.x = 0
++      ballVelocityX = -ballVelocityX
++      bounced = true
++    }
++    if ball.position.x > Constants.gameWidth {
++      ball.position.x = Constants.gameWidth
++      ballVelocityX = -ballVelocityX
++      bounced = true
++    }
++    if ball.position.y < 0 {
++      ballVelocityY = -ballVelocityY
++      bounced = true
++    }
++    
++    if bounced {
++      SoundController.shared.playPopEffect()
++    }
++    
++    // Check paddle collision
++    let ballRect = ball.boundingBox(camera.viewMatrix)
++    let paddleRect = paddle.boundingBox(camera.viewMatrix)
++    
++    if ballRect.intersects(paddleRect) {
++      ballVelocityY = -ballVelocityY
++      bounced = true
++    }
++    
++    // Check bricks collision
++    for (index, brick) in bricks.nodes.enumerated() {
++      let brickRect = brick.boundingBox(camera.viewMatrix)
++      
++      if ballRect.intersects(brickRect) {
++        ballVelocityY = -ballVelocityY
++        bricks.remove(instance: index)
++        break
++      }
+@@ -106,0 +164,21 @@
++  
++  override func touchesBegan(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    previousTouchLocation = touch.location(in: view)
++  }
++  
++  override func touchesMoved(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    let touchLocation = touch.location(in: view)
++    let delta = CGPoint(x: touchLocation.x - previousTouchLocation.x,
++                        y: touchLocation.y - previousTouchLocation.y)
++    let deltaX = Float(delta.x) * (Constants.gameWidth / Float(size.width))
++    
++    var newX = paddle.position.x + deltaX
++    newX = min(max(newX, paddle.width/2), Constants.gameWidth - paddle.width/2)
++    paddle.position.x = newX
++    
++    previousTouchLocation =  touchLocation
++  }
+```
+
+
+### Instance.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Instance.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Instance.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Instance.swift
+@@ -62,0 +63,5 @@
++  func remove(instance: Int) {
++    nodes.remove(at: instance)
++    instanceConstants.remove(at: instance)
++  }
++  
+@@ -74 +78,0 @@
+-    
+@@ -80 +83,0 @@
+-      
+@@ -84 +86,0 @@
+-      
+```
+
+
+### Model.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Model.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Model.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Model.swift
+@@ -101,0 +102,4 @@
++    let boundingBox = asset.boundingBox
++    width = boundingBox.maxBounds.x - boundingBox.minBounds.x
++    height = boundingBox.maxBounds.y - boundingBox.minBounds.y
++    
+@@ -109 +112,0 @@
+-    
+```
+
+
+### Node.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Node.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Node.swift`
+
+```diff Node.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Node.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Node.swift
+@@ -36,0 +37,3 @@
++  var width: Float = 1.0
++  var height: Float = 1.0
++  
+@@ -69,0 +73,14 @@
++  
++  func boundingBox(_ parentModelViewMatrix: matrix_float4x4) -> CGRect {
++    let modelViewMatrix = matrix_multiply(parentModelViewMatrix, modelMatrix)
++    var lowerLeft = float4(-width/2, -height/2, 0, 1)
++    lowerLeft = matrix_multiply(modelViewMatrix, lowerLeft)
++    var upperRight = float4(width/2, height/2, 0, 1)
++    upperRight = matrix_multiply(modelViewMatrix, upperRight)
++    
++    let boundingBox = CGRect(x: CGFloat(lowerLeft.x),
++                             y: CGFloat(lowerLeft.y),
++                             width: CGFloat(upperRight.x - lowerLeft.x),
++                             height: CGFloat(upperRight.y - lowerLeft.y))
++    return boundingBox
++  }
+```
+
+
+### Primitive.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Primitive.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Primitive.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Primitive.swift
+@@ -27,2 +27,5 @@
+-  var vertices: [Vertex] = []
+-  var indices: [UInt16] = []
++  var vertices: [Vertex] = [
++  ]
++  
++  var indices: [UInt16] = [
++  ]
+```
+
+
+
+
+
+
 # 📝 2026/04/13
 
 ## 差分 : `13-BeginningMetal-MakingAGamePart1/Challenge/`
