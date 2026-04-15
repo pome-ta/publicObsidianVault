@@ -1,5 +1,42 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/15
+
+## `asset.boundingBox`
+
+
+```py
+boundingBox = send_message(
+      asset,
+      'boundingBox',
+      restype=MDLAxisAlignedBoundingBox,
+      argtypes=[],
+    )
+
+    print('---')
+    print(f'maxBounds: {boundingBox.maxBounds}')
+    print(f'minBounds: {boundingBox.minBounds}')
+```
+
+
+```
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4764549021477878319567339520.0000)
+minBounds: simd_float3(4764584439226499841906442240.0000, 0.0000, 0.0000)
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4764549021477878319567339520.0000)
+minBounds: simd_float3(4764584439226499841906442240.0000, 0.0000, 0.0000)
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4762933972140736900904255488.0000)
+minBounds: simd_float3(4762969389889358423243358208.0000, 0.0000, 0.0000)
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4762995362905014206292033536.0000)
+minBounds: simd_float3(4763030780653635728631136256.0000, 0.0000, 0.0000)
+
+
+```
+
+
 # 📝 2026/04/14
 
 ## 差分 : `14-BeginningMetal-MakingAGamePart2/Final/`
