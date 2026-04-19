@@ -1,5 +1,158 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/19
+
+## いよいよ最後
+
+これ終えたら、まとめるか？
+
+## 差分 : `14-BeginningMetal-MakingAGamePart2/Challenge/`
+
+
+### GameOverScene.swift
+
+- new file
+
+
+### GameScene.swift
+
+- File Diff: `Final/GameScene.swift` vs `Challenge/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- Final/GameScene.swift
++++ Challenge/GameScene.swift
+@@ -102,0 +103 @@
++    
+@@ -132,2 +133 @@
+-      ballVelocityY = -ballVelocityY
+-      bounced = true
++      endGame(win: false)
+@@ -157,0 +158,3 @@
++    }
++    if bricks.nodes.count == 0 {
++      endGame(win: true)
+@@ -184,0 +188,6 @@
++  
++  func endGame(win: Bool) {
++    let gameOverScene = GameOverScene(device: device, size: size)
++    gameOverScene.win = win
++    sceneDelegate?.transition(to: gameOverScene)
++  }
+```
+
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -72,0 +73,2 @@
++  
++
+```
+
+
+### LightingScene.swift
+
+- File Diff: `Final/LightingScene.swift` vs `Challenge/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- Final/LightingScene.swift
++++ Challenge/LightingScene.swift
+@@ -43,0 +44 @@
++    
+```
+
+
+### Model.swift
+
+- File Diff: `Final/Model.swift` vs `Challenge/Model.swift`
+
+```diff Model.swift:swift
+--- Final/Model.swift
++++ Challenge/Model.swift
+@@ -71 +70,0 @@
+-    
+```
+
+
+### Primitive.swift
+
+- File Diff: `Final/Primitive.swift` vs `Challenge/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- Final/Primitive.swift
++++ Challenge/Primitive.swift
+@@ -27,5 +27,2 @@
+-  var vertices: [Vertex] = [
+-  ]
+-  
+-  var indices: [UInt16] = [
+-  ]
++  var vertices: [Vertex] = []
++  var indices: [UInt16] = []
+```
+
+
+### Scene.swift
+
+- File Diff: `Final/Scene.swift` vs `Challenge/Scene.swift`
+
+```diff Scene.swift:swift
+--- Final/Scene.swift
++++ Challenge/Scene.swift
+@@ -24,0 +25,4 @@
++protocol SceneDelegate {
++  func transition(to scene: Scene)
++}
++
+@@ -27 +31,5 @@
+-  var size: CGSize
++  var size: CGSize {
++    didSet {
++      sceneSizeWillChange(to: size)
++    }
++  }
+@@ -30,0 +39 @@
++  var sceneDelegate: SceneDelegate?
+```
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -53 +53,3 @@
+-    renderer?.scene = GameScene(device: device, size: view.bounds.size)
++    let scene = GameScene(device: device, size: view.bounds.size)
++    scene.sceneDelegate = self
++    renderer?.scene = scene
+@@ -55 +56,0 @@
+-    
+@@ -57 +57,0 @@
+-    
+@@ -86,0 +87,7 @@
++extension ViewController: SceneDelegate {
++  func transition(to scene: Scene) {
++    scene.size = view.bounds.size
++    scene.sceneDelegate = self
++    renderer?.scene = scene
++  }
++}
+@@ -88,0 +96 @@
++
+```
+
+
+
+
+
+
 # 📝 2026/04/15
 
 ## `asset.boundingBox`
