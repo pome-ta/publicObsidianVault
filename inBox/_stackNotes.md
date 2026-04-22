@@ -2,17 +2,40 @@
 
 # 📝 2026/04/22
 
+## Beginning Metal
+
+[BeginningMetal | pystaRubiconObjcSandBox/playground/Metal/BeginningMetal at main · pome-ta/pystaRubiconObjcSandBox · GitHub](https://github.com/pome-ta/pystaRubiconObjcSandBox/tree/main/playground/Metal/BeginningMetal)
+
 完了した？ぽいので、コード見直していくか？
 
 まず、仕様として、音関係でa-shell が連続で使えない。
 
 
-## `types`
+### `types`
 
 - `with_encoding`
 - `with_preferred_encoding`
 
 違い。使い分けってなんだっけ？
+
+
+## met-materials
+
+[`study/editions/5.0` | pome-ta/met-materials: The projects and the materials that accompany the Metal by Tutorials book.](https://github.com/pome-ta/met-materials/tree/study/editions/5.0)
+
+フォークしてブランチを切った。
+
+
+[kodecocodes/met-materials: The projects and the materials that accompany the Metal by Tutorials book.](https://github.com/kodecocodes/met-materials/tree/editions/5.0)
+
+`editions/5.0` のエディションで進めていく。
+
+（たぶんないけど、元の更新をマージするには、、、）
+1. 元からフォークした`editions/5.0` でマージ
+2. フォークした`editions/5.0` から`study/editions/5.0` をマージ
+
+
+となるのかしら？
 
 
 
