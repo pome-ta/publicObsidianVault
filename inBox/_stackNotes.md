@@ -1,5 +1,48 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/26
+
+## 差分
+
+
+### Contents.swift
+
+- File Diff: `01-hello-metal/Chapter1.playground/Contents.swift` vs `02-3d-models/Chapter2.playground/Pages/1 Render and Export 3D Model.xcplaygroundpage/Contents.swift`
+
+```diff Contents.swift:swift
+--- 01-hello-metal/Chapter1.playground/Contents.swift
++++ 02-3d-models/Chapter2.playground/Pages/1 Render and Export 3D Model.xcplaygroundpage/Contents.swift
+@@ -16,2 +16,2 @@
+-  sphereWithExtent: [0.75, 0.75, 0.75],
+-  segments: [30, 30],
++  coneWithExtent: [1, 1, 1],
++  segments: [10, 10],
+@@ -18,0 +19 @@
++  cap: true,
+@@ -21,0 +23,16 @@
++
++// begin export code
++let asset = MDLAsset()
++asset.add(mdlMesh)
++let fileExtension = "usda"
++guard MDLAsset.canExportFileExtension(fileExtension) else {
++  fatalError("Can't export a .\(fileExtension) format")
++}
++do {
++  let url = playgroundSharedDataDirectory
++    .appendingPathComponent("generatedCone.\(fileExtension)")
++  try asset.export(to: url)
++} catch {
++  fatalError("Error \(error.localizedDescription)")
++}
++// end export code
+@@ -66,0 +84 @@
++renderEncoder.setTriangleFillMode(.lines)
+```
+
+
+
+
 
 # 📝 2026/04/24
 
