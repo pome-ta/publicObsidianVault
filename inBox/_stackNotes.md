@@ -1,5 +1,97 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/04/28
+
+## 差分
+
+### Contents.swift
+
+- File Diff: `1 Render and Export 3D Model.xcplaygroundpage/Contents.swift` vs `2 Import Train.xcplaygroundpage/Contents.swift`
+
+```diff Contents.swift:swift
+--- 1 Render and Export 3D Model.xcplaygroundpage/Contents.swift
++++ 2 Import Train.xcplaygroundpage/Contents.swift
+@@ -15,7 +15,26 @@
+-let mdlMesh = MDLMesh(
+-  coneWithExtent: [1, 1, 1],
+-  segments: [10, 10],
+-  inwardNormals: false,
+-  cap: true,
+-  geometryType: .triangles,
+-  allocator: allocator)
++
++guard let assetURL = Bundle.main.url(
++  forResource: "train",
++  withExtension: "usdz") else {
++  fatalError()
++}
++
++let vertexDescriptor = MTLVertexDescriptor()
++vertexDescriptor.attributes[0].format = .float3
++vertexDescriptor.attributes[0].offset = 0
++vertexDescriptor.attributes[0].bufferIndex = 0
++
++vertexDescriptor.layouts[0].stride =
++  MemoryLayout<SIMD3<Float>>.stride
++let meshDescriptor =
++  MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
++(meshDescriptor.attributes[0] as! MDLVertexAttribute).name =
++  MDLVertexAttributePosition
++
++let asset = MDLAsset(
++  url: assetURL,
++  vertexDescriptor: meshDescriptor,
++  bufferAllocator: allocator)
++let mdlMesh =
++  asset.childObjects(of: MDLMesh.self).first as! MDLMesh
++
+@@ -23,16 +41,0 @@
+-
+-// begin export code
+-let asset = MDLAsset()
+-asset.add(mdlMesh)
+-let fileExtension = "usda"
+-guard MDLAsset.canExportFileExtension(fileExtension) else {
+-  fatalError("Can't export a .\(fileExtension) format")
+-}
+-do {
+-  let url = playgroundSharedDataDirectory
+-    .appendingPathComponent("generatedCone.\(fileExtension)")
+-  try asset.export(to: url)
+-} catch {
+-  fatalError("Error \(error.localizedDescription)")
+-}
+-// end export code
+@@ -51 +54,3 @@
+-  return vertex_in.position;
++float4 position = vertex_in.position;
++position.y -= 1.0;
++return position;
+@@ -86,2 +91,8 @@
+-guard let submesh = mesh.submeshes.first else {
+-  fatalError()
++for submesh in mesh.submeshes {
++  renderEncoder.drawIndexedPrimitives(
++    type: .triangle,
++    indexCount: submesh.indexCount,
++    indexType: submesh.indexType,
++    indexBuffer: submesh.indexBuffer.buffer,
++    indexBufferOffset: submesh.indexBuffer.offset
++  )
+@@ -89,7 +99,0 @@
+-
+-renderEncoder.drawIndexedPrimitives(
+-  type: .triangle,
+-  indexCount: submesh.indexCount,
+-  indexType: submesh.indexType,
+-  indexBuffer: submesh.indexBuffer.buffer,
+-  indexBufferOffset: 0)
+```
+
+
+
+
+
 # 📝 2026/04/26
 
 ## 差分
