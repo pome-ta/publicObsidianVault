@@ -1,5 +1,40 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/05/05
+
+## 音楽理論を学び直す
+
+- [憂鬱と官能を教えた学校　上 :菊地　成孔,大谷　能生 | 河出書房新社](https://www.kawade.co.jp/sp/isbn/9784309410166/)
+- [憂鬱と官能を教えた学校　下 :菊地　成孔,大谷　能生 | 河出書房新社](https://www.kawade.co.jp/sp/isbn/9784309410173/)
+
+これをベースに。
+
+なんか、検証用のGitHub pages とかできたらいいな
+
+
+
+# 📝 2026/04/29
+
+## 差分
+
+### Contents.swift
+
+- File Diff: `final/2 Import Train.xcplaygroundpage/Contents.swift` vs `challenge/Import Mushroom.xcplaygroundpage/Contents.swift`
+
+```diff Contents.swift:swift
+--- final/2 Import Train.xcplaygroundpage/Contents.swift
++++ challenge/Import Mushroom.xcplaygroundpage/Contents.swift
+@@ -17 +17 @@
+-  forResource: "train",
++  forResource: "mushroom",
+@@ -41,0 +42 @@
++
+```
+
+
+
+
+
 # 📝 2026/04/28
 
 ## 差分
