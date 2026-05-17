@@ -2,6 +2,94 @@
 
 # 📝 2026/05/08
 
+## 差分
+
+- 同一の可能性
+
+
+- 同一の可能性
+
+
+- 同一の可能性
+
+
+### Renderer.swift
+
+- File Diff: `final/Renderer.swift` vs `challenge/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- final/Renderer.swift
++++ challenge/Renderer.swift
+@@ -33,0 +34 @@
++// swiftlint:disable force_cast
+@@ -55,16 +55,0 @@
+-    // create the mesh
+-    let allocator = MTKMeshBufferAllocator(device: device)
+-    let size: Float = 0.8
+-    let mdlMesh = MDLMesh(
+-      boxWithExtent: [size, size, size],
+-      segments: [1, 1, 1],
+-      inwardNormals: false,
+-      geometryType: .triangles,
+-      allocator: allocator)
+-    do {
+-      mesh = try MTKMesh(mesh: mdlMesh, device: device)
+-    } catch {
+-      print(error.localizedDescription)
+-    }
+-    vertexBuffer = mesh.vertexBuffers[0].buffer
+-
+@@ -76,0 +62,10 @@
++
++    // create the mesh
++    let mdlMesh = Self.loadTrain()
++    do {
++      mesh = try MTKMesh(mesh: mdlMesh, device: Self.device)
++    } catch {
++      print(error.localizedDescription)
++    }
++
++    vertexBuffer = mesh.vertexBuffers[0].buffer
+@@ -100,0 +96,27 @@
++  }
++
++  static func loadTrain() -> MDLMesh {
++    let allocator = MTKMeshBufferAllocator(device: Self.device)
++    guard let assetURL = Bundle.main.url(
++      forResource: "train",
++      withExtension: "usdz") else {
++      fatalError("Train model not found")
++    }
++
++    let vertexDescriptor = MTLVertexDescriptor()
++    vertexDescriptor.attributes[0].format = .float3
++    vertexDescriptor.attributes[0].offset = 0
++    vertexDescriptor.attributes[0].bufferIndex = 0
++
++    vertexDescriptor.layouts[0].stride =
++      MemoryLayout<SIMD3<Float>>.stride
++    let meshDescriptor =
++      MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
++    (meshDescriptor.attributes[0] as! MDLVertexAttribute).name =
++      MDLVertexAttributePosition
++
++    let asset = MDLAsset(
++      url: assetURL,
++      vertexDescriptor: meshDescriptor,
++      bufferAllocator: allocator)
++    return asset.childObjects(of: MDLMesh.self).first as! MDLMesh
+@@ -141,0 +164 @@
++// swiftlint:enable force_cast
+```
+
+
+
+
+
+
+
+
+
 ## 戻し
 
 
