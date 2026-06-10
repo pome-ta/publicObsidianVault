@@ -1,6 +1,18 @@
 もう面倒だから、全部書き落としていくか
 
 
+
+# 📝 2026/06/10
+
+## lobster-wiki
+
+なんか、おもろい
+
+[readme - lobster-wiki_sandbox](https://pome-ta.github.io/lobster-wiki_sandbox/)
+
+こことの使い分けとか考えなきゃな
+
+
 # 📝 2026/05/31
 
 
