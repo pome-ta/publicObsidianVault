@@ -48,6 +48,9 @@ Gemini くんの言われるがままに、、、
 [almostnode/public/__sw__.js at main · macaly/almostnode · GitHub](https://github.com/macaly/almostnode/blob/main/public/__sw__.js) を直下に
 
 
+github pages だと、パス的にだめか？
+
+
 ```html
 <!DOCTYPE html>
 <html lang="ja">
