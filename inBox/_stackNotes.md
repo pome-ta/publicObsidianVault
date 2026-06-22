@@ -1,5 +1,36 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/06/22
+
+## lobster-wiki
+
+### PR を投げてみる
+
+[Fix router intercepting external links with `?page=` by pome-ta · Pull Request #1 · Hacknock/lobster-wiki · GitHub](https://github.com/Hacknock/lobster-wiki/pull/1)
+
+test がなかったから、直接出しちゃった
+
+素敵だから、継続して欲しいという気持ちも込めて。
+
+
+## `almostnode`
+
+[GitHub - macaly/almostnode: Node.js in your browser. Just like that. · GitHub](https://github.com/macaly/almostnode)
+
+
+> ブラウザ上でNode.js。それだけのことです。
+
+> 軽量で、ブラウザネイティブなNode.js実行環境です。Node.jsコードの実行、npmパッケージのインストール、ViteやNext.jsを使った開発――これらすべてをサーバーなしで実現できます。
+
+[almostnode — Node.js in your browser](https://almostnode.dev/)
+
+[Getting Started — almostnode docs](https://almostnode.dev/docs/)
+
+なんだこれ。
+
+
+codemirror のLSP として、裏でこねこねしてたのが不要になるか！？
+
 
 
 # 📝 2026/06/10
