@@ -1,5 +1,12 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/06/27
+
+
+[topGenArt - bnnGenArtPE | SketchBook](https://pome-ta.github.io/bnnGenArtPE/)
+
+
+
 # 📝 2026/06/23
 
 ## almostnode と仲良くなりたい

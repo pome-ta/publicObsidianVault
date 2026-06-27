@@ -49,7 +49,7 @@
         "state": {
           "type": "search",
           "state": {
-            "query": "blob",
+            "query": "",
             "matchingCase": true,
             "explainSearch": false,
             "collapseAll": false,
@@ -157,8 +157,15 @@
   },
   "active": "2441139913e0fb49",
   "lastOpenFiles": [
-    "agentPrompts/note2604191358.md",
+    "inBox/note2507141430.md",
+    "inBox/note2505131200.md",
+    "inBox/note2505130119.md",
+    "inBox/note2505121200.md",
+    "inBox/note2505102324.md",
+    "inBox/note2505101828.md",
+    "inBox/note2505101800.md",
     "inBox/_stackNotes.md",
+    "agentPrompts/note2604191358.md",
     "agentPrompts/note2604171430.md",
     "agentPrompts/note2604151323.md",
     "agentPrompts/note2603261655.md",
@@ -176,13 +183,6 @@
     "agentPrompts/note2512151532.md",
     "agentPrompts/note2512120139.md",
     "agentPrompts/note2512111555.md",
-    "agentPrompts/note2512100926.md",
-    "agentPrompts/note2512092347.md",
-    "agentPrompts/note2512100018.md",
-    "agentPrompts/note2512091645.md",
-    "agentPrompts/note2512080104.md",
-    "inBox/note2507092022.md",
-    "agentPrompts/note2512082015.md",
     "agentPrompts",
     "inBox"
   ]
