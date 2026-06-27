@@ -3,7 +3,29 @@
 # 📝 2026/06/27
 
 
+## lobster-wiki
+
+
+p5 のsketch をまとめてみた
+
 [topGenArt - bnnGenArtPE | SketchBook](https://pome-ta.github.io/bnnGenArtPE/)
+
+
+output せな
+
+- 簡単な使いかた
+- 拡張した系
+
+## `@typescript/vfs` わかりゃん
+
+毎回AI こねこねしても完成しないのは、ワイが理解できてないからだと思われる
+
+- [@typescript/vfs - npm](https://www.npmjs.com/package/@typescript/vfs)
+- [TypeScript: Developers - TypeScript VFS](https://www.typescriptlang.org/dev/typescript-vfs/)
+- [TypeScript-Website/packages/typescript-vfs at v2 · microsoft/TypeScript-Website · GitHub](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/typescript-vfs)
+
+
+とは言え、TypeScript が`7.0.0` とかになったらディスコンになるんかな？
 
 
 
