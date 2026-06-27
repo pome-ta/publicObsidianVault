@@ -27,6 +27,8 @@ output せな
 
 とは言え、TypeScript が`7.0.0` とかになったらディスコンになるんかな？
 
+[tswasm ? | X](https://x.com/mmkalmmkal/status/2067999852777066832?s=46)
+
 
 
 # 📝 2026/06/23
