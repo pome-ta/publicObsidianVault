@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/_stackNotes.md",
+                "file": "agentPrompts/note2607011123.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "_stackNotes"
+              "title": "note2607011123"
             }
           }
         ]
@@ -157,6 +157,8 @@
   },
   "active": "2441139913e0fb49",
   "lastOpenFiles": [
+    "inBox/_stackNotes.md",
+    "agentPrompts/note2607011123.md",
     "inBox/note2507141430.md",
     "inBox/note2505131200.md",
     "inBox/note2505130119.md",
@@ -164,7 +166,6 @@
     "inBox/note2505102324.md",
     "inBox/note2505101828.md",
     "inBox/note2505101800.md",
-    "inBox/_stackNotes.md",
     "agentPrompts/note2604191358.md",
     "agentPrompts/note2604171430.md",
     "agentPrompts/note2604151323.md",
@@ -182,7 +183,6 @@
     "agentPrompts/note2512161654.md",
     "agentPrompts/note2512151532.md",
     "agentPrompts/note2512120139.md",
-    "agentPrompts/note2512111555.md",
     "agentPrompts",
     "inBox"
   ]
