@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "f9a2fc253315cc89",
+        "id": "5ca45280e5534f91",
         "type": "tabs",
         "children": [
           {
-            "id": "2441139913e0fb49",
+            "id": "f4317cdf2cbfbcf7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agentPrompts/note2607011123.md",
+                "file": "agentPrompts/note2607022237.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2607011123"
+              "title": "note2607022237"
             }
           }
         ]
@@ -155,10 +155,11 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "2441139913e0fb49",
+  "active": "f4317cdf2cbfbcf7",
   "lastOpenFiles": [
-    "inBox/_stackNotes.md",
+    "agentPrompts/note2607022237.md",
     "agentPrompts/note2607011123.md",
+    "inBox/_stackNotes.md",
     "inBox/note2507141430.md",
     "inBox/note2505131200.md",
     "inBox/note2505130119.md",
@@ -182,7 +183,6 @@
     "agentPrompts/note2512041405.md",
     "agentPrompts/note2512161654.md",
     "agentPrompts/note2512151532.md",
-    "agentPrompts/note2512120139.md",
     "agentPrompts",
     "inBox"
   ]
