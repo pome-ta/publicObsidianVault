@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agentPrompts/note2607142139.md",
+                "file": "agentPrompts/note2607151701.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2607142139"
+              "title": "note2607151701"
             }
           }
         ]
@@ -131,7 +131,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "inBox/_stackNotes.md",
+            "file": "note2607151249.md",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -157,8 +157,10 @@
   },
   "active": "2c4a236a0aa458cd",
   "lastOpenFiles": [
-    "agentPrompts/note2607132239.md",
+    "agentPrompts/note2607151249.md",
+    "agentPrompts/note2607151701.md",
     "agentPrompts/note2607142139.md",
+    "agentPrompts/note2607132239.md",
     "agentPrompts/note2512221514.md",
     "inBox/_stackNotes.md",
     "agentPrompts/note2607022237.md",
@@ -181,8 +183,6 @@
     "agentPrompts/note2601211550.md",
     "agentPrompts/note2512281441.md",
     "agentPrompts/note2512281239.md",
-    "agentPrompts/note2512261710.md",
-    "agentPrompts/note2512041405.md",
     "agentPrompts",
     "inBox"
   ]
