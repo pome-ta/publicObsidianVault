@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "99e2a4922e871bdb",
+        "id": "c402291027146c96",
         "type": "tabs",
         "children": [
           {
-            "id": "c14126a5377b85ef",
+            "id": "bb323f162f23241b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agentPrompts/note2607022237.md",
+                "file": "agentPrompts/note2607191752.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "note2607022237"
+              "title": "note2607191752"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "18be305ff1008b95",
@@ -172,8 +171,10 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "c14126a5377b85ef",
+  "active": "bb323f162f23241b",
   "lastOpenFiles": [
+    "agentPrompts/無題のファイル.base",
+    "agentPrompts/note2607022237.md",
     "inBox/_stackNotes.md",
     "inBox/無題のファイル.base",
     "inBox/無題のファイル 3.base",
@@ -185,7 +186,6 @@
     "agentPrompts/note2512202334.md",
     "agentPrompts/note2512162228.md",
     "agentPrompts/note2512161654.md",
-    "agentPrompts/無題のファイル.base",
     "agentPrompts/note2512151532.md",
     "agentPrompts/note2512092347.md",
     "agentPrompts/note2512051042.md",
@@ -203,7 +203,6 @@
     "inBox/note2510010205.md",
     "inBox/note2507111704.md",
     "inBox/note2507131542.md",
-    "inBox/note2507012353.md",
     "^inBox"
   ]
 }
