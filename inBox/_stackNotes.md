@@ -1,6 +1,31 @@
 もう面倒だから、全部書き落としていくか
 
 
+
+# 📝 2026/07/19
+
+## eruda のlog をクリップボードへ
+
+```js
+const outdiv = document.createElement('div');
+const erudaShadow = document.getElementById('eruda').shadowRoot;
+const lunaConsoleLogContents = erudaShadow.querySelectorAll('.luna-console-log-content');
+
+lunaConsoleLogContents.forEach((content) => {
+outdiv.appendChild(content);
+});
+
+const innerText = outdiv.innerText;
+const copyblock = '```' + '\n' + innerText + '\n' + '```';
+navigator.clipboard.writeText(copyblock).then();
+```
+
+
+これだと、現在表示できる範囲まで？で取得しているっぽい。
+
+
+
+
 # 📝 2026/07/12
 
 
