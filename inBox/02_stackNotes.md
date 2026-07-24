@@ -1,0 +1,3682 @@
+もう面倒だから、全部書き落としていくか
+
+
+# 📝 2026/07/24
+
+## p5.sound
+
+[GitHub - processing/p5.sound.js](https://github.com/processing/p5.sound.js)
+
+`0.3.0` が`0.4.1` になってた。
+
+p5.js をv2系に移行のため、古いsound ではない方へ順応していく。
+
+### v2系移行につき
+
+iframe 内のsketch 描画方式は変更がない。が、sound 面で`AudioContext` への配慮が必要。
+それは、以前も配慮は必要であったが、sound のアーキテクチャ刷新により、より真面目に考えなければならなくなった。
+
+v2系での方針としては、sandbox を毎回生成し直す。
+しかし、`AudioContext` はメインスレッド側で1つ持たせておき、sandbox 生成時に、メイン側の`AudioContext` をsandbox に投げ渡す感じ。
+
+sound 関係をこんな面倒にしているのが、safari の音制限のため。普通にChrome とかだとこの点は苦労しないと思う。
+
+
+### 書き方
+
+そのものが、変化しまくっているので、過去のコードを確認しながら、検証をしていく感じ
+example にあるコードが全部global mode なんですが。。。。
+
+#### `loadSound`
+
+なんかだめでは？`setup` での`async` とか、あってるのかすらわからん。
+ちょっと、こっちのsandbox 土台も再度洗い直さなきゃいけないけど。
+
+#### osc のLFO 制御
+
+`Oscillator` とするオブジェクトは、`p5.sound` のみ、内部に`node` を持っている。
+オブジェクトの`frequency` は、発信する数値であるが、`node.frequency` はWebAudioAPI での`OscillatorNode` の`.frequency` の「それ」となる。
+オブジェクトの`.frequency` は、`node.frequency.value` という感じになる。
+
+frequency を揺らすにあたり、オブジェクトで`.connect` するのではなく、`node.connect` と`node` 側で`.connect` をする。
+
+p5.sound はtone.js のラッパーな感じであるが、結局tone.js のオブジェクトを触りにいく感じとなり、少しもやる。
+いまいまだと、さほど複雑なことをしていないので「WebAudioAPI そのものでいいのでは？」と思ってしまっている。
+
+#### メインミキサー？
+
+出す音の中央集権的なハブが欲しいので、`Gain` にその役を任せてみている。
+p5.sound としてそれが正しいのかは、不明。
+音源全てに`.disconnect` が必要となる感じになっている。
+
+`p5soundNode` だと、そもそも`node` を持っていないので、`Gain` が代用している感じになった。
+
+これでいいんだっけ？
+
+
+# 📝 2026/07/19
+
+## eruda のlog をクリップボードへ
+
+```js
+const outdiv = document.createElement('div');
+const erudaShadow = document.getElementById('eruda').shadowRoot;
+const lunaConsoleLogContents = erudaShadow.querySelectorAll('.luna-console-log-content');
+
+lunaConsoleLogContents.forEach((content) => {
+outdiv.appendChild(content);
+});
+
+const innerText = outdiv.innerText;
+const copyblock = '```' + '\n' + innerText + '\n' + '```';
+navigator.clipboard.writeText(copyblock).then();
+```
+
+
+これだと、現在表示できる範囲まで？で取得しているっぽい。
+
+
+
+
+# 📝 2026/07/12
+
+
+## `AudioContext` の`.state` 対応
+
+iPhone のlive coding として更新時には、アクションなく音を出したい。
+
+
+
+
+# 📝 2026/06/27
+
+
+## lobster-wiki
+
+
+p5 のsketch をまとめてみた
+
+[topGenArt - bnnGenArtPE | SketchBook](https://pome-ta.github.io/bnnGenArtPE/)
+
+
+output せな
+
+- 簡単な使いかた
+- 拡張した系
+
+## `@typescript/vfs` わかりゃん
+
+毎回AI こねこねしても完成しないのは、ワイが理解できてないからだと思われる
+
+- [@typescript/vfs - npm](https://www.npmjs.com/package/@typescript/vfs)
+- [TypeScript: Developers - TypeScript VFS](https://www.typescriptlang.org/dev/typescript-vfs/)
+- [TypeScript-Website/packages/typescript-vfs at v2 · microsoft/TypeScript-Website · GitHub](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/typescript-vfs)
+
+
+とは言え、TypeScript が`7.0.0` とかになったらディスコンになるんかな？
+
+[tswasm ? | X](https://x.com/mmkalmmkal/status/2067999852777066832?s=46)
+
+
+
+# 📝 2026/06/23
+
+## almostnode と仲良くなりたい
+
+なかなか、iPhone で触るの難しいかもな
+
+### codrmirror とLSP
+
+WebSocket で解決か？と思ったけどそうはいかないみたい
+またvfs とか出てきた
+
+
+### とりま、チュートリアルてきなの的なのやるか
+
+#### Quick Start
+
+動く
+
+
+```js
+console.log('hoge');
+
+import { createContainer } from 'almostnode';
+
+const { vfs, runtime, npm } = createContainer();
+
+// Write a file to the virtual filesystem
+vfs.writeFileSync(
+  '/hello.js',
+  `
+  console.log('Hello from almostnode!');
+`,
+);
+
+// Execute it
+runtime.runFile('/hello.js');
+
+```
+
+
+### 逃し`index.html`
+
+pages で確認もしなきゃ
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+
+    <script type="importmap">
+      {
+        "imports": {
+          "eruda": "https://esm.sh/eruda",
+          "almostnode": "https://esm.sh/almostnode"
+        }
+      }
+    </script>
+
+    <!-- eruda -->
+    <script type="module">
+      import eruda from 'eruda';
+
+      eruda.init();
+    </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #0a0a0a;
+        color: #eee;
+        min-height: 100vh;
+      }
+      h1 {
+        color: #fff;
+        margin-bottom: 10px;
+      }
+      h1 span {
+        background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .subtitle {
+        color: #888;
+        margin-bottom: 20px;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        height: calc(100vh - 140px);
+      }
+      .panel {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #333;
+      }
+      .panel-title {
+        font-weight: bold;
+        color: #fff;
+      }
+      .file-tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .file-tab {
+        padding: 5px 10px;
+        background: #333;
+        border: none;
+        border-radius: 4px;
+        color: #888;
+        cursor: pointer;
+        font-size: 12px;
+        font-family: 'Monaco', 'Menlo', monospace;
+      }
+      .file-tab.active {
+        background: #22c55e;
+        color: white;
+      }
+      .file-tab:hover:not(.active) {
+        background: #444;
+      }
+      textarea {
+        flex: 1;
+        background: #111;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 13px;
+        color: #eee;
+        resize: none;
+        line-height: 1.5;
+        tab-size: 2;
+      }
+      textarea:focus {
+        outline: none;
+        border-color: #22c55e;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        align-items: center;
+      }
+      button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      #start-btn {
+        background: #22c55e;
+        color: white;
+      }
+      #start-btn:hover:not(:disabled) {
+        background: #16a34a;
+      }
+      #save-btn {
+        background: #3b82f6;
+        color: white;
+      }
+      #save-btn:hover:not(:disabled) {
+        background: #2563eb;
+      }
+      .save-hint {
+        font-size: 11px;
+        color: #666;
+        margin-left: auto;
+      }
+      .preview-frame {
+        flex: 1;
+        border: none;
+        border-radius: 8px;
+        background: #fff;
+      }
+      .preview-placeholder {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #111;
+        border-radius: 8px;
+        color: #666;
+        text-align: center;
+        padding: 20px;
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #333;
+      }
+      .status-dot.running {
+        background: #22c55e;
+      }
+      .status-dot.starting {
+        background: #f59e0b;
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      .hmr-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #22c55e;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 13px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s, transform 0.3s;
+        z-index: 1000;
+      }
+      .hmr-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .console-output {
+        margin-top: 10px;
+        background: #111;
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-family: 'Monaco', 'Menlo', monospace;
+        font-size: 11px;
+        max-height: 120px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        color: #888;
+      }
+      .console-output .hmr {
+        color: #22c55e;
+        font-weight: bold;
+      }
+      .console-output .error {
+        color: #ef4444;
+      }
+    </style>
+    <title>Editor + Next.js Preview (CDN Version)</title>
+  </head>
+  <body>
+    <h1><span>Editor</span> + Next.js Preview</h1>
+    <p class="subtitle">Edit files, save with Ctrl/Cmd+S, and see live HMR updates in the preview</p>
+    <div class="hmr-toast" id="hmr-toast">HMR Updated</div>
+
+    <div class="container">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Editor</span>
+          <div class="status">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="status-text">Ready</span>
+          </div>
+        </div>
+        <div class="file-tabs" id="file-tabs"></div>
+        <textarea id="editor" placeholder="Select a file to edit..."></textarea>
+        <div class="actions">
+          <button id="start-btn">Start Preview</button>
+          <button id="save-btn" disabled>Save</button>
+          <span class="save-hint">Ctrl/Cmd+S to save</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Preview</span>
+          <button id="refresh-btn" style="padding: 4px 8px; font-size: 12px; background: #333; color: #ccc">
+            Refresh
+          </button>
+        </div>
+        <div class="preview-placeholder" id="preview-placeholder">
+          <div style="font-size: 48px; margin-bottom: 10px">N</div>
+          <div>Click <strong>"Start Preview"</strong> to launch the Next.js dev server</div>
+        </div>
+        <iframe id="preview-frame" class="preview-frame" style="display: none"></iframe>
+        <div class="console-output" id="console"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { VirtualFS, NextDevServer, getServerBridge } from 'almostnode';
+
+      // ── State ──
+      let vfs, devServer, devServerUrl;
+      let currentFile = '/app/page.tsx';
+
+      // ── DOM refs ──
+      const editor = document.getElementById('editor');
+      const fileTabs = document.getElementById('file-tabs');
+      const startBtn = document.getElementById('start-btn');
+      const saveBtn = document.getElementById('save-btn');
+      const refreshBtn = document.getElementById('refresh-btn');
+      const statusDot = document.getElementById('status-dot');
+      const statusText = document.getElementById('status-text');
+      const previewFrame = document.getElementById('preview-frame');
+      const placeholder = document.getElementById('preview-placeholder');
+      const hmrToast = document.getElementById('hmr-toast');
+      const consoleEl = document.getElementById('console');
+
+      const files = [
+        { path: '/app/page.tsx', label: 'page.tsx' },
+        { path: '/app/layout.tsx', label: 'layout.tsx' },
+        { path: '/app/about/page.tsx', label: 'about/page.tsx' },
+        { path: '/app/globals.css', label: 'globals.css' },
+      ];
+
+      function log(msg, cls = '') {
+        const line = document.createElement('div');
+        line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        if (cls) line.className = cls;
+        consoleEl.appendChild(line);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+      }
+
+      function showHmrToast() {
+        hmrToast.classList.add('show');
+        setTimeout(() => hmrToast.classList.remove('show'), 2000);
+      }
+
+      function setupFiles() {
+        vfs = new VirtualFS();
+
+        vfs.writeFileSync(
+          '/package.json',
+          JSON.stringify(
+            {
+              name: 'editor-tutorial',
+              version: '1.0.0',
+              dependencies: {
+                next: '^14.0.0',
+                react: '^18.2.0',
+                'react-dom': '^18.2.0',
+              },
+            },
+            null,
+            2,
+          ),
+        );
+
+        vfs.mkdirSync('/app', { recursive: true });
+        vfs.mkdirSync('/app/about', { recursive: true });
+
+        // 💡 修正ポイント: Live Serverのスクリプト誤爆を防ぐため、文字列を配列で結合しています
+        // 💡 修正ポイント: <html> と <body> を <div> に変更して DOM ネスティング警告を解消
+        vfs.writeFileSync(
+          '/app/layout.tsx',
+          [
+            'export default function RootLayout({ children }) {',
+            '  return (',
+            "    <div style={{ margin: 0, fontFamily: 'system-ui', background: '#fafafa', minHeight: '100vh' }}>",
+            "      <main style={{ maxWidth: 720, margin: '0 auto', padding: '32px 24px' }}>",
+            '        {children}',
+            '      </main>',
+            '    </div>',
+            '  );',
+            '}',
+          ].join('\n'),
+        );
+
+        vfs.writeFileSync(
+          '/app/page.tsx',
+          `'use client';
+        import { useState } from 'react';
+        export default function Home() {
+          const [count, setCount] = useState(0);
+          return (
+            <div>
+              <h1>Welcome!</h1>
+              <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
+            </div>
+          );
+        }`,
+        );
+        vfs.writeFileSync(
+          '/app/about/page.tsx',
+          `export default function About() {
+          return (
+            <div>
+              <h1>About Page</h1>
+              <p>
+                This is the about page.
+                almostnode routing is working!
+              </p>
+              <a href="/">Go back home</a>
+            </div>
+          );
+        }`,
+        );
+        vfs.writeFileSync('/app/globals.css', `body { margin: 0; }`);
+      }
+
+      function renderTabs() {
+        fileTabs.innerHTML = files
+          .map(
+            (f) =>
+              `<button class="file-tab${f.path === currentFile ? ' active' : ''}" data-path="${f.path}">${
+                f.label
+              }</button>`,
+          )
+          .join('');
+      }
+
+      function loadFile(path) {
+        try {
+          editor.value = vfs.readFileSync(path, 'utf8');
+          currentFile = path;
+          renderTabs();
+        } catch (e) {
+          log('Error loading ' + path + ': ' + e.message, 'error');
+        }
+      }
+
+      function saveFile() {
+        if (!vfs || !currentFile) return;
+        vfs.writeFileSync(currentFile, editor.value);
+        log('Saved: ' + currentFile);
+      }
+
+      async function startPreview() {
+        startBtn.disabled = true;
+        statusDot.className = 'status-dot starting';
+        statusText.textContent = 'Starting...';
+        log('Starting Next.js dev server...');
+
+        try {
+          devServer = new NextDevServer(vfs, { port: 3003, root: '/' });
+          devServer.start();
+
+          const bridge = getServerBridge();
+
+          // 注意: index.html と同じ階層に __sw__.js を配置している前提のパスです
+          //await bridge.initServiceWorker({ swUrl: '/__sw__.js' });
+          await bridge.initServiceWorker();
+          log('Service Worker ready');
+
+          bridge.registerServer(devServer, 3003);
+          devServerUrl = bridge.getServerUrl(3003) + '/';
+          log('Dev server URL: ' + devServerUrl);
+
+          devServer.on('hmr-update', (update) => {
+            log('HMR update: ' + update.path, 'hmr');
+            showHmrToast();
+          });
+
+          placeholder.style.display = 'none';
+          previewFrame.style.display = 'block';
+
+          previewFrame.onload = () => {
+            if (previewFrame.contentWindow) {
+              devServer.setHMRTarget(previewFrame.contentWindow);
+            }
+          };
+
+          previewFrame.src = devServerUrl;
+          saveBtn.disabled = false;
+
+          statusDot.className = 'status-dot running';
+          statusText.textContent = 'Running';
+        } catch (e) {
+          statusDot.className = 'status-dot';
+          statusText.textContent = 'Error';
+          log('Failed to start: ' + e.message, 'error');
+          console.error(e);
+          startBtn.disabled = false;
+        }
+      }
+
+      fileTabs.addEventListener('click', (e) => {
+        if (e.target.classList.contains('file-tab')) {
+          loadFile(e.target.dataset.path);
+        }
+      });
+      startBtn.addEventListener('click', startPreview);
+      saveBtn.addEventListener('click', saveFile);
+      refreshBtn.addEventListener('click', () => {
+        if (devServerUrl) previewFrame.src = devServerUrl + '?t=' + Date.now();
+      });
+      editor.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          saveFile();
+        }
+      });
+
+      setupFiles();
+      renderTabs();
+      loadFile(currentFile);
+      log('Files loaded. Click "Start Preview" to launch.');
+    </script>
+  </body>
+</html>
+
+```
+
+
+
+
+# 📝 2026/06/22
+
+## lobster-wiki
+
+### PR を投げてみる
+
+[Fix router intercepting external links with `?page=` by pome-ta · Pull Request #1 · Hacknock/lobster-wiki · GitHub](https://github.com/Hacknock/lobster-wiki/pull/1)
+
+test がなかったから、直接出しちゃった
+
+素敵だから、継続して欲しいという気持ちも込めて。
+
+
+## `almostnode`
+
+[GitHub - macaly/almostnode: Node.js in your browser. Just like that. · GitHub](https://github.com/macaly/almostnode)
+
+
+> ブラウザ上でNode.js。それだけのことです。
+
+> 軽量で、ブラウザネイティブなNode.js実行環境です。Node.jsコードの実行、npmパッケージのインストール、ViteやNext.jsを使った開発――これらすべてをサーバーなしで実現できます。
+
+[almostnode — Node.js in your browser](https://almostnode.dev/)
+
+[Getting Started — almostnode docs](https://almostnode.dev/docs/)
+
+なんだこれ。
+
+
+codemirror のLSP として、裏でこねこねしてたのが不要になるか！？
+
+
+
+### 妄想
+
+ホットリロードとかあるけど、p5.js やaudio 系ってブラウザ上のリロードではなく、Node 上で完結できるのかな？
+
+モバイルのaudio 制限が、上手く巻き取られないと嬉しいな
+→ これ、ダメっぽい
+
+
+### とりま、実験
+
+Gemini くんの言われるがままに、、、
+
+[almostnode/public/__sw__.js at main · macaly/almostnode · GitHub](https://github.com/macaly/almostnode/blob/main/public/__sw__.js) を直下に
+
+
+github pages だと、パス的にだめか？
+
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+
+    <script type="importmap">
+      {
+        "imports": {
+          "eruda": "https://esm.sh/eruda",
+          "almostnode": "https://esm.sh/almostnode"
+        }
+      }
+    </script>
+
+    <!-- eruda -->
+    <script type="module">
+      import eruda from 'eruda';
+
+      eruda.init();
+    </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #0a0a0a;
+        color: #eee;
+        min-height: 100vh;
+      }
+      h1 {
+        color: #fff;
+        margin-bottom: 10px;
+      }
+      h1 span {
+        background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .subtitle {
+        color: #888;
+        margin-bottom: 20px;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        height: calc(100vh - 140px);
+      }
+      .panel {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #333;
+      }
+      .panel-title {
+        font-weight: bold;
+        color: #fff;
+      }
+      .file-tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .file-tab {
+        padding: 5px 10px;
+        background: #333;
+        border: none;
+        border-radius: 4px;
+        color: #888;
+        cursor: pointer;
+        font-size: 12px;
+        font-family: 'Monaco', 'Menlo', monospace;
+      }
+      .file-tab.active {
+        background: #22c55e;
+        color: white;
+      }
+      .file-tab:hover:not(.active) {
+        background: #444;
+      }
+      textarea {
+        flex: 1;
+        background: #111;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 13px;
+        color: #eee;
+        resize: none;
+        line-height: 1.5;
+        tab-size: 2;
+      }
+      textarea:focus {
+        outline: none;
+        border-color: #22c55e;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        align-items: center;
+      }
+      button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      #start-btn {
+        background: #22c55e;
+        color: white;
+      }
+      #start-btn:hover:not(:disabled) {
+        background: #16a34a;
+      }
+      #save-btn {
+        background: #3b82f6;
+        color: white;
+      }
+      #save-btn:hover:not(:disabled) {
+        background: #2563eb;
+      }
+      .save-hint {
+        font-size: 11px;
+        color: #666;
+        margin-left: auto;
+      }
+      .preview-frame {
+        flex: 1;
+        border: none;
+        border-radius: 8px;
+        background: #fff;
+      }
+      .preview-placeholder {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #111;
+        border-radius: 8px;
+        color: #666;
+        text-align: center;
+        padding: 20px;
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #333;
+      }
+      .status-dot.running {
+        background: #22c55e;
+      }
+      .status-dot.starting {
+        background: #f59e0b;
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      .hmr-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #22c55e;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 13px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s, transform 0.3s;
+        z-index: 1000;
+      }
+      .hmr-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .console-output {
+        margin-top: 10px;
+        background: #111;
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-family: 'Monaco', 'Menlo', monospace;
+        font-size: 11px;
+        max-height: 120px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        color: #888;
+      }
+      .console-output .hmr {
+        color: #22c55e;
+        font-weight: bold;
+      }
+      .console-output .error {
+        color: #ef4444;
+      }
+    </style>
+    <title>Editor + Next.js Preview (CDN Version)</title>
+  </head>
+  <body>
+    <h1><span>Editor</span> + Next.js Preview</h1>
+    <p class="subtitle">Edit files, save with Ctrl/Cmd+S, and see live HMR updates in the preview</p>
+    <div class="hmr-toast" id="hmr-toast">HMR Updated</div>
+
+    <div class="container">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Editor</span>
+          <div class="status">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="status-text">Ready</span>
+          </div>
+        </div>
+        <div class="file-tabs" id="file-tabs"></div>
+        <textarea id="editor" placeholder="Select a file to edit..."></textarea>
+        <div class="actions">
+          <button id="start-btn">Start Preview</button>
+          <button id="save-btn" disabled>Save</button>
+          <span class="save-hint">Ctrl/Cmd+S to save</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Preview</span>
+          <button id="refresh-btn" style="padding: 4px 8px; font-size: 12px; background: #333; color: #ccc">
+            Refresh
+          </button>
+        </div>
+        <div class="preview-placeholder" id="preview-placeholder">
+          <div style="font-size: 48px; margin-bottom: 10px">N</div>
+          <div>Click <strong>"Start Preview"</strong> to launch the Next.js dev server</div>
+        </div>
+        <iframe id="preview-frame" class="preview-frame" style="display: none"></iframe>
+        <div class="console-output" id="console"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { VirtualFS, NextDevServer, getServerBridge } from 'almostnode';
+
+      // ── State ──
+      let vfs, devServer, devServerUrl;
+      let currentFile = '/app/page.tsx';
+
+      // ── DOM refs ──
+      const editor = document.getElementById('editor');
+      const fileTabs = document.getElementById('file-tabs');
+      const startBtn = document.getElementById('start-btn');
+      const saveBtn = document.getElementById('save-btn');
+      const refreshBtn = document.getElementById('refresh-btn');
+      const statusDot = document.getElementById('status-dot');
+      const statusText = document.getElementById('status-text');
+      const previewFrame = document.getElementById('preview-frame');
+      const placeholder = document.getElementById('preview-placeholder');
+      const hmrToast = document.getElementById('hmr-toast');
+      const consoleEl = document.getElementById('console');
+
+      const files = [
+        { path: '/app/page.tsx', label: 'page.tsx' },
+        { path: '/app/layout.tsx', label: 'layout.tsx' },
+        { path: '/app/about/page.tsx', label: 'about/page.tsx' },
+        { path: '/app/globals.css', label: 'globals.css' },
+      ];
+
+      function log(msg, cls = '') {
+        const line = document.createElement('div');
+        line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        if (cls) line.className = cls;
+        consoleEl.appendChild(line);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+      }
+
+      function showHmrToast() {
+        hmrToast.classList.add('show');
+        setTimeout(() => hmrToast.classList.remove('show'), 2000);
+      }
+
+      function setupFiles() {
+        vfs = new VirtualFS();
+
+        vfs.writeFileSync(
+          '/package.json',
+          JSON.stringify(
+            {
+              name: 'editor-tutorial',
+              version: '1.0.0',
+              dependencies: {
+                next: '^14.0.0',
+                react: '^18.2.0',
+                'react-dom': '^18.2.0',
+              },
+            },
+            null,
+            2,
+          ),
+        );
+
+        vfs.mkdirSync('/app', { recursive: true });
+        vfs.mkdirSync('/app/about', { recursive: true });
+
+        // 💡 修正ポイント: Live Serverのスクリプト誤爆を防ぐため、文字列を配列で結合しています
+        // 💡 修正ポイント: <html> と <body> を <div> に変更して DOM ネスティング警告を解消
+        vfs.writeFileSync(
+          '/app/layout.tsx',
+          [
+            'export default function RootLayout({ children }) {',
+            '  return (',
+            "    <div style={{ margin: 0, fontFamily: 'system-ui', background: '#fafafa', minHeight: '100vh' }}>",
+            "      <main style={{ maxWidth: 720, margin: '0 auto', padding: '32px 24px' }}>",
+            '        {children}',
+            '      </main>',
+            '    </div>',
+            '  );',
+            '}',
+          ].join('\n'),
+        );
+
+        vfs.writeFileSync(
+          '/app/page.tsx',
+          `'use client';
+        import { useState } from 'react';
+        export default function Home() {
+          const [count, setCount] = useState(0);
+          return (
+            <div>
+              <h1>Welcome!</h1>
+              <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
+            </div>
+          );
+        }`,
+        );
+        vfs.writeFileSync(
+          '/app/about/page.tsx',
+          `export default function About() {
+          return (
+            <div>
+              <h1>About Page</h1>
+              <p>
+                This is the about page.
+                almostnode routing is working!
+              </p>
+              <a href="/">Go back home</a>
+            </div>
+          );
+        }`,
+        );
+        vfs.writeFileSync('/app/globals.css', `body { margin: 0; }`);
+      }
+
+      function renderTabs() {
+        fileTabs.innerHTML = files
+          .map(
+            (f) =>
+              `<button class="file-tab${f.path === currentFile ? ' active' : ''}" data-path="${f.path}">${
+                f.label
+              }</button>`,
+          )
+          .join('');
+      }
+
+      function loadFile(path) {
+        try {
+          editor.value = vfs.readFileSync(path, 'utf8');
+          currentFile = path;
+          renderTabs();
+        } catch (e) {
+          log('Error loading ' + path + ': ' + e.message, 'error');
+        }
+      }
+
+      function saveFile() {
+        if (!vfs || !currentFile) return;
+        vfs.writeFileSync(currentFile, editor.value);
+        log('Saved: ' + currentFile);
+      }
+
+      async function startPreview() {
+        startBtn.disabled = true;
+        statusDot.className = 'status-dot starting';
+        statusText.textContent = 'Starting...';
+        log('Starting Next.js dev server...');
+
+        try {
+          devServer = new NextDevServer(vfs, { port: 3003, root: '/' });
+          devServer.start();
+
+          const bridge = getServerBridge();
+
+          // 注意: index.html と同じ階層に __sw__.js を配置している前提のパスです
+          await bridge.initServiceWorker({ swUrl: '/__sw__.js' });
+          log('Service Worker ready');
+
+          bridge.registerServer(devServer, 3003);
+          devServerUrl = bridge.getServerUrl(3003) + '/';
+          log('Dev server URL: ' + devServerUrl);
+
+          devServer.on('hmr-update', (update) => {
+            log('HMR update: ' + update.path, 'hmr');
+            showHmrToast();
+          });
+
+          placeholder.style.display = 'none';
+          previewFrame.style.display = 'block';
+
+          previewFrame.onload = () => {
+            if (previewFrame.contentWindow) {
+              devServer.setHMRTarget(previewFrame.contentWindow);
+            }
+          };
+
+          previewFrame.src = devServerUrl;
+          saveBtn.disabled = false;
+
+          statusDot.className = 'status-dot running';
+          statusText.textContent = 'Running';
+        } catch (e) {
+          statusDot.className = 'status-dot';
+          statusText.textContent = 'Error';
+          log('Failed to start: ' + e.message, 'error');
+          console.error(e);
+          startBtn.disabled = false;
+        }
+      }
+
+      fileTabs.addEventListener('click', (e) => {
+        if (e.target.classList.contains('file-tab')) {
+          loadFile(e.target.dataset.path);
+        }
+      });
+      startBtn.addEventListener('click', startPreview);
+      saveBtn.addEventListener('click', saveFile);
+      refreshBtn.addEventListener('click', () => {
+        if (devServerUrl) previewFrame.src = devServerUrl + '?t=' + Date.now();
+      });
+      editor.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          saveFile();
+        }
+      });
+
+      setupFiles();
+      renderTabs();
+      loadFile(currentFile);
+      log('Files loaded. Click "Start Preview" to launch.');
+    </script>
+  </body>
+</html>
+
+```
+
+
+# 📝 2026/06/10
+
+## lobster-wiki
+
+なんか、おもろい
+
+[readme - lobster-wiki_sandbox](https://pome-ta.github.io/lobster-wiki_sandbox/)
+
+こことの使い分けとか考えなきゃな
+
+
+# 📝 2026/05/31
+
+
+## JavaScript のプレイグラウンドをつくりたい
+
+
+- ぽこぽこと、js での確認したい
+- GitHub pages で手軽にハンドリングしたい
+- 試したいコードは気軽に切り替えられるといい
+    - push で切り替えでもいいか
+- ブランチで切ると、pages が機能しないからだめ
+- エンドポイント的には`/docs/index.html` は固定
+- 書き味として、通常通りで処理をしていきたい
+- リンク毎に辿るのは面倒よな
+
+# 📝 2026/05/08
+
+## 差分
+
+- 同一の可能性
+
+
+- 同一の可能性
+
+
+- 同一の可能性
+
+
+### Renderer.swift
+
+- File Diff: `final/Renderer.swift` vs `challenge/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- final/Renderer.swift
++++ challenge/Renderer.swift
+@@ -33,0 +34 @@
++// swiftlint:disable force_cast
+@@ -55,16 +55,0 @@
+-    // create the mesh
+-    let allocator = MTKMeshBufferAllocator(device: device)
+-    let size: Float = 0.8
+-    let mdlMesh = MDLMesh(
+-      boxWithExtent: [size, size, size],
+-      segments: [1, 1, 1],
+-      inwardNormals: false,
+-      geometryType: .triangles,
+-      allocator: allocator)
+-    do {
+-      mesh = try MTKMesh(mesh: mdlMesh, device: device)
+-    } catch {
+-      print(error.localizedDescription)
+-    }
+-    vertexBuffer = mesh.vertexBuffers[0].buffer
+-
+@@ -76,0 +62,10 @@
++
++    // create the mesh
++    let mdlMesh = Self.loadTrain()
++    do {
++      mesh = try MTKMesh(mesh: mdlMesh, device: Self.device)
++    } catch {
++      print(error.localizedDescription)
++    }
++
++    vertexBuffer = mesh.vertexBuffers[0].buffer
+@@ -100,0 +96,27 @@
++  }
++
++  static func loadTrain() -> MDLMesh {
++    let allocator = MTKMeshBufferAllocator(device: Self.device)
++    guard let assetURL = Bundle.main.url(
++      forResource: "train",
++      withExtension: "usdz") else {
++      fatalError("Train model not found")
++    }
++
++    let vertexDescriptor = MTLVertexDescriptor()
++    vertexDescriptor.attributes[0].format = .float3
++    vertexDescriptor.attributes[0].offset = 0
++    vertexDescriptor.attributes[0].bufferIndex = 0
++
++    vertexDescriptor.layouts[0].stride =
++      MemoryLayout<SIMD3<Float>>.stride
++    let meshDescriptor =
++      MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
++    (meshDescriptor.attributes[0] as! MDLVertexAttribute).name =
++      MDLVertexAttributePosition
++
++    let asset = MDLAsset(
++      url: assetURL,
++      vertexDescriptor: meshDescriptor,
++      bufferAllocator: allocator)
++    return asset.childObjects(of: MDLMesh.self).first as! MDLMesh
+@@ -141,0 +164 @@
++// swiftlint:enable force_cast
+```
+
+
+
+
+
+
+
+
+
+## 戻し
+
+
+```python
+_TOP_DIR_NAME = 'pystaRubiconObjcSandBox'
+_MODULES_DIR_NAME = 'modules'
+
+# todo: `./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME}` にあるpackage のimport 準備
+if __name__ == '__main__' and not __file__[:__file__.rfind('/')].endswith(
+    _TOP_DIR_NAME):
+  import pathlib
+  import sys
+  __parents = pathlib.Path(__file__).resolve().parents
+  for __dir_path in __parents:
+    if __dir_path.name == _TOP_DIR_NAME and (__modules_path := __dir_path /
+                                             _MODULES_DIR_NAME).exists():
+      sys.path.insert(0, str(__modules_path))
+      break
+  else:
+    import warnings
+    with warnings.catch_warnings():
+      warnings.simplefilter('always', ImportWarning)
+      __warning_message = f'./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME} not found in parent directories'
+      warnings.warn(__warning_message, ImportWarning)
+
+import ctypes
+
+from pyrubicon.objc.api import NSObject
+from pyrubicon.objc.api import ObjCClass, ObjCProtocol
+from pyrubicon.objc.api import objc_method, objc_property
+from pyrubicon.objc.runtime import send_super
+from pyrubicon.objc.types import CGSize, UIEdgeInsetsMake
+
+from objc_frameworks.Foundation import NSStringFromClass
+from objc_frameworks.CoreGraphics import CGRectZero
+from objc_frameworks.UIKit import (
+  UILayoutConstraintAxis,
+  NSTextAlignment,
+  UIViewAutoresizing,
+)
+from objc_frameworks.Metal import (
+  MTLCreateSystemDefaultDevice,
+  MTLClearColorMake,
+)
+
+from rbedge import pdbr
+
+MTKViewDelegate = ObjCProtocol('MTKViewDelegate')
+
+UIViewController = ObjCClass('UIViewController')
+MTKView = ObjCClass('MTKView')
+UIStackView = ObjCClass('UIStackView')
+UIColor = ObjCClass('UIColor')
+UIView = ObjCClass('UIView')
+
+
+#class Renderer(NSObject, protocols=[MTKViewDelegate]):
+class Renderer(NSObject):
+  device: 'MTLDevice' = objc_property()
+  commandQueue: 'MTLCommandQueue' = objc_property()
+  library: 'MTLLibrary!' = objc_property()
+  mesh: 'MTKMesh!' = objc_property()
+  vertexBuffer: 'MTLBuffer!' = objc_property()
+  pipelineState: 'MTLRenderPipelineState!' = objc_property()
+
+  @objc_method
+  def initWithMetalView_(self, metalView):
+    send_super(__class__, self, 'init')
+    if not ((device := MTLCreateSystemDefaultDevice()) and
+            (commandQueue := device.newCommandQueue())):
+      raise ValueError('GPU not available')
+
+    self.device = device
+    self.commandQueue = commandQueue
+
+    metalView.device = device
+    #metalView.setDevice_(device)
+
+    metalView.clearColor = MTLClearColorMake(
+      red=1,
+      green=1,
+      blue=0.8,
+      alpha=1,
+    )
+
+    metalView.delegate = self
+    metalView.autoresizingMask = UIViewAutoresizing.flexibleWidth | UIViewAutoresizing.flexibleHeight
+
+    return self
+
+  # --- MTKViewDelegate
+  @objc_method
+  def mtkView_drawableSizeWillChange_(self, view, size: CGSize):
+    pass
+
+  @objc_method
+  def drawInMTKView_(self, view):
+    print('d')
+
+    if not ((drawable := view.currentDrawable) and
+            (descriptor := view.currentRenderPassDescriptor)):
+      return
+
+    commandBuffer = self.commandQueue.commandBuffer()
+    commandEncoder = commandBuffer.renderCommandEncoderWithDescriptor_(
+      descriptor)
+    commandEncoder.endEncoding()
+    commandBuffer.presentDrawable_(drawable)
+    commandBuffer.commit()
+
+
+class MainViewController(UIViewController):
+
+  verticalView: UIStackView = objc_property()
+  renderer:Renderer = objc_property()
+
+  @objc_method
+  def viewDidLoad(self):
+    send_super(__class__, self, 'viewDidLoad')
+    self.navigationItem.title = NSStringFromClass(__class__)
+
+    #device = MTLCreateSystemDefaultDevice()
+    #commandQueue = device.newCommandQueue()
+
+    #metalView = MTKView.alloc().initWithFrame_device_(CGRectZero, device)
+    metalView = MTKView.new()
+
+    self.renderer = Renderer.alloc().initWithMetalView_(metalView)
+    #pdbr.state(renderer)
+    #metalView.delegate = renderer
+    metalView.enableSetNeedsDisplay = True
+    metalView.setNeedsDisplay()
+
+    view = UIView.new()
+    view.autoresizingMask = UIViewAutoresizing.flexibleWidth | UIViewAutoresizing.flexibleHeight
+    view.addSubview_(metalView)
+
+    verticalView = UIStackView.alloc().initWithArrangedSubviews_([
+      view,
+    ])
+    verticalView.layoutMargins = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0)
+    verticalView.setLayoutMarginsRelativeArrangement_(True)
+
+    verticalView.backgroundColor = UIColor.secondarySystemBackgroundColor()
+
+    self.verticalView = verticalView
+    #self.renderer = renderer
+
+    self.setupLayoutConstraint()
+
+  @objc_method
+  def didReceiveMemoryWarning(self):
+    send_super(__class__, self, 'didReceiveMemoryWarning')
+    print(f'	{NSStringFromClass(__class__)}: didReceiveMemoryWarning')
+
+  # --- private
+  @objc_method
+  def setupLayoutConstraint(self):
+    NSLayoutConstraint = ObjCClass('NSLayoutConstraint')
+
+    self.view.addSubview_(self.verticalView)
+
+    safeAreaLayoutGuide = self.view.safeAreaLayoutGuide
+
+    self.verticalView.translatesAutoresizingMaskIntoConstraints = False
+    NSLayoutConstraint.activateConstraints_([
+      self.verticalView.centerXAnchor.constraintEqualToAnchor_(
+        safeAreaLayoutGuide.centerXAnchor),
+      self.verticalView.centerYAnchor.constraintEqualToAnchor_(
+        safeAreaLayoutGuide.centerYAnchor),
+      self.verticalView.widthAnchor.constraintEqualToAnchor_multiplier_(
+        safeAreaLayoutGuide.widthAnchor,
+        0.88,
+      ),
+      self.verticalView.heightAnchor.constraintEqualToAnchor_multiplier_(
+        safeAreaLayoutGuide.heightAnchor,
+        0.88,
+      ),
+    ])
+
+
+if __name__ == '__main__':
+  from rbedge.app import App
+  from objc_frameworks.UIKit import UIModalPresentationStyle
+
+  main_vc = MainViewController.new()
+
+  presentation_style = UIModalPresentationStyle.fullScreen
+  #presentation_style = UIModalPresentationStyle.pageSheet
+
+  app = App(main_vc, presentation_style)
+  app.present()
+
+
+```
+
+
+# 📝 2026/05/06
+
+## 退避
+
+```python
+_TOP_DIR_NAME = 'pystaRubiconObjcSandBox'
+_MODULES_DIR_NAME = 'modules'
+
+# todo: `./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME}` にあるpackage のimport 準備
+if __name__ == '__main__' and not __file__[:__file__.rfind('/')].endswith(
+    _TOP_DIR_NAME):
+  import pathlib
+  import sys
+  __parents = pathlib.Path(__file__).resolve().parents
+  for __dir_path in __parents:
+    if __dir_path.name == _TOP_DIR_NAME and (__modules_path := __dir_path /
+                                             _MODULES_DIR_NAME).exists():
+      sys.path.insert(0, str(__modules_path))
+      break
+  else:
+    import warnings
+    with warnings.catch_warnings():
+      warnings.simplefilter('always', ImportWarning)
+      __warning_message = f'./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME} not found in parent directories'
+      warnings.warn(__warning_message, ImportWarning)
+
+import ctypes
+
+from pyrubicon.objc.api import ObjCClass
+from pyrubicon.objc.api import objc_method, objc_property
+from pyrubicon.objc.runtime import send_super
+
+from objc_frameworks.Foundation import NSStringFromClass
+
+from rbedge import pdbr
+from contentView import ContentView
+
+UIViewController = ObjCClass('UIViewController')
+
+
+class MainViewController(UIViewController):
+
+  contentView: ContentView = objc_property()
+
+  @objc_method
+  def dealloc(self):
+    # xxx: 呼ばない-> `send_super(__class__, self, 'dealloc')`
+    #print(f'	 - {NSStringFromClass(__class__)}: dealloc')
+    pass
+
+  @objc_method
+  def loadView(self):
+    send_super(__class__, self, 'loadView')
+
+  @objc_method
+  def viewDidLoad(self):
+    send_super(__class__, self, 'viewDidLoad')
+    self.navigationItem.title = NSStringFromClass(__class__)
+    self.navigationItem.subtitle = 'The Rendering Pipeline'
+
+    self.contentView = ContentView.new()
+    self.setupLayoutConstraint()
+
+  @objc_method
+  def viewWillAppear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewWillAppear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def viewDidAppear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewDidAppear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def viewWillDisappear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewWillDisappear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def viewDidDisappear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewDidDisappear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def didReceiveMemoryWarning(self):
+    send_super(__class__, self, 'didReceiveMemoryWarning')
+    print(f'	{NSStringFromClass(__class__)}: didReceiveMemoryWarning')
+
+  # --- private
+  @objc_method
+  def setupLayoutConstraint(self):
+    NSLayoutConstraint = ObjCClass('NSLayoutConstraint')
+
+    self.view.addSubview_(self.contentView)
+
+    safeAreaLayoutGuide = self.view.safeAreaLayoutGuide
+
+    self.contentView.translatesAutoresizingMaskIntoConstraints = False
+    NSLayoutConstraint.activateConstraints_([
+      self.contentView.centerXAnchor.constraintEqualToAnchor_(
+        safeAreaLayoutGuide.centerXAnchor),
+      self.contentView.centerYAnchor.constraintEqualToAnchor_(
+        safeAreaLayoutGuide.centerYAnchor),
+      self.contentView.widthAnchor.constraintEqualToAnchor_multiplier_(
+        safeAreaLayoutGuide.widthAnchor,
+        0.88,
+      ),
+      self.contentView.heightAnchor.constraintEqualToAnchor_multiplier_(
+        safeAreaLayoutGuide.heightAnchor,
+        0.88,
+      ),
+    ])
+
+
+if __name__ == '__main__':
+  from rbedge.app import App
+  from objc_frameworks.UIKit import UIModalPresentationStyle
+
+  main_vc = MainViewController.new()
+
+  presentation_style = UIModalPresentationStyle.fullScreen
+  #presentation_style = UIModalPresentationStyle.pageSheet
+
+  app = App(main_vc, presentation_style)
+  app.present()
+
+
+```
+
+# 📝 2026/05/05
+
+## 音楽理論を学び直す
+
+- [憂鬱と官能を教えた学校　上 :菊地　成孔,大谷　能生 | 河出書房新社](https://www.kawade.co.jp/sp/isbn/9784309410166/)
+- [憂鬱と官能を教えた学校　下 :菊地　成孔,大谷　能生 | 河出書房新社](https://www.kawade.co.jp/sp/isbn/9784309410173/)
+
+これをベースに。
+
+なんか、検証用のGitHub pages とかできたらいいな
+
+
+
+# 📝 2026/04/29
+
+## 差分
+
+### Contents.swift
+
+- File Diff: `final/2 Import Train.xcplaygroundpage/Contents.swift` vs `challenge/Import Mushroom.xcplaygroundpage/Contents.swift`
+
+```diff Contents.swift:swift
+--- final/2 Import Train.xcplaygroundpage/Contents.swift
++++ challenge/Import Mushroom.xcplaygroundpage/Contents.swift
+@@ -17 +17 @@
+-  forResource: "train",
++  forResource: "mushroom",
+@@ -41,0 +42 @@
++
+```
+
+
+
+
+
+# 📝 2026/04/28
+
+## 差分
+
+### Contents.swift
+
+- File Diff: `1 Render and Export 3D Model.xcplaygroundpage/Contents.swift` vs `2 Import Train.xcplaygroundpage/Contents.swift`
+
+```diff Contents.swift:swift
+--- 1 Render and Export 3D Model.xcplaygroundpage/Contents.swift
++++ 2 Import Train.xcplaygroundpage/Contents.swift
+@@ -15,7 +15,26 @@
+-let mdlMesh = MDLMesh(
+-  coneWithExtent: [1, 1, 1],
+-  segments: [10, 10],
+-  inwardNormals: false,
+-  cap: true,
+-  geometryType: .triangles,
+-  allocator: allocator)
++
++guard let assetURL = Bundle.main.url(
++  forResource: "train",
++  withExtension: "usdz") else {
++  fatalError()
++}
++
++let vertexDescriptor = MTLVertexDescriptor()
++vertexDescriptor.attributes[0].format = .float3
++vertexDescriptor.attributes[0].offset = 0
++vertexDescriptor.attributes[0].bufferIndex = 0
++
++vertexDescriptor.layouts[0].stride =
++  MemoryLayout<SIMD3<Float>>.stride
++let meshDescriptor =
++  MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
++(meshDescriptor.attributes[0] as! MDLVertexAttribute).name =
++  MDLVertexAttributePosition
++
++let asset = MDLAsset(
++  url: assetURL,
++  vertexDescriptor: meshDescriptor,
++  bufferAllocator: allocator)
++let mdlMesh =
++  asset.childObjects(of: MDLMesh.self).first as! MDLMesh
++
+@@ -23,16 +41,0 @@
+-
+-// begin export code
+-let asset = MDLAsset()
+-asset.add(mdlMesh)
+-let fileExtension = "usda"
+-guard MDLAsset.canExportFileExtension(fileExtension) else {
+-  fatalError("Can't export a .\(fileExtension) format")
+-}
+-do {
+-  let url = playgroundSharedDataDirectory
+-    .appendingPathComponent("generatedCone.\(fileExtension)")
+-  try asset.export(to: url)
+-} catch {
+-  fatalError("Error \(error.localizedDescription)")
+-}
+-// end export code
+@@ -51 +54,3 @@
+-  return vertex_in.position;
++float4 position = vertex_in.position;
++position.y -= 1.0;
++return position;
+@@ -86,2 +91,8 @@
+-guard let submesh = mesh.submeshes.first else {
+-  fatalError()
++for submesh in mesh.submeshes {
++  renderEncoder.drawIndexedPrimitives(
++    type: .triangle,
++    indexCount: submesh.indexCount,
++    indexType: submesh.indexType,
++    indexBuffer: submesh.indexBuffer.buffer,
++    indexBufferOffset: submesh.indexBuffer.offset
++  )
+@@ -89,7 +99,0 @@
+-
+-renderEncoder.drawIndexedPrimitives(
+-  type: .triangle,
+-  indexCount: submesh.indexCount,
+-  indexType: submesh.indexType,
+-  indexBuffer: submesh.indexBuffer.buffer,
+-  indexBufferOffset: 0)
+```
+
+
+
+
+
+# 📝 2026/04/26
+
+## 差分
+
+
+### Contents.swift
+
+- File Diff: `01-hello-metal/Chapter1.playground/Contents.swift` vs `02-3d-models/Chapter2.playground/Pages/1 Render and Export 3D Model.xcplaygroundpage/Contents.swift`
+
+```diff Contents.swift:swift
+--- 01-hello-metal/Chapter1.playground/Contents.swift
++++ 02-3d-models/Chapter2.playground/Pages/1 Render and Export 3D Model.xcplaygroundpage/Contents.swift
+@@ -16,2 +16,2 @@
+-  sphereWithExtent: [0.75, 0.75, 0.75],
+-  segments: [30, 30],
++  coneWithExtent: [1, 1, 1],
++  segments: [10, 10],
+@@ -18,0 +19 @@
++  cap: true,
+@@ -21,0 +23,16 @@
++
++// begin export code
++let asset = MDLAsset()
++asset.add(mdlMesh)
++let fileExtension = "usda"
++guard MDLAsset.canExportFileExtension(fileExtension) else {
++  fatalError("Can't export a .\(fileExtension) format")
++}
++do {
++  let url = playgroundSharedDataDirectory
++    .appendingPathComponent("generatedCone.\(fileExtension)")
++  try asset.export(to: url)
++} catch {
++  fatalError("Error \(error.localizedDescription)")
++}
++// end export code
+@@ -66,0 +84 @@
++renderEncoder.setTriangleFillMode(.lines)
+```
+
+
+
+
+
+# 📝 2026/04/24
+
+## `MDLMesh.alloc().initSphereWithExtent_segments_inwardNormals_geometryType_allocator_` の供養
+
+- `vector_float3`
+- `vector_uint2`
+
+の引数が、うまく読み取れない
+
+追っかけるのが少し面倒だから、違う方針でいく。
+
+```
+raise TypeError(
+TypeError: Method b'initSphereWithExtent:segments:inwardNormals:geometryType:allocator:' takes 5 arguments, but got 3 arguments
+
+```
+
+```python
+_TOP_DIR_NAME = 'pystaRubiconObjcSandBox'
+_MODULES_DIR_NAME = 'modules'
+
+# todo: `./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME}` にあるpackage のimport 準備
+if __name__ == '__main__' and not __file__[:__file__.rfind('/')].endswith(
+    _TOP_DIR_NAME):
+  import pathlib
+  import sys
+  __parents = pathlib.Path(__file__).resolve().parents
+  for __dir_path in __parents:
+    if __dir_path.name == _TOP_DIR_NAME and (__modules_path := __dir_path /
+                                             _MODULES_DIR_NAME).exists():
+      sys.path.insert(0, str(__modules_path))
+      break
+  else:
+    import warnings
+    with warnings.catch_warnings():
+      warnings.simplefilter('always', ImportWarning)
+      __warning_message = f'./{_TOP_DIR_NAME}/{_MODULES_DIR_NAME} not found in parent directories'
+      warnings.warn(__warning_message, ImportWarning)
+
+import ctypes
+
+from pyrubicon.objc.api import ObjCClass, ObjCInstance
+from pyrubicon.objc.api import objc_method, objc_property
+from pyrubicon.objc.runtime import send_super, send_message, objc_id
+from pyrubicon.objc.types import CGSize, CGRectMake, with_preferred_encoding, _NSRangeEncoding, NSInteger
+
+from objc_frameworks.Foundation import NSStringFromClass
+from objc_frameworks.CoreGraphics import CGRectZero
+from objc_frameworks.Metal import (
+  MTLCreateSystemDefaultDevice,
+  MTLClearColorMake,
+)
+from objc_frameworks.ModelIO import MDLGeometryType
+
+from rbedge.simd import simd_float3
+
+from rbedge import pdbr
+
+#@with_preferred_encoding(b'{?=ffff}')
+'''
+class simd_float3(ctypes.Structure):
+  _fields_ = [
+    ('x', ctypes.c_float),
+    ('y', ctypes.c_float),
+    ('z', ctypes.c_float),
+    ('_pad', ctypes.c_float),  # padding (SIMD alignment)
+  ]
+
+'''
+
+
+#@with_preferred_encoding(_NSRangeEncoding)
+class simd_uint2(ctypes.Structure):
+  _fields_ = [
+    ('x', ctypes.c_uint),
+    ('y', ctypes.c_uint),
+  ]
+
+
+UIViewController = ObjCClass('UIViewController')
+MTKView = ObjCClass('MTKView')
+
+MTKMeshBufferAllocator = ObjCClass('MTKMeshBufferAllocator')
+MDLMesh = ObjCClass('MDLMesh')
+
+if (device := MTLCreateSystemDefaultDevice()) is None:
+  raise ('GPU is not supported')
+
+allocator = MTKMeshBufferAllocator.alloc().initWithDevice_(device)
+
+#print(MTKMeshBufferAllocator.alloc().initWithDevice_)
+
+#print(MDLMesh.alloc().initSphereWithExtent_segments_inwardNormals_geometryType_allocator_)
+#extent = simd_float3(0.75, 0.75, 0.75)
+
+#segments = simd_uint2(30, 30)
+extent = (ctypes.c_float * 4)(0.75, 0.75, 0.75, 0.0)
+
+segments = (ctypes.c_uint * 2)(30, 30)
+
+mdlMesh = MDLMesh.alloc(
+).initSphereWithExtent_segments_inwardNormals_geometryType_allocator_(
+  extent,
+  segments,
+  False,
+  0,
+  allocator,
+)
+
+'''
+mdlMesh = MDLMesh.alloc().initSphereWithExtent(
+  simd_float3(0.75, 0.75, 0.75),
+  segments=simd_uint2(30, 30),
+  inwardNormals=False,
+  geometryType=MDLGeometryType.triangles,
+  allocator=allocator,
+)
+'''
+'''
+mdlMesh_ptr = send_message(
+  MDLMesh.alloc(),
+  'initSphereWithExtent:segments:inwardNormals:geometryType:allocator:',
+  simd_float3(0.75, 0.75, 0.75),
+  simd_uint2(30, 30),
+  False,
+  MDLGeometryType.triangles,
+  allocator,
+  restype=objc_id,
+  argtypes=[
+    simd_float3,  # extent
+    simd_uint2,  # segments
+    ctypes.c_bool,  # inwardNormals
+    NSInteger,  # geometryType
+    objc_id  # allocator
+  ],
+)
+#pdbr.state(MDLMesh.new())
+'''
+#mdlMesh = ObjCInstance(mdlMesh_ptr)
+
+#print(MDLGeometryType.triangles)
+
+shaders = '''
+#include <metal_stdlib>
+using namespace metal;
+
+struct VertexIn {
+  float4 position [[attribute(0)]];
+};
+
+vertex float4 vertex_main(const VertexIn vertex_in [[stage_in]]) {
+  return vertex_in.position;
+}
+
+fragment float4 fragment_main() {
+  return float4(1, 0, 0, 1);
+}
+'''
+
+
+class MainViewController(UIViewController):
+
+  metalView: MTKView = objc_property()
+  commandQueue: 'MTLCommandQueue' = objc_property()
+
+  @objc_method
+  def dealloc(self):
+    # xxx: 呼ばない-> `send_super(__class__, self, 'dealloc')`
+    #print(f'	 - {NSStringFromClass(__class__)}: dealloc')
+    pass
+
+  @objc_method
+  def loadView(self):
+    send_super(__class__, self, 'loadView')
+
+  @objc_method
+  def viewDidLoad(self):
+    send_super(__class__, self, 'viewDidLoad')
+    self.navigationItem.title = NSStringFromClass(__class__)
+    self.navigationItem.subtitle = '1. Hello, Metal!'
+
+    if (device := MTLCreateSystemDefaultDevice()) is None:
+      raise ('GPU is not supported')
+
+    # todo: `translatesAutoresizingMaskIntoConstraints = False` するので、レイアウトでサイズ調整
+    #frame = CGRectMake(x=0, y=0, w=500, h=500)
+    frame = CGRectZero
+
+    metalView = MTKView.alloc().initWithFrame_device_(frame, device)
+    metalView.clearColor = MTLClearColorMake(red=1, green=1, blue=0.8, alpha=1)
+
+    metalView.delegate = self
+    commandQueue = device.newCommandQueue()
+
+    metalView.enableSetNeedsDisplay = True
+    metalView.setNeedsDisplay()
+
+    self.view.addSubview_(metalView)
+
+    self.metalView = metalView
+    self.commandQueue = commandQueue
+
+    self.setupLayoutConstraint()
+
+  @objc_method
+  def viewWillAppear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewWillAppear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def viewDidAppear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewDidAppear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def viewWillDisappear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewWillDisappear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def viewDidDisappear_(self, animated: bool):
+    send_super(__class__,
+               self,
+               'viewDidDisappear:',
+               animated,
+               argtypes=[
+                 ctypes.c_bool,
+               ])
+
+  @objc_method
+  def didReceiveMemoryWarning(self):
+    send_super(__class__, self, 'didReceiveMemoryWarning')
+    print(f'	{NSStringFromClass(__class__)}: didReceiveMemoryWarning')
+
+  # --- MTKViewDelegate
+  @objc_method
+  def mtkView_drawableSizeWillChange_(self, view, size: CGSize):
+    pass
+
+  @objc_method
+  def drawInMTKView_(self, view):
+    if not ((drawable := view.currentDrawable) and
+            (descriptor := view.currentRenderPassDescriptor)):
+      return
+
+    commandBuffer = self.commandQueue.commandBuffer()
+    commandEncoder = commandBuffer.renderCommandEncoderWithDescriptor_(
+      descriptor)
+    commandEncoder.endEncoding()
+    commandBuffer.presentDrawable_(drawable)
+    commandBuffer.commit()
+
+  # --- private
+  @objc_method
+  def setupLayoutConstraint(self):
+    from objc_frameworks.UIKit import UILayoutPriorityDefaultHigh
+    NSLayoutConstraint = ObjCClass('NSLayoutConstraint')
+
+    self.metalView.translatesAutoresizingMaskIntoConstraints = False
+
+    safeAreaLayoutGuide = self.view.safeAreaLayoutGuide
+
+    # センター
+    centerXAnchor = self.metalView.centerXAnchor.constraintEqualToAnchor_(
+      safeAreaLayoutGuide.centerXAnchor)
+    centerYAnchor = self.metalView.centerYAnchor.constraintEqualToAnchor_(
+      safeAreaLayoutGuide.centerYAnchor)
+
+    # 固定サイズ(500)
+    fixedWidth = self.metalView.widthAnchor.constraintEqualToConstant_(500)
+    fixedWidth.setPriority_(UILayoutPriorityDefaultHigh)
+    fixedHeight = self.metalView.heightAnchor.constraintEqualToConstant_(500)
+    fixedHeight.setPriority_(UILayoutPriorityDefaultHigh)
+
+    # safeArea に対する88%
+    maxWidth = self.metalView.widthAnchor.constraintLessThanOrEqualToAnchor_multiplier_(
+      safeAreaLayoutGuide.widthAnchor,
+      0.88,
+    )
+    maxHeight = self.metalView.heightAnchor.constraintLessThanOrEqualToAnchor_multiplier_(
+      safeAreaLayoutGuide.heightAnchor,
+      0.88,
+    )
+
+    # スクエア定義
+    aspect = self.metalView.widthAnchor.constraintEqualToAnchor_(
+      self.metalView.heightAnchor)
+
+    NSLayoutConstraint.activateConstraints_([
+      centerXAnchor,
+      centerYAnchor,
+      fixedWidth,
+      fixedHeight,
+      maxWidth,
+      maxHeight,
+      aspect,
+    ])
+
+
+if __name__ == '__main__':
+  from rbedge.app import App
+  from objc_frameworks.UIKit import UIModalPresentationStyle
+  '''
+
+  main_vc = MainViewController.new()
+
+  presentation_style = UIModalPresentationStyle.fullScreen
+  #presentation_style = UIModalPresentationStyle.pageSheet
+
+  app = App(main_vc, presentation_style)
+  app.present()
+  '''
+
+
+```
+
+
+
+
+
+# 📝 2026/04/22
+
+## Beginning Metal
+
+[BeginningMetal | pystaRubiconObjcSandBox/playground/Metal/BeginningMetal at main · pome-ta/pystaRubiconObjcSandBox · GitHub](https://github.com/pome-ta/pystaRubiconObjcSandBox/tree/main/playground/Metal/BeginningMetal)
+
+完了した？ぽいので、コード見直していくか？
+
+まず、仕様として、音関係でa-shell が連続で使えない。
+
+
+### `types`
+
+- `with_encoding`
+- `with_preferred_encoding`
+
+違い。使い分けってなんだっけ？
+
+
+## met-materials
+
+[`study/editions/5.0` | pome-ta/met-materials: The projects and the materials that accompany the Metal by Tutorials book.](https://github.com/pome-ta/met-materials/tree/study/editions/5.0)
+
+フォークしてブランチを切った。
+
+
+[kodecocodes/met-materials: The projects and the materials that accompany the Metal by Tutorials book.](https://github.com/kodecocodes/met-materials/tree/editions/5.0)
+
+`editions/5.0` のエディションで進めていく。
+
+（たぶんないけど、元の更新をマージするには、、、）
+1. 元からフォークした`editions/5.0` でマージ
+2. フォークした`editions/5.0` から`study/editions/5.0` をマージ
+
+
+となるのかしら？
+
+[pystaRubiconObjcSandBox/playground/Metal/MetalByTutorials at main · pome-ta/pystaRubiconObjcSandBox · GitHub](https://github.com/pome-ta/pystaRubiconObjcSandBox/tree/main/playground/Metal/MetalByTutorials)
+
+
+# 📝 2026/04/19
+
+## いよいよ最後
+
+これ終えたら、まとめるか？
+
+## 差分 : `14-BeginningMetal-MakingAGamePart2/Challenge/`
+
+
+### GameOverScene.swift
+
+- new file
+
+
+### GameScene.swift
+
+- File Diff: `Final/GameScene.swift` vs `Challenge/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- Final/GameScene.swift
++++ Challenge/GameScene.swift
+@@ -102,0 +103 @@
++    
+@@ -132,2 +133 @@
+-      ballVelocityY = -ballVelocityY
+-      bounced = true
++      endGame(win: false)
+@@ -157,0 +158,3 @@
++    }
++    if bricks.nodes.count == 0 {
++      endGame(win: true)
+@@ -184,0 +188,6 @@
++  
++  func endGame(win: Bool) {
++    let gameOverScene = GameOverScene(device: device, size: size)
++    gameOverScene.win = win
++    sceneDelegate?.transition(to: gameOverScene)
++  }
+```
+
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -72,0 +73,2 @@
++  
++
+```
+
+
+### LightingScene.swift
+
+- File Diff: `Final/LightingScene.swift` vs `Challenge/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- Final/LightingScene.swift
++++ Challenge/LightingScene.swift
+@@ -43,0 +44 @@
++    
+```
+
+
+### Model.swift
+
+- File Diff: `Final/Model.swift` vs `Challenge/Model.swift`
+
+```diff Model.swift:swift
+--- Final/Model.swift
++++ Challenge/Model.swift
+@@ -71 +70,0 @@
+-    
+```
+
+
+### Primitive.swift
+
+- File Diff: `Final/Primitive.swift` vs `Challenge/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- Final/Primitive.swift
++++ Challenge/Primitive.swift
+@@ -27,5 +27,2 @@
+-  var vertices: [Vertex] = [
+-  ]
+-  
+-  var indices: [UInt16] = [
+-  ]
++  var vertices: [Vertex] = []
++  var indices: [UInt16] = []
+```
+
+
+### Scene.swift
+
+- File Diff: `Final/Scene.swift` vs `Challenge/Scene.swift`
+
+```diff Scene.swift:swift
+--- Final/Scene.swift
++++ Challenge/Scene.swift
+@@ -24,0 +25,4 @@
++protocol SceneDelegate {
++  func transition(to scene: Scene)
++}
++
+@@ -27 +31,5 @@
+-  var size: CGSize
++  var size: CGSize {
++    didSet {
++      sceneSizeWillChange(to: size)
++    }
++  }
+@@ -30,0 +39 @@
++  var sceneDelegate: SceneDelegate?
+```
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -53 +53,3 @@
+-    renderer?.scene = GameScene(device: device, size: view.bounds.size)
++    let scene = GameScene(device: device, size: view.bounds.size)
++    scene.sceneDelegate = self
++    renderer?.scene = scene
+@@ -55 +56,0 @@
+-    
+@@ -57 +57,0 @@
+-    
+@@ -86,0 +87,7 @@
++extension ViewController: SceneDelegate {
++  func transition(to scene: Scene) {
++    scene.size = view.bounds.size
++    scene.sceneDelegate = self
++    renderer?.scene = scene
++  }
++}
+@@ -88,0 +96 @@
++
+```
+
+
+
+
+
+
+# 📝 2026/04/15
+
+## `asset.boundingBox`
+
+
+```py
+boundingBox = send_message(
+      asset,
+      'boundingBox',
+      restype=MDLAxisAlignedBoundingBox,
+      argtypes=[],
+    )
+
+    print('---')
+    print(f'maxBounds: {boundingBox.maxBounds}')
+    print(f'minBounds: {boundingBox.minBounds}')
+```
+
+
+```
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4764549021477878319567339520.0000)
+minBounds: simd_float3(4764584439226499841906442240.0000, 0.0000, 0.0000)
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4764549021477878319567339520.0000)
+minBounds: simd_float3(4764584439226499841906442240.0000, 0.0000, 0.0000)
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4762933972140736900904255488.0000)
+minBounds: simd_float3(4762969389889358423243358208.0000, 0.0000, 0.0000)
+---
+maxBounds: simd_float3(0.0000, 0.0000, 4762995362905014206292033536.0000)
+minBounds: simd_float3(4763030780653635728631136256.0000, 0.0000, 0.0000)
+
+
+```
+
+
+# 📝 2026/04/14
+
+## 差分 : `14-BeginningMetal-MakingAGamePart2/Final/`
+
+### GameScene.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/GameScene.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/GameScene.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/GameScene.swift
+@@ -37,0 +38,6 @@
++  
++  var previousTouchLocation: CGPoint = .zero
++  
++  var ballVelocityX: Float = 0
++  var ballVelocityY: Float = 0
++  
+@@ -62,0 +69,3 @@
++    ballVelocityX = 20
++    ballVelocityY = 15
++    
+@@ -97,0 +107,3 @@
++    
++    var bounced = false
++    
+@@ -100,0 +113,45 @@
++    }
++    ball.position.x += ballVelocityX * deltaTime
++    ball.position.y += ballVelocityY * deltaTime
++    if ball.position.y > Constants.gameHeight {
++      ball.position.y = Constants.gameHeight
++      ballVelocityY = -ballVelocityY
++      bounced = true
++    }
++    if ball.position.x < 0 {
++      ball.position.x = 0
++      ballVelocityX = -ballVelocityX
++      bounced = true
++    }
++    if ball.position.x > Constants.gameWidth {
++      ball.position.x = Constants.gameWidth
++      ballVelocityX = -ballVelocityX
++      bounced = true
++    }
++    if ball.position.y < 0 {
++      ballVelocityY = -ballVelocityY
++      bounced = true
++    }
++    
++    if bounced {
++      SoundController.shared.playPopEffect()
++    }
++    
++    // Check paddle collision
++    let ballRect = ball.boundingBox(camera.viewMatrix)
++    let paddleRect = paddle.boundingBox(camera.viewMatrix)
++    
++    if ballRect.intersects(paddleRect) {
++      ballVelocityY = -ballVelocityY
++      bounced = true
++    }
++    
++    // Check bricks collision
++    for (index, brick) in bricks.nodes.enumerated() {
++      let brickRect = brick.boundingBox(camera.viewMatrix)
++      
++      if ballRect.intersects(brickRect) {
++        ballVelocityY = -ballVelocityY
++        bricks.remove(instance: index)
++        break
++      }
+@@ -106,0 +164,21 @@
++  
++  override func touchesBegan(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    previousTouchLocation = touch.location(in: view)
++  }
++  
++  override func touchesMoved(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    let touchLocation = touch.location(in: view)
++    let delta = CGPoint(x: touchLocation.x - previousTouchLocation.x,
++                        y: touchLocation.y - previousTouchLocation.y)
++    let deltaX = Float(delta.x) * (Constants.gameWidth / Float(size.width))
++    
++    var newX = paddle.position.x + deltaX
++    newX = min(max(newX, paddle.width/2), Constants.gameWidth - paddle.width/2)
++    paddle.position.x = newX
++    
++    previousTouchLocation =  touchLocation
++  }
+```
+
+
+### Instance.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Instance.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Instance.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Instance.swift
+@@ -62,0 +63,5 @@
++  func remove(instance: Int) {
++    nodes.remove(at: instance)
++    instanceConstants.remove(at: instance)
++  }
++  
+@@ -74 +78,0 @@
+-    
+@@ -80 +83,0 @@
+-      
+@@ -84 +86,0 @@
+-      
+```
+
+
+### Model.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Model.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Model.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Model.swift
+@@ -101,0 +102,4 @@
++    let boundingBox = asset.boundingBox
++    width = boundingBox.maxBounds.x - boundingBox.minBounds.x
++    height = boundingBox.maxBounds.y - boundingBox.minBounds.y
++    
+@@ -109 +112,0 @@
+-    
+```
+
+
+### Node.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Node.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Node.swift`
+
+```diff Node.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Node.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Node.swift
+@@ -36,0 +37,3 @@
++  var width: Float = 1.0
++  var height: Float = 1.0
++  
+@@ -69,0 +73,14 @@
++  
++  func boundingBox(_ parentModelViewMatrix: matrix_float4x4) -> CGRect {
++    let modelViewMatrix = matrix_multiply(parentModelViewMatrix, modelMatrix)
++    var lowerLeft = float4(-width/2, -height/2, 0, 1)
++    lowerLeft = matrix_multiply(modelViewMatrix, lowerLeft)
++    var upperRight = float4(width/2, height/2, 0, 1)
++    upperRight = matrix_multiply(modelViewMatrix, upperRight)
++    
++    let boundingBox = CGRect(x: CGFloat(lowerLeft.x),
++                             y: CGFloat(lowerLeft.y),
++                             width: CGFloat(upperRight.x - lowerLeft.x),
++                             height: CGFloat(upperRight.y - lowerLeft.y))
++    return boundingBox
++  }
+```
+
+
+### Primitive.swift
+
+- File Diff: `13-BeginningMetal-MakingAGamePart1/Challenge/Primitive.swift` vs `14-BeginningMetal-MakingAGamePart2/Final/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- 13-BeginningMetal-MakingAGamePart1/Challenge/Primitive.swift
++++ 14-BeginningMetal-MakingAGamePart2/Final/Primitive.swift
+@@ -27,2 +27,5 @@
+-  var vertices: [Vertex] = []
+-  var indices: [UInt16] = []
++  var vertices: [Vertex] = [
++  ]
++  
++  var indices: [UInt16] = [
++  ]
+```
+
+
+
+
+
+
+# 📝 2026/04/13
+
+## 差分 : `13-BeginningMetal-MakingAGamePart1/Challenge/`
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -73,0 +74 @@
++    
+@@ -78,0 +80 @@
++      
+@@ -81,0 +84 @@
++      
+```
+
+
+### SoundController.swift
+
+- new file
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -55,0 +56,2 @@
++    SoundController.shared.playBackgroundMusic("bulletstorm_bg_v1.mp3")
++    
+```
+
+
+
+## `SoundController.swift` をどのように書くか問題
+
+
+```swift
+import AVFoundation
+
+class SoundController {
+  static let shared = SoundController()
+  
+  var backgroundMusicPlayer: AVAudioPlayer?
+  var popEffect: AVAudioPlayer?
+  
+  private init() {
+    popEffect = preloadSoundEffect("pop.wav")
+  }
+  
+  func playBackgroundMusic(_ filename: String) {
+    backgroundMusicPlayer = preloadSoundEffect(filename)
+    backgroundMusicPlayer?.numberOfLoops = -1
+    backgroundMusicPlayer?.play()
+  }
+  
+  func playPopEffect() {
+    popEffect?.play()
+  }
+  
+  func preloadSoundEffect(_ filename: String) -> AVAudioPlayer? {
+    if let url = Bundle.main.url(forResource: filename,
+                                 withExtension: nil) {
+      do {
+        let player = try AVAudioPlayer(contentsOf: url)
+        player.prepareToPlay()
+        return player
+      } catch {
+        print("file \(filename) not found")
+      }
+    }
+    return nil
+  }
+}
+
+```
+
+
+
+# 📝 2026/04/10
+
+## 差分 : `13-BeginningMetal-MakingAGamePart1/Final/`
+
+
+### GameScene.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/GameScene.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/GameScene.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/GameScene.swift
+@@ -25,0 +26,12 @@
++  
++  enum Constants {
++    static let gameHeight: Float = 48
++    static let gameWidth: Float = 27
++    static let bricksPerRow = 8
++    static let bricksPerColumn = 8
++  }
++  
++  let ball: Model
++  let paddle: Model
++  
++  let bricks: Instance
+@@ -27,2 +38,0 @@
+-  let mushroom: Model
+-  
+@@ -30 +40,5 @@
+-    mushroom = Model(device: device, modelName: "mushroom")
++    ball =  Model(device: device, modelName: "ball")
++    paddle = Model(device: device, modelName: "paddle")
++    
++    bricks = Instance(device: device, modelName: "brick",
++                      instances: Constants.bricksPerRow * Constants.bricksPerColumn)
+@@ -33 +47,7 @@
+-    add(childNode: mushroom)
++
++    camera.position.z = -sceneOffset(height: Constants.gameHeight,
++                                     fov: camera.fovRadians)
++    camera.position.x = -Constants.gameWidth / 2
++    camera.position.y = -Constants.gameHeight / 2
++    camera.rotation.x = radians(fromDegrees: 20)
++    camera.position.y = -Constants.gameHeight / 2 + 5
+@@ -35 +55,40 @@
+-    camera.position.z = -6
++    light.color = float3(1, 1, 1)
++    light.ambientIntensity = 0.3
++    light.diffuseIntensity = 0.8
++    light.direction = float3(0, -1, -1)
++    setupScene()
++  }
++  
++  func setupScene() {
++    ball.position.x = Constants.gameWidth / 2
++    ball.position.y = Constants.gameHeight * 0.1
++    ball.materialColor = float4(0.5, 0.9, 0, 1)
++    add(childNode: ball)
++    
++    paddle.position.x = Constants.gameWidth / 2
++    paddle.position.y = Constants.gameHeight * 0.05
++    paddle.materialColor = float4(1, 0, 0, 1)
++    add(childNode: paddle)
++    
++    let border = Model(device: device, modelName: "border")
++    border.position.x = Constants.gameWidth/2
++    border.position.y = Constants.gameHeight/2
++    border.materialColor = float4(0.51, 0.24, 0, 1)
++    add(childNode: border)
++    
++    let colors = generateColors(number: Constants.bricksPerRow)
++    
++    let margin = Constants.gameWidth * 0.11
++    let startY = Constants.gameHeight * 0.5
++    
++    for row in 0..<Constants.bricksPerRow {
++      for column in 0..<Constants.bricksPerColumn {
++        var position = float3(0)
++        position.x = margin + (margin * Float(row))
++        position.y = startY + (margin * Float(column))
++        let index = row * Constants.bricksPerColumn + column
++        bricks.nodes[index].position = position
++        bricks.nodes[index].materialColor = colors[row]
++      }
++    }
++    add(childNode: bricks)
+@@ -39 +98,8 @@
+-    mushroom.rotation.y += deltaTime
++    for brick in bricks.nodes {
++      brick.rotation.y += π / 4 * deltaTime
++      brick.rotation.z += π / 4 * deltaTime
++    }
++  }
++  
++  func sceneOffset(height: Float, fov: Float) -> Float {
++    return (height / 2) / tan(fov / 2)
+```
+
+
+### Instance.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Instance.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Instance.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Instance.swift
+@@ -78,0 +79,3 @@
++      pointer.pointee.normalMatrix = matrix_multiply(modelViewMatrix, node.modelMatrix).upperLeft3x3()
++      pointer.pointee.shininess = node.shininess
++      pointer.pointee.specularIntensity = node.specularIntensity
+```
+
+
+### LightingScene.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/LightingScene.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/LightingScene.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/LightingScene.swift
+@@ -34,0 +35 @@
++    mushroom.position.y = -1
+@@ -37 +37,0 @@
+-    mushroom.position.y = -1
+@@ -39 +39 @@
+-    
++
+@@ -58,0 +59 @@
++    
+```
+
+
+### Model.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Model.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Model.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Model.swift
+@@ -100,0 +101 @@
++    
+@@ -107,0 +109 @@
++    
+@@ -143,0 +146,2 @@
++
++
+```
+
+
+### Primitive.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Primitive.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Primitive.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Primitive.swift
+@@ -28 +27,0 @@
+-  
+```
+
+
+### Renderer.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/Renderer.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/Renderer.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/Renderer.swift
+@@ -53,0 +54 @@
++    
+```
+
+
+### Utilities.swift
+
+- new file
+
+
+### ViewController.swift
+
+- File Diff: `12-BeginningMetal-DiffuseSpecularLighting/Challenge/ViewController.swift` vs `13-BeginningMetal-MakingAGamePart1/Final/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- 12-BeginningMetal-DiffuseSpecularLighting/Challenge/ViewController.swift
++++ 13-BeginningMetal-MakingAGamePart1/Final/ViewController.swift
+@@ -53 +53 @@
+-    renderer?.scene = LightingScene(device: device, size: view.bounds.size)
++    renderer?.scene = GameScene(device: device, size: view.bounds.size)
+@@ -54,0 +55 @@
++    
+@@ -55,0 +57,2 @@
++  
++  override var prefersStatusBarHidden: Bool { return true }
+```
+
+
+
+
+
+# 📝 2026/04/09
+
+
+## 差分 : `12 - DiffuseSpecularLighting/Challenge/`
+
+### AppDelegate.swift
+
+- File Diff: `Final/AppDelegate.swift` vs `Challenge/AppDelegate.swift`
+
+```diff AppDelegate.swift:swift
+--- Final/AppDelegate.swift
++++ Challenge/AppDelegate.swift
+@@ -30 +29,0 @@
+-
+```
+
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -68,2 +67,0 @@
+-  
+-
+```
+
+
+### LightingScene.swift
+
+- File Diff: `Final/LightingScene.swift` vs `Challenge/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- Final/LightingScene.swift
++++ Challenge/LightingScene.swift
+@@ -34,0 +35,2 @@
++    mushroom.specularIntensity = 0.2
++    mushroom.shininess = 2.0
+@@ -57 +58,0 @@
+-    
+```
+
+
+### Model.swift
+
+- File Diff: `Final/Model.swift` vs `Challenge/Model.swift`
+
+```diff Model.swift:swift
+--- Final/Model.swift
++++ Challenge/Model.swift
+@@ -101 +100,0 @@
+-    
+@@ -109 +107,0 @@
+-    
+@@ -117,0 +116,2 @@
++    modelConstants.shininess = shininess
++    modelConstants.specularIntensity = specularIntensity
+@@ -144,2 +143,0 @@
+-
+-
+```
+
+
+### Node.swift
+
+- File Diff: `Final/Node.swift` vs `Challenge/Node.swift`
+
+```diff Node.swift:swift
+--- Final/Node.swift
++++ Challenge/Node.swift
+@@ -27,0 +28,3 @@
++  var specularIntensity: Float = 1
++  var shininess: Float = 1
++  
+```
+
+
+### Primitive.swift
+
+- File Diff: `Final/Primitive.swift` vs `Challenge/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- Final/Primitive.swift
++++ Challenge/Primitive.swift
+@@ -27,0 +28 @@
++  
+```
+
+
+### Renderer.swift
+
+- File Diff: `Final/Renderer.swift` vs `Challenge/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- Final/Renderer.swift
++++ Challenge/Renderer.swift
+@@ -54 +53,0 @@
+-    
+```
+
+
+### Types.swift
+
+- File Diff: `Final/Types.swift` vs `Challenge/Types.swift`
+
+```diff Types.swift:swift
+--- Final/Types.swift
++++ Challenge/Types.swift
+@@ -34,0 +35,2 @@
++  var specularIntensity: Float = 1
++  var shininess: Float = 1
+```
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -55 +54,0 @@
+-    
+```
+
+
+
+
+
+## 差分 : `12 - DiffuseSpecularLighting/Final/`
+
+### AppDelegate.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/AppDelegate.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/AppDelegate.swift`
+
+```diff AppDelegate.swift:swift
+--- 11 - Ambient Lighting/Challenge/AppDelegate.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/AppDelegate.swift
+@@ -29,0 +30 @@
++
+```
+
+
+### GameScene.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/GameScene.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- 11 - Ambient Lighting/Challenge/GameScene.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/GameScene.swift
+@@ -41 +40,0 @@
+-  
+```
+
+
+### Instance.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Instance.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 11 - Ambient Lighting/Challenge/Instance.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Instance.swift
+@@ -67,0 +68,2 @@
++  
++
+```
+
+
+### LightingScene.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/LightingScene.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- 11 - Ambient Lighting/Challenge/LightingScene.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/LightingScene.swift
+@@ -38,2 +38,4 @@
+-    light.color = float3(0, 0, 1)
+-    light.ambientIntensity = 0.5
++    light.color = float3(1, 1, 1)
++    light.ambientIntensity = 0.2
++    light.diffuseIntensity = 0.8
++    light.direction = float3(0, 0, -1)
+```
+
+
+### Model.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Model.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 11 - Ambient Lighting/Challenge/Model.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Model.swift
+@@ -108,0 +109 @@
++    
+@@ -115,0 +117 @@
++    modelConstants.normalMatrix = modelViewMatrix.upperLeft3x3()
+```
+
+
+### Renderer.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Renderer.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- 11 - Ambient Lighting/Challenge/Renderer.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Renderer.swift
+@@ -67,2 +66,0 @@
+-    
+-    
+@@ -71 +68,0 @@
+-    
+@@ -73 +69,0 @@
+-
+@@ -76 +71,0 @@
+-    
+@@ -79 +73,0 @@
+-    
+@@ -83,2 +76,0 @@
+-    
+-    
+```
+
+
+### Scene.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Scene.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Scene.swift`
+
+```diff Scene.swift:swift
+--- 11 - Ambient Lighting/Challenge/Scene.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Scene.swift
+@@ -74 +73,0 @@
+-
+```
+
+
+### Types.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/Types.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/Types.swift`
+
+```diff Types.swift:swift
+--- 11 - Ambient Lighting/Challenge/Types.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/Types.swift
+@@ -33,0 +34 @@
++  var normalMatrix = matrix_identity_float3x3
+@@ -42,0 +44,2 @@
++  var diffuseIntensity: Float = 1.0
++  var direction = float3(0)
+```
+
+
+### ViewController.swift
+
+- File Diff: `11 - Ambient Lighting/Challenge/ViewController.swift` vs `12-BeginningMetal-DiffuseSpecularLighting/Final/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- 11 - Ambient Lighting/Challenge/ViewController.swift
++++ 12-BeginningMetal-DiffuseSpecularLighting/Final/ViewController.swift
+@@ -54,0 +55 @@
++    
+```
+
+
+
+
+
+# 📝 2026/04/07
+
+## 差分 : `11 - Ambient Lighting/Challenge/`
+
+### GameScene.swift
+
+- File Diff: `Final/GameScene.swift` vs `Challenge/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- Final/GameScene.swift
++++ Challenge/GameScene.swift
+@@ -40,0 +41 @@
++  
+```
+
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -68,2 +67,0 @@
+-  
+-
+```
+
+
+### LightingScene.swift
+
+- File Diff: `Final/LightingScene.swift` vs `Challenge/LightingScene.swift`
+
+```diff LightingScene.swift:swift
+--- Final/LightingScene.swift
++++ Challenge/LightingScene.swift
+@@ -27,0 +28 @@
++  var previousTouchLocation: CGPoint = .zero
+@@ -39 +39,0 @@
+-    
+@@ -43,0 +44,19 @@
++  
++  override func touchesBegan(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    previousTouchLocation = touch.location(in: view)
++  }
++  
++  override func touchesMoved(_ view: UIView, touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    guard let touch = touches.first else { return }
++    let touchLocation = touch.location(in: view)
++    
++    let delta = CGPoint(x: previousTouchLocation.x - touchLocation.x,
++                        y: previousTouchLocation.y - touchLocation.y)
++    let sensitivity: Float = 0.01
++    mushroom.rotation.x += Float(delta.y) * sensitivity
++    mushroom.rotation.y += Float(delta.x) * sensitivity
++    previousTouchLocation = touchLocation
++  }
+```
+
+
+### Model.swift
+
+- File Diff: `Final/Model.swift` vs `Challenge/Model.swift`
+
+```diff Model.swift:swift
+--- Final/Model.swift
++++ Challenge/Model.swift
+@@ -70,0 +71 @@
++    
+```
+
+
+### Primitive.swift
+
+- File Diff: `Final/Primitive.swift` vs `Challenge/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- Final/Primitive.swift
++++ Challenge/Primitive.swift
+@@ -28 +27,0 @@
+-  
+```
+
+
+### Renderer.swift
+
+- File Diff: `Final/Renderer.swift` vs `Challenge/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- Final/Renderer.swift
++++ Challenge/Renderer.swift
+@@ -53,0 +54 @@
++    
+@@ -65,0 +67,2 @@
++    
++    
+@@ -67,0 +71 @@
++    
+@@ -68,0 +73 @@
++
+@@ -70,0 +76 @@
++    
+@@ -76,0 +83,2 @@
++    
++    
+```
+
+
+### Scene.swift
+
+- File Diff: `Final/Scene.swift` vs `Challenge/Scene.swift`
+
+```diff Scene.swift:swift
+--- Final/Scene.swift
++++ Challenge/Scene.swift
+@@ -61,0 +62,13 @@
++  
++  func touchesBegan(_ view: UIView, touches: Set<UITouch>,
++                    with event: UIEvent?) {}
++  
++  func touchesMoved(_ view: UIView, touches: Set<UITouch>,
++                    with event: UIEvent?) {}
++  
++  func touchesEnded(_ view: UIView, touches: Set<UITouch>,
++                    with event: UIEvent?) {}
++  
++  func touchesCancelled(_ view: UIView, touches: Set<UITouch>,
++                        with event: UIEvent?) {}
++
+```
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -55,0 +56,24 @@
++
++  override func touchesBegan(_ touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    renderer?.scene?.touchesBegan(view, touches:touches,
++                                  with: event)
++  }
++  
++  override func touchesMoved(_ touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    renderer?.scene?.touchesMoved(view, touches: touches,
++                                  with: event)
++  }
++  
++  override func touchesEnded(_ touches: Set<UITouch>,
++                             with event: UIEvent?) {
++    renderer?.scene?.touchesEnded(view, touches: touches,
++                                  with: event)
++  }
++  
++  override func touchesCancelled(_ touches: Set<UITouch>,
++                                 with event: UIEvent?) {
++    renderer?.scene?.touchesCancelled(view, touches: touches,
++                                      with: event)
++  }
+@@ -57,0 +82,2 @@
++
++
+```
+
+
+
+
+
+# 📝 2026/04/04
+
+## 差分 : `11 - Ambient Lighting/Final/`
+
+### Instance.swift
+
+- File Diff: `10 - Instances/Challenge/Instance.swift` vs `11 - Ambient Lighting/Final/Instance.swift`
+
+```diff Instance.swift:swift
+--- 10 - Instances/Challenge/Instance.swift
++++ 11 - Ambient Lighting/Final/Instance.swift
+@@ -67,0 +68,2 @@
++  
++
+@@ -74 +75,0 @@
+-    
+@@ -85 +85,0 @@
+-    
+@@ -88 +87,0 @@
+-    
+```
+
+
+### LightingScene.swift
+
+- new file
+
+
+### Model.swift
+
+- File Diff: `10 - Instances/Challenge/Model.swift` vs `11 - Ambient Lighting/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 10 - Instances/Challenge/Model.swift
++++ 11 - Ambient Lighting/Final/Model.swift
+@@ -69 +69 @@
+-      fragmentFunctionName = "textured_fragment"
++      fragmentFunctionName = "lit_textured_fragment"
+@@ -71 +70,0 @@
+-    
+@@ -109 +107,0 @@
+-    
+```
+
+
+### Scene.swift
+
+- File Diff: `10 - Instances/Challenge/Scene.swift` vs `11 - Ambient Lighting/Final/Scene.swift`
+
+```diff Scene.swift:swift
+--- 10 - Instances/Challenge/Scene.swift
++++ 11 - Ambient Lighting/Final/Scene.swift
+@@ -29,0 +30 @@
++  var light = Light()
+@@ -44,0 +46,4 @@
++    commandEncoder.setFragmentBytes(&light,
++                                    length: MemoryLayout<Light>.stride,
++                                    at: 3)
++    
+```
+
+
+### Types.swift
+
+- File Diff: `10 - Instances/Challenge/Types.swift` vs `11 - Ambient Lighting/Final/Types.swift`
+
+```diff Types.swift:swift
+--- 10 - Instances/Challenge/Types.swift
++++ 11 - Ambient Lighting/Final/Types.swift
+@@ -38,0 +39,7 @@
++
++struct Light {
++  var color = float3(1)
++  var ambientIntensity: Float = 1.0
++}
++
++
+```
+
+
+### ViewController.swift
+
+- File Diff: `10 - Instances/Challenge/ViewController.swift` vs `11 - Ambient Lighting/Final/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- 10 - Instances/Challenge/ViewController.swift
++++ 11 - Ambient Lighting/Final/ViewController.swift
+@@ -51 +51 @@
+-    metalView.clearColor =  Colors.skyBlue
++    metalView.clearColor =  Colors.wenderlichGreen
+@@ -53 +53 @@
+-    renderer?.scene = LandscapeScene(device: device, size: view.bounds.size)
++    renderer?.scene = LightingScene(device: device, size: view.bounds.size)
+```
+
+
+
+
+
+# 📝 2026/04/03
+
+## 差分 : `10 - Instances/Challenge/`
+
+今回はpdf 確認しながらステップバイステップでいきたいかもな
+
+
+### Instance.swift
+
+- File Diff: `Final/Instance.swift` vs `Challenge/Instance.swift`
+
+```diff Instance.swift:swift
+--- Final/Instance.swift
++++ Challenge/Instance.swift
+@@ -68,2 +67,0 @@
+-  
+-
+@@ -75,0 +74 @@
++    
+@@ -85,0 +85 @@
++    
+@@ -87,0 +88 @@
++    
+```
+
+
+### LandscapeScene.swift
+
+- File Diff: `Final/LandscapeScene.swift` vs `Challenge/LandscapeScene.swift`
+
+```diff LandscapeScene.swift:swift
+--- Final/LandscapeScene.swift
++++ Challenge/LandscapeScene.swift
+@@ -27,0 +28,3 @@
++  let ground: Plane
++  let grass: Instance
++  let mushroom: Model
+@@ -29,0 +33,4 @@
++    ground = Plane(device: device)
++    grass = Instance(device: device, modelName: "grass",
++                     instances: 10000)
++    mushroom = Model(device: device, modelName: "mushroom")
+@@ -33,0 +41,48 @@
++    setupScene()
++  }
++  
++  func setupScene() {
++    ground.materialColor = float4(0.4, 0.3, 0.1, 1) // brown
++    add(childNode: ground)
++    add(childNode: grass)
++    add(childNode: mushroom)
++    
++    ground.scale = float3(20)
++    ground.rotation.x = radians(fromDegrees: 90)
++    
++    camera.rotation.x = radians(fromDegrees: -10)
++    camera.position.z = -20
++    camera.position.y = -2
++    
++    let greens = [
++      float4(0.34, 0.51, 0.01, 1),
++      float4(0.5, 0.5, 0, 1),
++      float4(0.29, 0.36, 0.14, 1)
++    ]
++    
++    for row in 0..<100 {
++      for column in 0..<100 {
++        var position = float3(0)
++        position.x = Float(row) / 4
++        position.z = Float(column) / 4
++        
++        let blade = grass.nodes[row * 100 + column]
++        blade.scale = float3(0.5)
++        blade.position = position
++        
++        blade.materialColor = greens[Int(arc4random_uniform(3))]
++        blade.rotation.y = radians(fromDegrees: Float(arc4random_uniform(360)))
++      }
++    }
++    grass.position.x = -12
++    grass.position.z = -12
++    
++    mushroom.position.x = -6
++    mushroom.position.z = -8
++    mushroom.scale = float3(2)
++    
++    sun.position.y = 7
++    sun.position.x = 6
++    sun.scale = float3(2)
++    
++    camera.fovDegrees = 25
+```
+
+
+### Primitive.swift
+
+- File Diff: `Final/Primitive.swift` vs `Challenge/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- Final/Primitive.swift
++++ Challenge/Primitive.swift
+@@ -27,0 +28 @@
++  
+@@ -37 +38 @@
+-  var fragmentFunctionName: String = "fragment_shader"
++  var fragmentFunctionName: String = "fragment_color"
+@@ -116,0 +118 @@
++    modelConstants.materialColor = materialColor
+```
+
+
+### Renderer.swift
+
+- File Diff: `Final/Renderer.swift` vs `Challenge/Renderer.swift`
+
+```diff Renderer.swift:swift
+--- Final/Renderer.swift
++++ Challenge/Renderer.swift
+@@ -59 +59,3 @@
+-  func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
++  func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
++    scene?.sceneSizeWillChange(to: size)
++  }
+```
+
+
+### Scene.swift
+
+- File Diff: `Final/Scene.swift` vs `Challenge/Scene.swift`
+
+```diff Scene.swift:swift
+--- Final/Scene.swift
++++ Challenge/Scene.swift
+@@ -35 +34,0 @@
+-    camera.aspect = Float(size.width / size.height)
+@@ -53,0 +53,4 @@
++  
++  func sceneSizeWillChange(to size: CGSize) {
++    camera.aspect = Float(size.width / size.height)
++  }
+```
+
+
+### ViewController.swift
+
+- File Diff: `Final/ViewController.swift` vs `Challenge/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- Final/ViewController.swift
++++ Challenge/ViewController.swift
+@@ -53 +53 @@
+-    renderer?.scene = InstanceScene(device: device, size: view.bounds.size)
++    renderer?.scene = LandscapeScene(device: device, size: view.bounds.size)
+```
+
+
+
+
+
+
+# 📝 2026/04/01
+
+## difflib で差分確認
+
+参照コードの変化が目視確認では辛いので、ゴリっと出すようにした
+
+## diff
+
+なんとなく、改行での差分が多めか？
+
+### AppDelegate.swift
+
+- File Diff: `9 - Model IO/Challenge/AppDelegate.swift` vs `10 - Instances/Final/AppDelegate.swift`
+
+```diff AppDelegate.swift:swift
+--- 9 - Model IO/Challenge/AppDelegate.swift
++++ 10 - Instances/Final/AppDelegate.swift
+@@ -30 +29,0 @@
+-
+```
+
+
+### CrowdScene.swift
+
+- new file
+
+
+### GameScene.swift
+
+- File Diff: `9 - Model IO/Challenge/GameScene.swift` vs `10 - Instances/Final/GameScene.swift`
+
+```diff GameScene.swift:swift
+--- 9 - Model IO/Challenge/GameScene.swift
++++ 10 - Instances/Final/GameScene.swift
+@@ -41 +40,0 @@
+-  
+```
+
+
+### Instance.swift
+
+- new file
+
+
+### InstanceScene.swift
+
+- new file
+
+
+### Model.swift
+
+- File Diff: `9 - Model IO/Challenge/Model.swift` vs `10 - Instances/Final/Model.swift`
+
+```diff Model.swift:swift
+--- 9 - Model IO/Challenge/Model.swift
++++ 10 - Instances/Final/Model.swift
+@@ -108,0 +109 @@
++    
+@@ -116 +116,0 @@
+-    
+```
+
+
+### Primitive.swift
+
+- File Diff: `9 - Model IO/Challenge/Primitive.swift` vs `10 - Instances/Final/Primitive.swift`
+
+```diff Primitive.swift:swift
+--- 9 - Model IO/Challenge/Primitive.swift
++++ 10 - Instances/Final/Primitive.swift
+@@ -28 +27,0 @@
+-  
+```
+
+
+### Renderable.swift
+
+- File Diff: `9 - Model IO/Challenge/Renderable.swift` vs `10 - Instances/Final/Renderable.swift`
+
+```diff Renderable.swift:swift
+--- 9 - Model IO/Challenge/Renderable.swift
++++ 10 - Instances/Final/Renderable.swift
+@@ -57 +56,0 @@
+-
+```
+
+
+### ViewController.swift
+
+- File Diff: `9 - Model IO/Challenge/ViewController.swift` vs `10 - Instances/Final/ViewController.swift`
+
+```diff ViewController.swift:swift
+--- 9 - Model IO/Challenge/ViewController.swift
++++ 10 - Instances/Final/ViewController.swift
+@@ -53 +53 @@
+-    renderer?.scene = LandscapeScene(device: device, size: view.bounds.size)
++    renderer?.scene = InstanceScene(device: device, size: view.bounds.size)
+```
+
+
+
