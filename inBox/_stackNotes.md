@@ -1,6 +1,58 @@
 もう面倒だから、全部書き落としていくか
 
 
+# 📝 2026/07/24
+
+## p5.sound
+
+[GitHub - processing/p5.sound.js](https://github.com/processing/p5.sound.js)
+
+`0.3.0` が`0.4.1` になってた。
+
+p5.js をv2系に移行のため、古いsound ではない方へ順応していく。
+
+### v2系移行につき
+
+iframe 内のsketch 描画方式は変更がない。が、sound 面で`AudioContext` への配慮が必要。
+それは、以前も配慮は必要であったが、sound のアーキテクチャ刷新により、より真面目に考えなければならなくなった。
+
+v2系での方針としては、sandbox を毎回生成し直す。
+しかし、`AudioContext` はメインスレッド側で1つ持たせておき、sandbox 生成時に、メイン側の`AudioContext` をsandbox に投げ渡す感じ。
+
+sound 関係をこんな面倒にしているのが、safari の音制限のため。普通にChrome とかだとこの点は苦労しないと思う。
+
+
+### 書き方
+
+そのものが、変化しまくっているので、過去のコードを確認しながら、検証をしていく感じ
+example にあるコードが全部global mode なんですが。。。。
+
+#### `loadSound`
+
+なんかだめでは？`setup` での`async` とか、あってるのかすらわからん。
+ちょっと、こっちのsandbox 土台も再度洗い直さなきゃいけないけど。
+
+#### osc のLFO 制御
+
+`Oscillator` とするオブジェクトは、`p5.sound` のみ、内部に`node` を持っている。
+オブジェクトの`frequency` は、発信する数値であるが、`node.frequency` はWebAudioAPI での`OscillatorNode` の`.frequency` の「それ」となる。
+オブジェクトの`.frequency` は、`node.frequency.value` という感じになる。
+
+frequency を揺らすにあたり、オブジェクトで`.connect` するのではなく、`node.connect` と`node` 側で`.connect` をする。
+
+p5.sound はtone.js のラッパーな感じであるが、結局tone.js のオブジェクトを触りにいく感じとなり、少しもやる。
+いまいまだと、さほど複雑なことをしていないので「WebAudioAPI そのものでいいのでは？」と思ってしまっている。
+
+#### メインミキサー？
+
+出す音の中央集権的なハブが欲しいので、`Gain` にその役を任せてみている。
+p5.sound としてそれが正しいのかは、不明。
+音源全てに`.disconnect` が必要となる感じになっている。
+
+`p5soundNode` だと、そもそも`node` を持っていないので、`Gain` が代用している感じになった。
+
+これでいいんだっけ？
+
 
 # 📝 2026/07/19
 
