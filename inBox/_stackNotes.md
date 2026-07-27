@@ -12,6 +12,23 @@
     - sandbox を使い回す必要がなくなったため
 - いい具合に`fetch` して、取得する
     - `await` をトップレベルで使うと、`document.addEventListener('DOMContentLoaded', () => {});` が面倒になるため、要調整
+- sandbox のエントリポイントが、`main.js` をroot となる？
+
+### 非同期source 取得
+
+```js
+/* --- load Source */
+async function insertFetchDoc(filePath) {
+  const fetchFilePath = async (path) => {
+    const res = await fetch(path);
+    return await res.text();
+  };
+  return await fetchFilePath(filePath);
+}
+```
+
+無駄ありすぎるから、そろそろなんとかしたい
+
 
 
 # 📝 2026/07/25
