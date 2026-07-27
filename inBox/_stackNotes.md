@@ -1,5 +1,19 @@
 もう面倒だから、全部書き落としていくか
 
+
+# 📝 2026/07/27
+
+## [p5js4codemirror6](https://github.com/pome-ta/p5js4codemirror6/tree/18c4e92efbb0827eb968b8f0a5432b7b4cc1556f) の書き換え
+
+↑のリンクは、このメモ時のコミット
+
+
+- sandbox へは、事前に文字列HTML を作り読み込み
+    - sandbox を使い回す必要がなくなったため
+- いい具合に`fetch` して、取得する
+    - `await` をトップレベルで使うと、`document.addEventListener('DOMContentLoaded', () => {});` が面倒になるため、要調整
+
+
 # 📝 2026/07/25
 
 
