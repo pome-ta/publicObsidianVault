@@ -5,6 +5,21 @@
 
 ## p5.sound とTone.js
 
+wrapper ってなんやろか（哲学）基本的にTone.js 使用でええんか？
+
+### LSP を加味すると。。。
+
+
+```html
+<script src="http://unpkg.com/tone"></script>
+```
+
+これでglobal 展開できるらしいけど（未検証）、LSP の時ATA 考慮すると、`import` 明示させた方がええか？
+
+
+とはいえ、プレイグラウンドだと、別に書くから点在しちゃうか？
+
+
 
 
 # 📝 2026/07/27
