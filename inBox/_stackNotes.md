@@ -1,6 +1,12 @@
 もう面倒だから、全部書き落としていくか
 
 
+# 📝 2026/07/30
+
+## p5.sound とTone.js
+
+
+
 # 📝 2026/07/27
 
 ## [p5js4codemirror6](https://github.com/pome-ta/p5js4codemirror6/tree/18c4e92efbb0827eb968b8f0a5432b7b4cc1556f) の書き換え
