@@ -3,6 +3,22 @@
 
 # 📝 2026/08/08
 
+## スペクトラムアナライザのパフォーマンス
+
+```
+
+6
+5
+6.999999999999545
+5
+6
+7
+6
+```
+
+
+`import SpectrumAnalyzer from 'modules/SpectrumAnalyzer01.js';`
+
 
 
 
