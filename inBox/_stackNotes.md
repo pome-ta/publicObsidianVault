@@ -1,25 +1,311 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/08/12
+
+
+[standardized-audio-context CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/npm/standardized-audio-context)
+
+
+
+# 📝 2026/08/10
+
+## スペクトラムアナライザのパフォーマンス
+
+### コード
+
+```js
+    const types = ['sine', 'triangle', 'sawtooth', 'square'];
+
+    mainOsc = new p5.Oscillator(440, types[0]);
+    mainOsc.amp(0.8);
+    mainOsc.disconnect();
+
+    lfo = new p5.Oscillator(0.1, 'sine'); // 速さ
+    lfo.amp(360); // 幅
+    lfo.disconnect();
+
+    subOsc = new p5.Oscillator(880, types[2]);
+    subOsc.amp(0.3);
+    subOsc.disconnect();
+
+    mainMixer = new p5.Gain();
+    lfo.node.connect(mainOsc.node.frequency);
+    mainOsc.connect(mainMixer);
+    subOsc.connect(mainMixer);
+
+    lfo.start();
+    mainOsc.start();
+    subOsc.start();
+
+```
+
+### 01
+
+```
+ave: 3.712500000000015
+max: 6
+min: 2
+```
+
+```
+ave: 3.720833333333248
+max: 6
+min: 1.9999999999990905
+```
+
+```
+ave: 3.779166666666718
+max: 6
+min: 2
+```
+
+```
+ave: 3.824999999999926
+max: 6
+min: 2
+```
+
+
+```
+ave: 3.8083333333332954
+max: 6
+min: 1.9999999999990905
+```
+
+
+```
+ave: 4.0333333333333865
+max: 6.000000000000455
+min: 2.9999999999990905
+```
+
+```
+ave: 3.858333333333356
+max: 6.0000000000009095
+min: 2
+```
+
+### 02
+
+```
+ave: 3.8041666666666476
+max: 6.000000000000455
+min: 2
+```
+
+
+```
+ave: 3.662499999999947
+max: 14
+min: 1.9999999999990905
+```
+
+```
+ave: 3.95416666666668
+max: 8
+min: 2.9999999999990905
+```
+
+```
+ave: 3.79166666666671
+max: 12
+min: 1.9999999999995453
+```
+
+```
+ave: 3.824999999999945
+max: 6
+min: 1.9999999999990905
+```
+
+
+```
+ave: 3.8416666666666135
+max: 18
+min: 2
+```
+
+
+```
+ave: 3.7958333333332708
+max: 20
+min: 2
+```
+
+```
+ave: 3.787499999999964
+max: 8
+min: 2
+```
+
+### 03
+
+```
+ave: 4.070833333333271
+max: 5.0000000000009095
+min: 2.9999999999990905
+```
+
+
+```
+ave: 4.008333333333227
+max: 5.000000000000455
+min: 2.9999999999990905
+```
+
+```
+ave: 3.6749999999999394
+max: 5.0000000000009095
+min: 1.9999999999990905
+```
+
+
+```
+ave: 3.8291666666667408
+max: 14
+min: 1.9999999999995453
+```
+
+```
+ave: 3.7666666666666893
+max: 5.0000000000009095
+min: 2
+```
+
+```
+ave: 3.754166666666623
+max: 6.0000000000009095
+min: 1.9999999999990905
+```
+
+```
+ave: 4.004166666666745
+max: 5.0000000000009095
+min: 2.9999999999995453
+```
+
+```
+ave: 3.76666666666672
+max: 7
+min: 1.0000000000004547
+```
+
+
+```
+ave: 3.883333333333396
+max: 5.0000000000009095
+min: 2
+```
+
+```
+ave: 3.833333333333432
+max: 6
+min: 2
+```
 
 # 📝 2026/08/08
 
 ## スペクトラムアナライザのパフォーマンス
 
+### 01
+
+```
+ave: 3.8666666666666836
+max: 8
+min: 2
 ```
 
-6
-5
-6.999999999999545
-5
-6
-7
-6
+```
+ave: 3.691666666666644
+max: 22.000000000000455
+min: 1.9999999999995453
 ```
 
+```
+ave: 3.8833333333332556
+max: 6.0000000000009095
+min: 2.9999999999990905
+```
+
+```
+ave: 3.8624999999999905
+max: 15
+min: 2
+```
+
+```
+ave: 3.8374999999999604
+max: 6.000000000000455
+min: 2
+```
+
+```
+ave: 3.816666666666733
+max: 6.0000000000009095
+min: 2.9999999999990905
+```
+
+
+### 02
+
+```
+ave: 4.012499999999911
+max: 6.0000000000009095
+min: 2.9999999999990905
+```
+
+```
+ave: 3.8583333333332517
+max: 16
+min: 2.9999999999990905
+```
+
+
+```
+ave: 3.829166666666659
+max: 5.000000000000455
+min: 2.9999999999990905
+```
+
+```
+ave: 3.629166666666608
+max: 17.00000000000091
+min: 2
+```
+
+```
+ave: 3.9208333333334298
+max: 7
+min: 2.9999999999990905
+```
 
 `import SpectrumAnalyzer from 'modules/SpectrumAnalyzer01.js';`
 
+```js
+    const types = ['sine', 'triangle', 'sawtooth', 'square'];
 
+    mainOsc = new p5.Oscillator(440 + p.random() * 440, types[0]);
+    mainOsc.amp(0.8);
+    mainOsc.disconnect();
+
+    lfo = new p5.Oscillator(0.1, 'sine'); // 速さ
+    lfo.amp(200); // 幅
+    lfo.disconnect();
+
+    subOsc = new p5.Oscillator(880 + p.random() * 440, types[2]);
+    subOsc.amp(0.3);
+    subOsc.disconnect();
+
+    mainMixer = new p5.Gain();
+    lfo.node.connect(mainOsc.node.frequency);
+    mainOsc.connect(mainMixer);
+    subOsc.connect(mainMixer);
+
+    lfo.start();
+    mainOsc.start();
+    subOsc.start();
+
+```
 
 
 # 📝 2026/08/02
