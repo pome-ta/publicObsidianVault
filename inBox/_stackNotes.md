@@ -1,5 +1,62 @@
 もう面倒だから、全部書き落としていくか
 
+
+# 📝 2026/08/16
+
+p5.js のplayground で実装したmodule たちのメモ
+
+## p5.js のメソッドのインターセプト（？）
+
+```js
+  #hookWindowResized() {
+    const originalWindowResized = this.#p.windowResized;
+    this.#p.windowResized = (...args) => {
+      originalWindowResized?.apply(this.#p, args);
+      this.#setBaseAttributes();
+    };
+  }
+```
+
+
+```js
+const sketch = (p) => {
+  // ここで定義されると、
+  // `setup` や`draw` で上書きされて無効される
+}
+```
+
+
+## `TapIndicator.js`
+
+`p.setup` で、`draw` をインターセプト。
+`new p5(sketch);` 定義で上書きされないようなガードを`.setup` に持たせている
+
+
+
+## `SpectrumAnalyzer.js`
+
+v1 時のp5.sound は、`AnalyserNode.getByteFrequencyData()` と、`Uint8Array` 配列 で返っていたみたいだが、`AnalyserNode.getFloatFrequencyData()` と`Float32Array` 配列が返るように。
+
+```js
+        this.analyzer = new ToneFFT({
+            size: this.fftSize,
+            normalRange: true,
+        });
+```
+
+と、`normalRange: true` で指定されている。
+
+また、`db` の数値出しに関して、色々低く出るので、
+
+```
+  // todo: db 調整
+  //   - 0.42 : ブラックマン窓による減衰
+  //   - 0.5  : 正/負の周波数へのエネルギー分裂
+```
+
+と、調整してみている。
+
+
 # 📝 2026/08/15
 
 ## p5.sound とTone.js の使い分け
