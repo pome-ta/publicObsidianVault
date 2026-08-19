@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/_stackNotes.md",
+                "file": "inBox/note2608191355.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "_stackNotes"
+              "title": "note2608191355"
             }
           }
         ]
@@ -37,7 +37,9 @@
           "type": "file-explorer",
           "state": {
             "sortOrder": "alphabetical",
-            "autoReveal": false
+            "autoReveal": false,
+            "showSearch": false,
+            "searchQuery": ""
           },
           "icon": "lucide-folder-closed",
           "title": "ファイルエクスプローラ"
@@ -155,8 +157,10 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "f4317cdf2cbfbcf7",
+  "active": "2c4a236a0aa458cd",
   "lastOpenFiles": [
+    "inBox/_stackNotes.md",
+    "inBox/note2608191355.md",
     "agentPrompts/note2607202118.md",
     "agentPrompts/note2607201620.md",
     "agentPrompts/note2607201416.md",
@@ -171,7 +175,6 @@
     "agentPrompts/note2607142139.md",
     "agentPrompts/note2607132239.md",
     "agentPrompts/note2512221514.md",
-    "inBox/_stackNotes.md",
     "agentPrompts/note2607022237.md",
     "agentPrompts/note2607011123.md",
     "inBox/note2507141430.md",
@@ -182,7 +185,6 @@
     "inBox/note2505101828.md",
     "inBox/note2505101800.md",
     "agentPrompts/note2604191358.md",
-    "agentPrompts/note2604171430.md",
     "agentPrompts",
     "inBox"
   ]
