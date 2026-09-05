@@ -1,6 +1,28 @@
 もう面倒だから、全部書き落としていくか
 
 
+# 📝 2026/08/23
+
+## rubicon-objc
+
+
+```
+`api`, `runtime` and `types` are only included for clarity. They are not strictly necessary, because the from-imports below also import the types and runtime modules and implicitly add them to the rubicon.objc namespace.
+#
+# The import of collections is important, however. The classes from collections are not meant to be used directly, instead they are registered with the runtime module (using the for_objcclass decorator) so they are used in place of ObjCInstance when representing Foundation collections in Python. If this module is not imported, the registration will not take place, and Foundation collections will not support the expected methods/operators in Python!
+
+```
+
+```
+`api`、`runtime`、および `types` は、分かりやすくするためにのみ含まれています。以下の `from-imports` でも `types` および `runtime` モジュールがインポートされ、暗黙的に `rubicon.objc` 名前空間に追加されるため、これらは厳密には必須ではありません。
+#
+# ただし、collections のインポートは重要です。collections に含まれるクラスは直接使用されることを意図したものではなく、（for_objcclass デコレータを使用して）ランタイムモジュールに登録されることで、Python で Foundation コレクションを表現する際に ObjCInstance の代わりに使用されるようになっています。このモジュールをインポートしないと、登録が行われず、Foundation コレクションは Python で期待されるメソッドや演算子をサポートしなくなります！
+
+
+DeepLで翻訳しました (https://dee.pl/app)
+```
+
+
 # 📝 2026/08/16
 
 p5.js のplayground で実装したmodule たちのメモ
