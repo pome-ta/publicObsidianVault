@@ -1,6 +1,16 @@
 もう面倒だから、全部書き落としていくか
 
 
+# 📝 2026/09/24
+
+
+[GitHub - pome-ta/cm6tonejs4p5jsv2playground · GitHub](https://github.com/pome-ta/cm6tonejs4p5jsv2playground)
+
+Tone.js がメインとなってp5.js が蔑ろになってたので、ほぼクローンな状態で、Tone.js 検証用として引越し。
+
+
+Tone.js 仕様のメモ的なものを残しておかないと、、、（私が忘れる
+
 # 📝 2026/08/23
 
 ## rubicon-objc
