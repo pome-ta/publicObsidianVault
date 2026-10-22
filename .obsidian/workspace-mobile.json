@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/_stackNotes.md",
+                "file": "agentPrompts/scratchpad.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "_stackNotes"
+              "title": "scratchpad"
             }
           }
         ]
@@ -133,7 +133,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "inBox/_stackNotes.md",
+            "file": "agentPrompts/note2610221118.md",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -159,8 +159,9 @@
   },
   "active": "f4317cdf2cbfbcf7",
   "lastOpenFiles": [
-    "inBox/01_stackNotes.md",
     "inBox/_stackNotes.md",
+    "agentPrompts/scratchpad.md",
+    "inBox/01_stackNotes.md",
     "inBox/note2609080258.md",
     "inBox/note2608191355.md",
     "agentPrompts/note2607202118.md",
@@ -184,7 +185,6 @@
     "inBox/note2505130119.md",
     "inBox/note2505121200.md",
     "inBox/note2505102324.md",
-    "inBox/note2505101828.md",
     "agentPrompts",
     "inBox"
   ]
