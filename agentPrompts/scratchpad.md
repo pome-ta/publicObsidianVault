@@ -1,0 +1,1 @@
+frequency の変化でも、`k-rate` が比較的一般的？
