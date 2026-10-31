@@ -1,0 +1,5 @@
+- npm 経由でCDN でtone.js を取得
+- `import * as Tone from 'tone';` とビルドデータをインポート
+- 私の実装で`AudioWorkletProcessor` をつかうものがある
+- `AudioWorkletGlobalScope` としては、私とtone.js と共有か？
+- 
