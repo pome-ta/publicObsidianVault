@@ -1,5 +1,21 @@
-- npm 経由でCDN でtone.js を取得
-- `import * as Tone from 'tone';` とビルドデータをインポート
-- 私の実装で`AudioWorkletProcessor` をつかうものがある
-- `AudioWorkletGlobalScope` としては、私とtone.js と共有か？
-- 
+「同じcontext か？」について。ほぼコードの初動で、
+
+
+```js
+  // --- Tone.js
+  const p5Ctx = p.getAudioContext();
+  Tone.setContext(p5Ctx, true);
+  const toneCtx = Tone.getContext();
+  /* Starting Audio */
+  document.addEventListener(
+    'pointerup',
+    async () => await Tone.start(),
+    {
+      once: true,
+    },
+  );
+```
+
+としてるのだが、
+
+`Tone.BitCrusher` とかと、おなじcontext なのか？を確認する方法を知りたい。

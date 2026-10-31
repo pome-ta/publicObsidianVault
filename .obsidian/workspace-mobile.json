@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/_stackNotes.md",
+                "file": "agentPrompts/scratchpad.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "_stackNotes"
+              "title": "scratchpad"
             }
           }
         ]
@@ -159,9 +159,9 @@
   },
   "active": "f4317cdf2cbfbcf7",
   "lastOpenFiles": [
+    "inBox/_stackNotes.md",
     "agentPrompts/note2610291747.md",
     "agentPrompts/scratchpad.md",
-    "inBox/_stackNotes.md",
     "inBox/01_stackNotes.md",
     "inBox/note2609080258.md",
     "inBox/note2608191355.md",
