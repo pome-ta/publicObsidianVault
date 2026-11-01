@@ -1,3 +1,769 @@
+こんな感じかしらね？
+
+```js
+
+import * as Tone from 'tone';
+import { loadWorklet } from './workletLoader.js';
+
+export default class Bd extends Tone.ToneAudioNode {
+  name = 'Bd';
+  #paramNames = ['trigger', 'decay', 'amp', 'tone'];
+  input = undefined;
+  onprocessorerror = (e) => console.error(e);
+
+  static getDefaults() {
+    return Object.assign(Tone.ToneAudioNode.getDefaults(), {
+      decay: 30.0,
+      amp: 2.0,
+      tone: 56.0,
+      workletOptions: { outputChannelCount: [2] },
+    });
+  }
+  constructor(options) {
+    const opts = Object.assign(Bd.getDefaults(), options);
+    super(opts);
+
+    this.envelope = new Tone.AmplitudeEnvelope({
+      context: this.context,
+      attack: 0.0,
+      decay: 0.0,
+      sustain: 1.0,
+      release: 0.0,
+    });
+    this.output = this.envelope;
+
+    this._dummyGain = this.context.createGain();
+
+    // options の値を Param の初期 value に渡す
+    this.trigger = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'normalRange',
+      swappable: true,
+      value: 0,
+    });
+    this.decay = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'time',
+      swappable: true,
+      value: opts.decay,
+    });
+    this.amp = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'number',
+      swappable: true,
+      value: opts.amp,
+    });
+    this.tone = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'frequency',
+      swappable: true,
+      value: opts.tone,
+    });
+
+    const processorName = `${[...this.name]
+      .map((c, i) => (i ? c : c.toLowerCase()))
+      .join('')}-processor`;
+
+    loadWorklet(this.context)
+      .then(() => {
+        if (this.disposed) {
+          return; // ToneAudioWorklet と同じガード
+        }
+
+        // this._worklet = this.context.createAudioWorkletNode(
+        //   processorName,
+        //   opts.workletOptions,
+        // );
+        this._worklet = new AudioWorkletNode(
+          this.context.rawContext, // Tone 経由ではなく raw の context
+          processorName,
+          opts.workletOptions,
+        );
+
+        this._worklet.onprocessorerror = (e) =>
+          this.onprocessorerror(e.message);
+
+        this.onReady(this._worklet);
+      })
+      .catch((e) =>
+        console.error(`${processorName} setup failed`, e),
+      );
+  }
+
+  onReady(node) {
+    Tone.connect(node, this.output); // ソース → output Gain
+    this.#paramNames.forEach((n) => {
+      const p = node.parameters.get(n);
+      if (p) {
+        this[n].setParam(p);
+      }
+    });
+  }
+
+  triggerAttack(time, velocity = 1) {
+    const PULSE_WIDTH = 3 / this.context.sampleRate;
+    const t = this.toSeconds(time);
+
+    this.trigger.cancelScheduledValues(t);
+    this.trigger.setValueAtTime(0, t);
+    this.trigger.setValueAtTime(1, t);
+    // this.trigger.setValueAtTime(0, t + 1 / this.context.sampleRate);
+    this.trigger.setValueAtTime(0, t + PULSE_WIDTH);
+    this.envelope.triggerAttack(t, velocity);
+    return this;
+  }
+
+  triggerRelease(time) {
+    this.envelope.triggerRelease(this.toSeconds(time));
+    return this;
+  }
+
+  triggerAttackRelease(duration, time, velocity) {
+    const t = this.toSeconds(time);
+    this.triggerAttack(t, velocity);
+    this.triggerRelease(t + this.toSeconds(duration));
+    return this;
+  }
+
+  dispose() {
+    super.dispose();
+    this._dummyGain.disconnect();
+    this.#paramNames.forEach((n) => this[n].dispose());
+    if (this._worklet) {
+      this._worklet.port.postMessage('dispose');
+      this._worklet.disconnect();
+    }
+    return this;
+  }
+}
+
+```
+
+
+> ### 4. `getDefaults()` に基底の defaults がない
+
+ここの、解説が私には理解できていない。。。
+つまり、どうゆうことなのだろうか？
+コードで例を出してもらえる？
+
+
+以前の汚れたコード：
+
+
+```js
+import * as Tone from 'tone';
+import { loadWorklet } from './workletLoader.js';
+
+export default class Bd extends Tone.ToneAudioNode {
+  constructor(options = {}) {
+    // arg decay=30, amp=2, gate=0, tone=56;
+    const opts = Object.assign(
+      { decay: 30.0, amp: 2.0, tone: 56.0 },
+      options,
+    );
+    super({ context: opts.context ?? Tone.getContext() });
+
+    this.name = 'Bd';
+
+    this.input = undefined;
+    this.envelope = new Tone.AmplitudeEnvelope({
+      context: this.context,
+      attack: 0.0,
+      decay: 0.0,
+      sustain: 1.0,
+      release: 0.0,
+    });
+    this.output = this.envelope;
+
+    this._dummyGain = this.context.createGain();
+
+    // options の値を Param の初期 value に渡す
+    this.trigger = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'normalRange',
+      swappable: true,
+      value: 0,
+    });
+    this.decay = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'time',
+      swappable: true,
+      value: opts.decay,
+    });
+    this.amp = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'number',
+      swappable: true,
+      value: opts.amp,
+    });
+    this.tone = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'frequency',
+      swappable: true,
+      value: opts.tone,
+    });
+
+    this._worklet = null;
+    const processorName = `${[...this.name]
+      .map((c, i) => (i ? c : c.toLowerCase()))
+      .join('')}-processor`;
+
+    loadWorklet(this.context)
+      .then(() => {
+        // this._worklet = this.context.createAudioWorkletNode(
+        //   processorName,
+        //   {
+        //     outputChannelCount: [2],
+        //   },
+        // );
+        this._worklet = new AudioWorkletNode(
+          this.context.rawContext, // Tone 経由ではなく raw の context
+          processorName,
+          { outputChannelCount: [2] },
+        );
+
+        this._worklet.onprocessorerror = (e) => {
+          console.log('onprocessorerror');
+          console.error(e);
+        };
+
+        Tone.connect(this._worklet, this.envelope); // 永続接続
+        ['trigger', 'decay', 'tone', 'amp'].forEach((name) => {
+          const p = this._worklet.parameters.get(name);
+          if (p) {
+            this[name].setParam(p);
+          }
+        });
+      })
+      .catch((e) => {
+        console.log('catch');
+        console.error(`${processorName} load failed`, e);
+      });
+  }
+
+  triggerAttack(time, velocity = 1) {
+    const PULSE_WIDTH = 3 / this.context.sampleRate;
+    const t = this.toSeconds(time);
+
+    this.trigger.cancelScheduledValues(t);
+    this.trigger.setValueAtTime(0, t);
+    this.trigger.setValueAtTime(1, t);
+    // this.trigger.setValueAtTime(0, t + 1 / this.context.sampleRate);
+    this.trigger.setValueAtTime(0, t + PULSE_WIDTH);
+    this.envelope.triggerAttack(t, velocity);
+    return this;
+  }
+
+  triggerRelease(time) {
+    this.envelope.triggerRelease(this.toSeconds(time));
+    return this;
+  }
+
+  triggerAttackRelease(duration, time, velocity) {
+    const t = this.toSeconds(time);
+    this.triggerAttack(t, velocity);
+    this.triggerRelease(t + this.toSeconds(duration));
+    return this;
+  }
+
+  dispose() {
+    super.dispose();
+    this._dummyGain.disconnect();
+    this.trigger.dispose();
+    this.decay.dispose();
+    this.amp.dispose();
+    this.tone.dispose();
+    if (this._worklet) {
+      this._worklet.port.postMessage('dispose');
+      this._worklet.disconnect();
+    }
+    return this;
+  }
+}
+```
+
+
+を、もろもろ整理してみたのだけど、危ない点ある？
+
+
+```js
+import * as Tone from 'tone';
+import { loadWorklet } from './workletLoader.js';
+
+export default class Bd extends Tone.ToneAudioNode {
+  name = 'Bd';
+  #paramNames = ['trigger', 'decay', 'amp', 'tone'];
+  input = undefined;
+  onprocessorerror = (e) => console.error(e);
+
+  static getDefaults() {
+    return {
+      decay: 30.0,
+      amp: 2.0,
+      tone: 56.0,
+      workletOptions: { outputChannelCount: [2] },
+    };
+  }
+
+  constructor(options) {
+    const opts = Object.assign(Bd.getDefaults(), options);
+    super(opts);
+
+    this.envelope = new Tone.AmplitudeEnvelope({
+      context: this.context,
+      attack: 0.0,
+      decay: 0.0,
+      sustain: 1.0,
+      release: 0.0,
+    });
+    this.output = this.envelope;
+
+    this._dummyGain = this.context.createGain();
+
+    // options の値を Param の初期 value に渡す
+    this.trigger = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'normalRange',
+      swappable: true,
+      value: 0,
+    });
+    this.decay = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'time',
+      swappable: true,
+      value: opts.decay,
+    });
+    this.amp = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'number',
+      swappable: true,
+      value: opts.amp,
+    });
+    this.tone = new Tone.Param({
+      context: this.context,
+      param: this._dummyGain.gain,
+      units: 'frequency',
+      swappable: true,
+      value: opts.tone,
+    });
+
+    const processorName = `${[...this.name]
+      .map((c, i) => (i ? c : c.toLowerCase()))
+      .join('')}-processor`;
+
+    loadWorklet(this.context).then(() => {
+      if (this.disposed) {
+        return; // ToneAudioWorklet と同じガード
+      }
+
+      // this._worklet = this.context.createAudioWorkletNode(
+      //   processorName,
+      //   opts.workletOptions,
+      // );
+      this._worklet = new AudioWorkletNode(
+        this.context.rawContext, // Tone 経由ではなく raw の context
+        processorName,
+        opts.workletOptions,
+      );
+
+      this._worklet.onprocessorerror = (e) =>
+        this.onprocessorerror(e.message);
+
+      this.onReady(this._worklet);
+    });
+  }
+
+  onReady(node) {
+    Tone.connect(node, this.output); // ソース → output Gain
+    this.#paramNames.forEach((n) =>
+      this[n].setParam(this._worklet.parameters.get(n)),
+    );
+  }
+
+  triggerAttack(time, velocity = 1) {
+    const PULSE_WIDTH = 3 / this.context.sampleRate;
+    const t = this.toSeconds(time);
+
+    this.trigger.cancelScheduledValues(t);
+    this.trigger.setValueAtTime(0, t);
+    this.trigger.setValueAtTime(1, t);
+    // this.trigger.setValueAtTime(0, t + 1 / this.context.sampleRate);
+    this.trigger.setValueAtTime(0, t + PULSE_WIDTH);
+    this.envelope.triggerAttack(t, velocity);
+    return this;
+  }
+
+  triggerRelease(time) {
+    this.envelope.triggerRelease(this.toSeconds(time));
+    return this;
+  }
+
+  triggerAttackRelease(duration, time, velocity) {
+    const t = this.toSeconds(time);
+    this.triggerAttack(t, velocity);
+    this.triggerRelease(t + this.toSeconds(duration));
+    return this;
+  }
+
+  dispose() {
+    super.dispose();
+    this.envelope.dispose();
+    this._dummyGain.disconnect();
+    this.#paramNames.forEach((n) => this[n].dispose());
+    if (this._worklet) {
+      this._worklet.port.postMessage('dispose');
+      this._worklet.disconnect();
+    }
+    return this;
+  }
+}
+
+```
+
+
+
+> 安全性と簡潔さの中間として、**`rawContext` をキーにした WeakMap** にすると、Tone の `Context` ラッパが違っても実体で判定できます：
+
+この実装にします。
+
+
+
+
+
+
+
+
+それであればさ。。。`loadWorklet` としている。`workletLoader.js` ってファイルがあるのだけどさ、
+
+```workletLoader.js
+const WORKLET_URL = new URL(
+  './combined-processor.worklet.js',
+  import.meta.url,
+);
+
+const loadPromises = new WeakMap(); // BaseContext -> Promise<void>
+
+export function loadWorklet(context) {
+  let p = loadPromises.get(context);
+  if (!p) {
+    p = context.rawContext.audioWorklet.addModule(
+      WORKLET_URL.href,
+    );
+    loadPromises.set(context, p);
+  }
+
+  return p;
+}
+
+```
+
+ここまでしなくても、
+
+```js
+const WORKLET_URL = new URL(
+  './combined-processor.worklet.js',
+  import.meta.url,
+);
+
+let loadPromise = null;
+
+export function loadWorklet(context) {
+  if (!loadPromise) {
+    loadPromise = context.rawContext.audioWorklet.addModule(
+      WORKLET_URL.href,
+    );
+  }
+  return loadPromise;
+}
+```
+
+こんくらい、シンプルでもいいのかな？
+
+
+> **回避策：ノード生成をネイティブ `AudioWorkletNode` に置き換えてください。**
+
+これで、解決したっぽい。
+
+
+
+
+
+全然だめ。
+
+```
+let lastErr;
+
+for (let i = 0; i < 100; i++) {
+
+console.log(i);
+
+if (this.disposed) return;
+
+try {
+
+this._worklet = create();
+
+lastErr = null;
+
+break;
+
+} catch (e) {
+
+lastErr = e;
+
+if (e.name !== 'InvalidStateError') throw e;
+
+await new Promise((r) => setTimeout(r, 24));
+
+}
+
+}
+
+if (!this._worklet) throw lastErr;
+```
+
+
+長くしてもだめ
+
+
+ああ、こうですね。
+
+```
+bd.js:118 bd worklet setup failed InvalidStateError: Failed to construct 'AudioWorkletNode': AudioWorkletNode cannot be created: The node name 'bd-processor' is not defined in AudioWorkletGlobalScope.
+```
+
+以下のように修正しても：
+
+```js
+loadWorklet(this.context)
+
+.then(async () => {
+
+// Tone 側（ToneAudioWorklet経由）の進行中 addModule も全部待つ
+
+const pending = this.context._workletPromises;
+
+if (pending && pending.size) {
+
+await Promise.all([...pending]);
+
+}
+
+if (this.disposed) return;
+
+const create = () =>
+
+this.context.createAudioWorkletNode('bd-processor', {
+
+outputChannelCount: [2],
+
+});
+
+try {
+
+this._worklet = create();
+
+} catch (e) {
+
+// 保険：InvalidStateError なら登録反映を1ターン待ってリトライ
+
+if (e.name === 'InvalidStateError') {
+
+await new Promise((r) => setTimeout(r, 0));
+
+if (this.disposed) return;
+
+this._worklet = create();
+
+} else {
+
+throw e;
+
+}
+
+}
+
+this._worklet.onprocessorerror = (e) => this.onprocessorerror(e);
+
+this.onReady(this._worklet);
+
+})
+
+.catch((e) => console.error('bd worklet setup failed', e));
+```
+
+
+エラーは変わりません。以前のままです。
+
+
+```
+bd-processor load failed InvalidStateError: Failed to construct 'AudioWorkletNode': AudioWorkletNode cannot be created: The node name 'bd-processor' is not defined in AudioWorkletGlobalScope.
+```
+
+
+ちなみに、
+
+`const pending = this.context._workletPromises;` の、変数`pending` は、
+
+- `bd` 先、`Tone.BitCrusher` 後
+- `Tone.BitCrusher` 先、`bd` 後
+
+でも、`undefined` です。
+
+
+
+```
+bd.context.rawContext.audioWorklet.addModule(window.__workletUrl)
+.then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor'))
+.then((n) => console.log('OK', n))
+.catch((e) => console.error('FAIL', e));
+```
+
+で、確認。
+
+
+## `bd` のみ宣言
+
+```
+bd.context.rawContext.audioWorklet.addModule(window.__workletUrl) .then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor')) .then((n) => console.log('OK', n)) .catch((e) => console.error('FAIL', e));
+
+1. Promise {<pending>}
+
+2. [[Prototype]]: Promise
+
+3. catch: ƒ catch()
+4. constructor: ƒ Promise()
+5. finally: ƒ finally()
+6. then: ƒ then()
+7. Symbol(Symbol.toStringTag): "Promise"
+8. [[Prototype]]: Object
+
+9. [[PromiseState]]: "fulfilled"
+10. [[PromiseResult]]: undefined
+
+VM311:3 OK
+
+1. AudioWorkletNode {parameters: AudioParamMap, port: MessagePort, onprocessorerror: null, context: AudioContext, numberOfInputs: 1, …}
+
+2. channelCount: 2
+3. channelCountMode: "max"
+4. channelInterpretation: "speakers"
+5. context: AudioContext {baseLatency: 0.005804988662131519, outputLatency: 0.016, onerror: null, playbackStats: AudioPlaybackStats, sinkId: '', …}
+6. numberOfInputs: 1
+7. numberOfOutputs: 1
+8. onprocessorerror: null
+9. parameters: AudioParamMap {size: 4}
+10. port: MessagePort {onmessage: null, onmessageerror: null}
+11. [[Prototype]]: AudioWorkletNode
+```
+
+
+## `bd` 宣言後、`Tone.BitCrusher`
+
+```
+bd.context.rawContext.audioWorklet.addModule(window.__workletUrl) .then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor')) .then((n) => console.log('OK', n)) .catch((e) => console.error('FAIL', e));
+
+1. Promise {<pending>}
+
+2. [[Prototype]]: Promise
+
+3. catch: ƒ catch()
+4. constructor: ƒ Promise()
+5. finally: ƒ finally()
+6. then: ƒ then()
+7. Symbol(Symbol.toStringTag): "Promise"
+8. [[Prototype]]: Object
+
+9. [[PromiseState]]: "fulfilled"
+10. [[PromiseResult]]: undefined
+
+VM349:3 OK
+
+1. AudioWorkletNode {parameters: AudioParamMap, port: MessagePort, onprocessorerror: null, context: AudioContext, numberOfInputs: 1, …}
+
+2. channelCount: 2
+3. channelCountMode: "max"
+4. channelInterpretation: "speakers"
+5. context: AudioContext {baseLatency: 0.005804988662131519, outputLatency: 0.016, onerror: null, playbackStats: AudioPlaybackStats, sinkId: '', …}
+6. numberOfInputs: 1
+7. numberOfOutputs: 1
+8. onprocessorerror: null
+9. parameters: AudioParamMap {size: 4}
+10. port: MessagePort {onmessage: null, onmessageerror: null}
+11. [[Prototype]]: AudioWorkletNode
+```
+
+
+## `Tone.BitCrusher` 宣言後、`bd`
+
+```
+bd.context.rawContext.audioWorklet.addModule(window.__workletUrl) .then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor')) .then((n) => console.log('OK', n)) .catch((e) => console.error('FAIL', e));
+
+1. Promise {<pending>}
+
+2. [[Prototype]]: Promise
+
+3. catch: ƒ catch()
+4. constructor: ƒ Promise()
+5. finally: ƒ finally()
+6. then: ƒ then()
+7. Symbol(Symbol.toStringTag): "Promise"
+8. [[Prototype]]: Object
+
+9. [[PromiseState]]: "fulfilled"
+10. [[PromiseResult]]: undefined
+
+VM386:3 OK
+
+1. AudioWorkletNode {parameters: AudioParamMap, port: MessagePort, onprocessorerror: null, context: AudioContext, numberOfInputs: 1, …}
+
+2. channelCount: 2
+3. channelCountMode: "max"
+4. channelInterpretation: "speakers"
+5. context: AudioContext {baseLatency: 0.005804988662131519, outputLatency: 0.016, onerror: null, playbackStats: AudioPlaybackStats, sinkId: '', …}
+6. numberOfInputs: 1
+7. numberOfOutputs: 1
+8. onprocessorerror: null
+9. parameters: AudioParamMap {size: 4}
+10. port: MessagePort {onmessage: null, onmessageerror: null}
+11. [[Prototype]]: AudioWorkletNode
+```
+
+
+あなたの返答が、途中で消えてしまったので、再度掲示する。
+
+なるほど、現在の問題点としては、
+
+`Tone.BitCrusher` を先に宣言し、私のモジュールを宣言したら、
+
+```
+bd-processor load failed InvalidStateError: Failed to construct 'AudioWorkletNode': AudioWorkletNode cannot be created: The node name 'bd-processor' is not defined in AudioWorkletGlobalScope.
+```
+
+とエラーを吐き、
+逆に、私のモジュールを先に宣言をし、`Tone.BitCrusher` を呼び出したら
+
+
+```
+Uncaught (in promise) InvalidStateError: Failed to construct 'AudioWorkletNode': AudioWorkletNode cannot be created: The node name 'bit-crusher' is not defined in AudioWorkletGlobalScope.
+```
+
+と、エラーを吐く。。。
+
+
+
+
 `FeedbackCombFilter` や、`Tone.BitCrusher`  のように、AudioWorklet を使ったモジュールを自作し実装したい。
 
 ただし、tone.js 自体への書き換えはしない。
@@ -472,3 +1238,128 @@ console.log(getContext().rawContext instanceof AudioContext); // false なら SA
 ```
 
 これ、`true` でした！
+
+
+
+
+> 1. **`combined-processor.worklet.js` の ES `import` が worklet 内で正しく評価されているか**。
+
+`Tone.BitCrusher`  を呼ばない場合には、問題なく音が出ている状況。それでも「 ES `import` が worklet 内で正しく評価されているか 」として、評価されていない可能性がある？
+
+
+> 2. **両方のノードが同じ `rawContext` に対して作られているか**。
+
+
+```js
+console.log(bins.context.rawContext === bd.context.rawContext);
+```
+
+としたら、`true` なので、同じ`rawContext` ですね。
+
+
+> 3. **最小構成で切り分け**。
+
+`Tone.BitCrusher`   を宣言しなければ、問題なく動いている（と思われる。エラーも出ない）
+
+
+
+> 4. **ロード完了を確実に待つ**。
+
+つまりこれは、どんな処理をすればいいのだ？どこに何のコードを書けばいい？
+
+
+
+```js
+bd.context.rawContext.audioWorklet.addModule('./combined-processor.worklet.js')
+.then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor'));
+```
+
+コンソールだと、
+
+```
+Uncaught ReferenceError: bd is not defined
+```
+
+か、、、`window.` と無理やりつけた方がいいか？ 
+
+
+
+
+`window.bd` とした、コンソールで、
+
+```js
+bd.context.rawContext.audioWorklet.addModule('./combined-processor.worklet.js')
+.then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor'));
+```
+
+としている。
+
+
+先に、`bd` を宣言した時のコンソール
+
+```
+bd.context.rawContext.audioWorklet.addModule('./combined-processor.worklet.js') .then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor'));
+
+1. Promise {<pending>}
+
+2. [[Prototype]]: Promise
+
+3. catch: ƒ catch()
+4. constructor: ƒ Promise()
+5. finally: ƒ finally()
+6. then: ƒ then()
+7. Symbol(Symbol.toStringTag): "Promise"
+8. [[Prototype]]: Object
+
+9. [[PromiseState]]: "rejected"
+10. [[PromiseResult]]: AbortError: Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)
+
+11. code: 20
+12. message: "Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)"
+13. name: "AbortError"
+14. [[Prototype]]: DOMException
+
+:5500/combined-processor.worklet.js:1 Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)
+
+（インデックス）:1 Uncaught (in promise) AbortError: Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)
+
+|   |   |   |   |
+|---|---|---|---|
+||Promise.then|||
+||（匿名）|@|VM203:2|
+```
+
+
+先に、`Tone.BitCrusher` 宣言した場合：
+
+```
+bd.context.rawContext.audioWorklet.addModule('./combined-processor.worklet.js') .then(() => new AudioWorkletNode(bd.context.rawContext, 'bd-processor'));
+
+1. Promise {<pending>}
+
+2. [[Prototype]]: Promise
+
+3. catch: ƒ catch()
+4. constructor: ƒ Promise()
+5. finally: ƒ finally()
+6. then: ƒ then()
+7. Symbol(Symbol.toStringTag): "Promise"
+8. [[Prototype]]: Object
+
+9. [[PromiseState]]: "rejected"
+10. [[PromiseResult]]: AbortError: Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)
+
+11. code: 20
+12. message: "Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)"
+13. name: "AbortError"
+14. [[Prototype]]: DOMException
+
+:5500/combined-processor.worklet.js:1 Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)
+
+（インデックス）:1 Uncaught (in promise) AbortError: Failed to load worklet module script: http://localhost:5500/combined-processor.worklet.js (HTTP status: 404)
+
+|   |   |   |   |
+|---|---|---|---|
+||Promise.then|||
+||（匿名）|@|VM241:2|
+```
