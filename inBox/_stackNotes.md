@@ -105,6 +105,8 @@ pystaUIKitCatalogChallenge(root)
 ## a-shell
 
 
+Python はvenv できるんやな
+
 ```
 Package           Version
 ----------------- ----------
