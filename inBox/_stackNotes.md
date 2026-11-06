@@ -1,5 +1,105 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/11/06
+
+
+[ pystaUIKitCatalogChallenge:](https://github.com/pome-ta/pystaUIKitCatalogChallenge) 書き換えるために、branch を切りtag をつけた
+
+
+## ディレクトリ構成
+
+Python のモジュールpath 関係で、考える必要あるかも
+
+### `project.pbxproj`
+
+```
+(Project Root)
+├── README.md
+├── UIKitCatalog (フォルダグループ)
+│   ├── UIKitCatalog.entitlements
+│   ├── Application (フォルダグループ)
+│   │   ├── AppDelegate.swift
+│   │   ├── SceneDelegate.swift
+│   │   ├── OutlineViewController.swift
+│   │   ├── CaseElement.swift
+│   │   └── BaseTableViewController.swift
+│   ├── Controls (フォルダグループ)
+│   │   ├── Button
+│   │   ├── Menu Button
+│   │   ├── Pointer Interaction Button
+│   │   ├── Page Control
+│   │   ├── Search
+│   │   ├── Segmented
+│   │   ├── Slider
+│   │   ├── Stepper
+│   │   ├── Switch
+│   │   └── TextField
+│   ├── Views (フォルダグループ)
+│   │   ├── ActivityIndicator
+│   │   ├── AlertControllerViewController.swift
+│   │   ├── AlertControllerViewController.storyboard
+│   │   ├── TextViewController.swift
+│   │   ├── TextViewController.storyboard
+│   │   ├── Image View
+│   │   ├── ProgressView
+│   │   ├── StackViewController.swift
+│   │   ├── StackViewController.storyboard
+│   │   ├── Toolbar
+│   │   ├── VisualEffectViewController.swift
+│   │   ├── VisualEffectViewController.storyboard
+│   │   ├── WebViewController.swift
+│   │   └── WebViewController.storyboard
+│   ├── Pickers (フォルダグループ)
+│   │   ├── DatePickerController.swift
+│   │   ├── DatePickerController.storyboard
+│   │   ├── PickerViewController.swift
+│   │   ├── PickerViewController.storyboard
+│   │   ├── ColorPickerViewController.swift
+│   │   ├── ColorPickerViewController.storyboard
+│   │   ├── FontPickerViewController.swift
+│   │   ├── FontPickerViewController.storyboard
+│   │   ├── ImagePickerViewController.swift
+│   │   └── ImagePickerViewController.storyboard
+│   ├── Assets.xcassets
+│   └── Supporting Files (フォルダグループ)
+│       ├── UIKitCatalog-Info.plist
+│       ├── Main.storyboard
+│       ├── LaunchScreen.storyboard
+│       ├── content.html
+│       ├── InfoPlist.strings
+│       ├── Localizable.strings
+│       ├── Localizable.stringsdict
+│       └── Credits.rtf
+├── Products (フォルダグループ)
+│   └── UIKitCatalog.app
+├── Frameworks (フォルダグループ)
+│   └── WebKit.framework
+├── Configuration (フォルダグループ)
+│   └── SampleCode.xcconfig
+└── LICENSE (フォルダグループ)
+    └── LICENSE.txt
+```
+
+
+### `pystaUIKitCatalogChallenge`
+
+```
+pystaUIKitCatalogChallenge (root)
+├── README.md
+├── pystaRubiconModules (git submodule)
+
+```
+
+
+#### 下書き
+
+pystaUIKitCatalogChallenge(root)
+- README.md
+- pystaRubiconModules (git submodule)
+- catalog
+    - __init__.py
+    - __main__.py
+
 # 📝 2026/11/05
 
 
@@ -17,9 +117,18 @@
 
 - macOS 上での起動が安定するか
 - コード全体の書き換えが頻繁するか
-- 
+- 別途りぽリポジトリ作りたいが、まだ固まってない感じ
+- テストディレクトリの位置とか
+- こっちで定義し直す要素の分類とメモ
 
+### いや、なんなら
 
+- 昔のままを出すか？
+    - ダメでした、落ちるやつある
+
+## 結論
+
+2027年めざす（マ？
 
 
 # 📝 2026/11/04
