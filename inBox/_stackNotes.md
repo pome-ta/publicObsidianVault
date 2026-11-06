@@ -100,6 +100,115 @@ pystaUIKitCatalogChallenge(root)
     - __init__.py
     - __main__.py
 
+
+
+## a-shell
+
+
+```
+Package           Version
+----------------- ----------
+appnope           0.1.4
+asttokens         3.0.0
+attrs             25.4.0
+backcall          0.2.0
+build             1.3.0
+certifi           2026.10.19
+cffi              1.17.1
+cryptography      3.4.8
+curl_cffi         0.15.1
+Cython            3.0.11
+decorator         5.2.1
+executing         2.2.1
+html5lib          1.1
+ipython           8.36.0
+ipython-genutils  0.2.0
+jedi              0.19.2
+lxml              6.0.1
+MarkupSafe        3.0.2
+matplotlib-inline 0.1.7
+packaging         25.0
+parso             0.8.5
+pexpect           4.9.0
+pickleshare       0.7.5
+pip               26.2.2
+prompt_toolkit    3.0.52
+ptyprocess        0.7.0
+pure_eval         0.2.3
+pycparser         2.23
+pycryptodome      3.23.0
+pycryptodomex     3.23.0
+Pygments          2.19.2
+pyproject_hooks   1.2.0
+regex             2025.9.18
+semantic-version  2.10.0
+setuptools        80.9.0
+setuptools-rust   1.12.0
+setuptools-scm    9.2.0
+six               1.17.0
+stack-data        0.6.3
+traitlets         5.14.3
+urllib3           2.5.0
+wcwidth           0.2.14
+webencodings      0.5.1
+wheel             0.45.1
+
+```
+
+
+```
+Package           Version
+----------------- ----------
+appnope           0.1.4
+asttokens         3.0.0
+attrs             25.4.0
+backcall          0.2.0
+build             1.3.0
+certifi           2026.10.19
+cffi              1.17.1
+cryptography      3.4.8
+curl_cffi         0.15.1
+Cython            3.0.11
+decorator         5.2.1
+executing         2.2.1
+html5lib          1.1
+ipython           8.36.0
+ipython-genutils  0.2.0
+jedi              0.19.2
+lxml              6.0.1
+MarkupSafe        3.0.2
+matplotlib-inline 0.1.7
+packaging         25.0
+parso             0.8.5
+pexpect           4.9.0
+pickleshare       0.7.5
+pip               26.2.2
+prompt_toolkit    3.0.52
+ptyprocess        0.7.0
+pure_eval         0.2.3
+pycparser         2.23
+pycryptodome      3.23.0
+pycryptodomex     3.23.0
+Pygments          2.19.2
+pyproject_hooks   1.2.0
+regex             2025.9.18
+rubicon-objc      0.5.7
+semantic-version  2.10.0
+setuptools        80.9.0
+setuptools-rust   1.12.0
+setuptools-scm    9.2.0
+six               1.17.0
+stack-data        0.6.3
+traitlets         5.14.3
+urllib3           2.5.0
+wcwidth           0.2.14
+webencodings      0.5.1
+wheel             0.45.1
+
+```
+
+
+
 # 📝 2026/11/05
 
 
