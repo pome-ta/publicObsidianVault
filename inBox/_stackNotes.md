@@ -1,5 +1,12 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/11/08
+
+## Pythonista3 とa-shell のマルチ環境でのimport 依存関係
+
+- root ディレクトリに、`bootstrap.py` を設置
+- a-shell （コマンド実行）では、rootディレクトリで`python -m main`
+
 # 📝 2026/11/06
 
 
