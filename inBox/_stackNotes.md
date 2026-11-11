@@ -1,5 +1,149 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/11/11
+
+## rubicon objc をなかなか忘れてる
+
+まずできそうなところから？
+
+
+rubicon リハビリか
+
+## ディレクトリ
+
+```
+UIKitCatalog
+├── README.md
+│
+├── UIKitCatalog
+│   ├── UIKitCatalog.entitlements
+│   │
+│   ├── Application
+│   │   ├── AppDelegate.swift
+│   │   ├── SceneDelegate.swift
+│   │   ├── OutlineViewController.swift
+│   │   ├── CaseElement.swift
+│   │   └── BaseTableViewController.swift
+│   │
+│   ├── Controls
+│   │   ├── Button
+│   │   │   ├── ButtonViewController.swift
+│   │   │   ├── ButtonViewController+Configs.swift
+│   │   │   └── ButtonViewController.storyboard
+│   │   │
+│   │   ├── Menu Button
+│   │   │   ├── MenuButtonViewController.swift
+│   │   │   └── MenuButtonViewController.storyboard
+│   │   │
+│   │   ├── Pointer Interaction Button
+│   │   │   ├── PointerInteractionButtonViewController.swift
+│   │   │   └── PointerInteractionButtonViewController.storyboard
+│   │   │
+│   │   ├── Page Control
+│   │   │   ├── DefaultPageControlViewController.swift
+│   │   │   ├── CustomPageControlViewController.swift
+│   │   │   ├── CustomPageControlViewController.storyboard
+│   │   │   └── DefaultPageControlViewController.storyboard
+│   │   │
+│   │   ├── Search
+│   │   │   ├── DefaultSearchBarViewController.swift
+│   │   │   ├── CustomSearchBarViewController.swift
+│   │   │   ├── CustomSearchBarViewController.storyboard
+│   │   │   └── DefaultSearchBarViewController.storyboard
+│   │   │
+│   │   ├── Segmented
+│   │   │   ├── SegmentedControlViewController.swift
+│   │   │   └── SegmentedControlViewController.storyboard
+│   │   │
+│   │   ├── Slider
+│   │   │   ├── SliderViewController.swift
+│   │   │   └── SliderViewController.storyboard
+│   │   │
+│   │   ├── Stepper
+│   │   │   ├── StepperViewController.swift
+│   │   │   └── StepperViewController.storyboard
+│   │   │
+│   │   ├── Switch
+│   │   │   ├── SwitchViewController.swift
+│   │   │   └── SwitchViewController.storyboard
+│   │   │
+│   │   └── TextField
+│   │       ├── TextFieldViewController.swift
+│   │       └── TextFieldViewController.storyboard
+│   │
+│   ├── Views
+│   │   ├── ActivityIndicator
+│   │   │   ├── ActivityIndicatorViewController.swift
+│   │   │   └── ActivityIndicatorViewController.storyboard
+│   │   │
+│   │   ├── AlertControllerViewController.swift
+│   │   ├── AlertControllerViewController.storyboard
+│   │   ├── TextViewController.swift
+│   │   ├── TextViewController.storyboard
+│   │   │
+│   │   ├── Image View
+│   │   │   ├── ImageViewController.swift
+│   │   │   ├── ImageViewController.storyboard
+│   │   │   ├── SymbolViewController.swift
+│   │   │   └── SymbolViewController.storyboard
+│   │   │
+│   │   ├── ProgressView
+│   │   │   ├── ProgressViewController.swift
+│   │   │   └── ProgressViewController.storyboard
+│   │   │
+│   │   ├── StackViewController.swift
+│   │   ├── StackViewController.storyboard
+│   │   │
+│   │   ├── Toolbar
+│   │   │   ├── DefaultToolbarViewController.swift
+│   │   │   ├── TintedToolbarViewController.swift
+│   │   │   ├── CustomToolbarViewController.swift
+│   │   │   ├── CustomToolbarViewController.storyboard
+│   │   │   ├── DefaultToolbarViewController.storyboard
+│   │   │   └── TintedToolbarViewController.storyboard
+│   │   │
+│   │   ├── VisualEffectViewController.swift
+│   │   ├── VisualEffectViewController.storyboard
+│   │   ├── WebViewController.swift
+│   │   └── WebViewController.storyboard
+│   │
+│   ├── Pickers
+│   │   ├── DatePickerController.swift
+│   │   ├── DatePickerController.storyboard
+│   │   ├── PickerViewController.swift
+│   │   ├── PickerViewController.storyboard
+│   │   ├── ColorPickerViewController.swift
+│   │   ├── ColorPickerViewController.storyboard
+│   │   ├── FontPickerViewController.swift
+│   │   ├── FontPickerViewController.storyboard
+│   │   ├── ImagePickerViewController.swift
+│   │   └── ImagePickerViewController.storyboard
+│   │
+│   ├── Assets.xcassets
+│   │
+│   └── Supporting Files
+│       ├── UIKitCatalog-Info.plist
+│       ├── Main.storyboard
+│       ├── LaunchScreen.storyboard
+│       ├── content.html
+│       ├── InfoPlist.strings
+│       ├── Localizable.strings
+│       ├── Localizable.stringsdict
+│       └── Credits.rtf
+│
+├── Products
+│   └── UIKitCatalog.app
+│
+├── Frameworks
+│   └── WebKit.framework
+│
+├── Configuration
+│   └── SampleCode.xcconfig
+│
+└── LICENSE
+    └── LICENSE.txt
+```
+
 # 📝 2026/11/08
 
 ## Pythonista3 とa-shell のマルチ環境でのimport 依存関係

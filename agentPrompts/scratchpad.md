@@ -1,36 +1,18 @@
+macOS（Appleシリコン） のVSCode でやってみたいことがある。
+
+- i(Pad)OS アプリをmac に入れている
+    - 主に以下のアプリである
+        - Pythonista3
+        - a-shell
+    - 今後はそのアプリたちを以下のような表記で総称する
+        - 「そのアプリ」
+        - 「モバイルアプリ」
+        - 「iPhone アプリ」
+- VSCode のワークスペースをそのアプリたちも外部参照している
+- 基本的にコードの編集はVSCode で行う
+    - Python のpip やnode のnpm で外部からモジュールやパッケージの取得は行わない
+- VSCode 側で、何かしらのアクションで、モバイルアプリのどちらかが開き、そのアプリで処理が実行される
 
 
-```
-MyProject/
-├── scripts/
-│   └── run_engine.py
-├── sub_package/
-│   ├── sub1/
-│   │   ├── __init__.py
-│   │   └── common.py
-│   └── sub2/
-│       ├── __init__.py
-│       └── common.py
-└── my_package/
-    ├── __init__.py
-    └── utils/
-        ├── __init__.py
-        └── common.py
-```
+つまり、本来そのアプリでコード編集をしてそのアプリで実行するワークフローをコード編集はVSCode で行い、実行はそのアプリ。というワークフローにしてみたい
 
-たとえば、`run_engine.py` で、
-
-```python
-sys.path.insert(0, str(PROJECT_ROOT / "sub_package"))
-sys.path.insert(0, str(PROJECT_ROOT))
-```
-
-このような`insert` 順番だとして、
-
-```py
-from my_package.utils.common import common_function
-
-import sub1.common
-```
-
-このようにimport する。しかし、`my_package.utils.common.py` 内で、`sub1.common` をimport してる関係値である場合には、`insert` 順番はこのままでいいの？
