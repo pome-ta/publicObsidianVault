@@ -2,5 +2,6 @@
   "translucency": true,
   "baseFontSize": 11,
   "cssTheme": "Obsidian Nord",
-  "accentColor": ""
+  "accentColor": "",
+  "showRibbon": true
 }

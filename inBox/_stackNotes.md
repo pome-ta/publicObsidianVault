@@ -1,5 +1,132 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/11/12
+
+これでinspector 開くとバグるの草
+
+
+```py
+def _clear_local_modules(
+  base_dir: pathlib.Path,
+  *dir_names: str,
+) -> list[str]:
+  """
+  実行スクリプトと同じ階層の指定ディレクトリ（複数可）配下から
+  読み込まれたモジュールのキャッシュを一括で削除する
+  """
+
+  # ターゲットディレクトリをすべて絶対パス化
+  resolved_targets = [(base_dir / name).resolve() for name in dir_names]
+
+  keys_to_delete = []
+
+  for name, module in sys.modules.items():
+
+    # 実ファイルを持たないモジュール(組み込み等)はスキップ (importに失敗した残骸(None)はスキップ)
+    if not (mod_file := getattr(module, '__file__', None)):
+      continue
+
+    # パスを解決(シンボリックリンクなどを排除した絶対パス化)
+    mod_path = pathlib.Path(mod_file).resolve()
+
+    # 指定したターゲットディレクトリのいずれかの配下にあるか判定
+    if any(mod_path.is_relative_to(t) for t in resolved_targets):
+      keys_to_delete.append(name)
+
+  # 該当したモジュールを sys.modules から一括削除
+  for k in keys_to_delete:
+    #del sys.modules[k]
+    pass
+
+  # 削除したモジュール名を返す(デバッグ確認用)
+  return keys_to_delete
+
+```
+
+## deepwiki くん
+
+```py
+if __name__ == '__main__':
+  try:
+    import bootstrap
+
+  except ModuleNotFoundError:
+    import pathlib, runpy
+
+    _SCRIPT_NAME = 'bootstrap.py'
+    try:
+      next(_script_path for _dir in pathlib.Path(__file__).resolve().parents
+           if (_script_path := _dir / _SCRIPT_NAME).is_file())
+    except StopIteration:
+      raise FileNotFoundError(f'{_SCRIPT_NAME} not found')
+
+    runpy.run_path(_script_path)
+
+from ctypes import Structure, byref, cast, c_void_p
+from pyrubicon.objc import ObjCClass, CGRectMake
+from pyrubicon.objc.api import Block
+from pyrubicon.objc.runtime import load_library
+
+libSystem = load_library("System")
+libdispatch = libSystem
+
+
+# dispatch_get_main_queue() はインライン関数 → 変数 _dispatch_main_q を直接取る
+class struct_dispatch_queue_s(Structure):
+  pass  # opaque
+
+
+_dispatch_main_q = struct_dispatch_queue_s.in_dll(libdispatch,
+                                                  "_dispatch_main_q")
+main_queue = cast(byref(_dispatch_main_q), c_void_p)  # &_dispatch_main_q
+
+libdispatch.dispatch_async.restype = None
+libdispatch.dispatch_async.argtypes = [c_void_p, c_void_p]
+
+UIKit = load_library("UIKit")
+
+UIApplication = ObjCClass("UIApplication")
+UIViewController = ObjCClass("UIViewController")
+UILabel = ObjCClass("UILabel")
+UIColor = ObjCClass("UIColor")
+
+
+def _present(result):
+  vc = UIViewController.alloc().init()
+  vc.view.backgroundColor = UIColor.whiteColor
+
+  label = UILabel.alloc().initWithFrame(CGRectMake(20, 100, 280, 40))
+  label.text = f"処理結果: {result}"
+  vc.view.addSubview(label)
+
+  root = UIApplication.sharedApplication.keyWindow.rootViewController
+  while root.presentedViewController is not None:
+    root = root.presentedViewController
+
+  root.presentViewController(vc, animated=True, completion=None)
+
+
+def present_result_modal(result):
+  # void(^)(void) 相当: 引数なし・戻り値なしのクロージャにする
+  block = Block(lambda: _present(result), None)
+  libdispatch.dispatch_async(main_queue, block)
+
+
+def run_some_process():
+  return 42
+
+
+present_result_modal(run_some_process())
+
+```
+
+
+
+# 📝 2026/11/12
+
+storyboard と考え方は、一旦放置し、出せる状態を目指すか
+
+
 # 📝 2026/11/11
 
 ## rubicon objc をなかなか忘れてる
@@ -8,6 +135,20 @@
 
 
 rubicon リハビリか
+
+## 整理
+
+storyboard 用に描画する用と、baseTableViewController と、どんな順番や？
+
+
+`CustomTableViewCell` は作る必要があり？ほんま？
+
+### storyboard
+
+コードで全部書きたい。過去不要としているものはなぜ不要？
+
+テーブルが出れば必要か？
+
 
 ## ディレクトリ
 
