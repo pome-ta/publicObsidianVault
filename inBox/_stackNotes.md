@@ -1,5 +1,104 @@
 もう面倒だから、全部書き落としていくか
 
+# 📝 2026/11/16
+
+
+## a-shell でrubicon の連続実行
+
+```py
+import ctypes
+
+from pyrubicon.objc import SEL, ObjCClass, objc_method
+from pyrubicon.objc.runtime import send_super
+from pyrubicon.objc.eventloop import RubiconEventLoop, iOSLifecycle, CFLifecycle
+
+UIApplication = ObjCClass("UIApplication")
+UIViewController = ObjCClass("UIViewController")
+UIColor = ObjCClass("UIColor")
+NSObject = ObjCClass("NSObject")
+
+ObjCClass.auto_rename = True
+
+loop = RubiconEventLoop()
+
+
+# auto_rename=True を付けておくと a-shell で何度実行してもエラーにならない
+class MyViewController(UIViewController):
+
+  @objc_method
+  def viewDidLoad(self) -> None:
+    send_super(
+      __class__,
+      self,
+      'viewDidLoad',
+      restype=None,
+    )
+    #self.view.backgroundColor = UIColor.systemTealColor
+  @objc_method
+  def viewDidDisappear_(self, animated: bool) -> None:
+    send_super(
+      __class__,
+      self,
+      'viewDidDisappear:',
+      animated,
+      restype=None,
+      argtypes=[
+        ctypes.c_bool,
+      ],
+    )
+
+    if self.isBeingDismissed:
+      print('hoge')
+      loop.stop()
+
+
+class ModalPresenter(NSObject):
+
+  @objc_method
+  def presentVC_(self, vc) -> None:
+    '''
+    sharedApplication = UIApplication.sharedApplication
+    objectEnumerator = sharedApplication.connectedScenes.objectEnumerator()
+
+    windowScene = next(_scene
+                       for _scene in iter(objectEnumerator.nextObject, None)
+                       if _scene.activationState == 0)
+
+    rootViewController = windowScene.keyWindow.rootViewController
+    '''
+
+    vc.modalPresentationStyle = 1
+    '''
+    rootViewController.presentViewController(vc,
+                                             animated=True,
+                                             completion=None)
+
+    '''
+
+    app = UIApplication.sharedApplication
+    rootVC = app.keyWindow.rootViewController
+    while childVC := rootVC.presentedViewController:
+      rootVC = childVC
+    #mainVC = MyViewController.new().autorelease()
+
+    rootVC.presentViewController_animated_completion_(vc, True, None)
+
+
+if __name__ == "__main__":
+  my_vc = MyViewController.alloc().init()
+  presenter = ModalPresenter.alloc().init()
+  presenter.performSelectorOnMainThread(
+    SEL("presentVC:"),
+    withObject=my_vc,
+    waitUntilDone=False,
+  )
+  loop.run_forever()
+
+```
+
+
+
+
 # 📝 2026/11/12
 
 これでinspector 開くとバグるの草
