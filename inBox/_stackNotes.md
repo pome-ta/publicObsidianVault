@@ -6,6 +6,11 @@ a-shell は、`dealloc` が走らずに静かにPython が終了？
 
 Pythonista3 は、グローバル的に変数が残ると、`dealloc` が走らない？
 
+
+
+
+
+
 # 📝 2026/11/19
 
 まだ、a-shell のrubicon 連続実行のことやってる
