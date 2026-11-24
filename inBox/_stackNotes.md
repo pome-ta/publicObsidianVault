@@ -1,13 +1,61 @@
 もう面倒だから、全部書き落としていくか
 
+
+# 📝 2026/11/24
+
+## rubicon-objc のa-shell / Pythonista3 実行整理
+
+アプリ内のPython を使い、アプリのViewController からモーダルなどで、自身のViewController を表示させる。
+
+## 問題点
+
+Pythonista3 では、気軽に動くが、a-shell では落ちる
+- 起動時
+- 終了時（view が閉じたあと）
+
+想定の域を出ないがアプリでのPython の実行挙動の違いがありそう
+
+- Pythonista3
+    - インタプリタを永続保持しているっぽい
+- a-shell
+    - `commandQueue` というバックグラウンドスレッドで実行
+    - コマンドごとに使い捨てられるインタプリタ
+
+
+## `loop` でPython をロック
+
+`loop.run_forever()` で、loop に入り、`loop.stop()` でロックを終える。
+`viewDidDisappear` がスマートっぽいけど、`dealloc` でとめることにした。
+
+### 参照（？）
+
+`dealloc` を実行させるために、`App` 自体をPython クラスから`NSObject` を継承したクラスへ変更。
+
+`（@）autoreleasepool()` も検討したが、`del` が構文的に気持ち悪いので、
+（あまり意味なさそうだが）
+
+```python
+  try:
+    import gc
+    gc.collect()
+  except Exception as e:
+    print('--- collect: error')
+    print(f'{e}')
+```
+
+と、`gc` で処理ということにした。
+
+また、`if __name__ == '__main__':` 以下のグローバルとなるところではなく、関数内で生成してしまった変数も、とりあえずで一層出来そうだったのでそのようにした。
+
+
+
+
+
 # 📝 2026/11/23
 
 a-shell は、`dealloc` が走らずに静かにPython が終了？
 
 Pythonista3 は、グローバル的に変数が残ると、`dealloc` が走らない？
-
-
-
 
 
 

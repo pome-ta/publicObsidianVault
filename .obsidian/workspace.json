@@ -13,44 +13,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inBox/_stackNotes.md",
+                "file": "agentPrompts/scratchpad.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "_stackNotes"
-            }
-          },
-          {
-            "id": "1b81364ac2a5b4c4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "inBox/_stackNotes.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "_stackNotes"
-            }
-          },
-          {
-            "id": "cc84d92c97533f7d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "inBox/spreadsheetStudySession.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "spreadsheetStudySession"
+              "title": "scratchpad"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -202,10 +173,26 @@
       "zk-prefixer:新規ユニークノートの作成": false
     }
   },
-  "active": "1b81364ac2a5b4c4",
+  "active": "96a446a17fbd7a3f",
   "lastOpenFiles": [
+    "agentPrompts/note2512071310.md",
+    "agentPrompts/note2512051042.md",
+    "agentPrompts/note2512050106.md",
+    "agentPrompts/note2512041405.md",
+    "agentPrompts/note2607202118.md",
+    "agentPrompts/note2609080258.md",
+    "agentPrompts/note2610291747.md",
+    "agentPrompts/note2611012217.md",
+    "agentPrompts/note2611241404.md",
     "agentPrompts/scratchpad.md",
+    "agentPrompts/note2611241312.md",
     "inBox/spreadsheetStudySession.md",
+    "inBox/無題のファイル 5.base",
+    "inBox/無題のファイル 4.base",
+    "inBox/無題のファイル 3.base",
+    "inBox/無題のファイル 2.base",
+    "inBox/無題のファイル 1.base",
+    "inBox/無題のファイル.base",
     "inBox/_stackNotes.md",
     "inBox/01_stackNotes.md",
     "inBox/02_stackNotes.md",
@@ -213,10 +200,6 @@
     "agentPrompts/note2607191752.md",
     "agentPrompts/無題のファイル.base",
     "agentPrompts/note2607022237.md",
-    "inBox/無題のファイル.base",
-    "inBox/無題のファイル 3.base",
-    "inBox/無題のファイル 2.base",
-    "inBox/無題のファイル 1.base",
     "agentPrompts/note2512281239.md",
     "agentPrompts/note2512261710.md",
     "agentPrompts/note2512221514.md",
@@ -225,16 +208,6 @@
     "agentPrompts/note2512161654.md",
     "agentPrompts/note2512151532.md",
     "agentPrompts/note2512092347.md",
-    "agentPrompts/note2512051042.md",
-    "agentPrompts/note2512071310.md",
-    "agentPrompts/note2512071627.md",
-    "agentPrompts/note2512080104.md",
-    "agentPrompts/note2512082015.md",
-    "agentPrompts/note2512091645.md",
-    "inBox/note2505121200.md",
-    "inBox/note2505102324.md",
-    "inBox/note2505101828.md",
-    "inBox/note2505101800.md",
     "^inBox"
   ]
 }
