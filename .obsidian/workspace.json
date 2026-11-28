@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "agentPrompts/scratchpad.md",
+                "file": "inBox/_stackNotes.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "scratchpad"
+              "title": "_stackNotes"
             }
           }
         ]
@@ -175,6 +175,8 @@
   },
   "active": "96a446a17fbd7a3f",
   "lastOpenFiles": [
+    "inBox/spreadsheetStudySession.md",
+    "agentPrompts/scratchpad.md",
     "agentPrompts/note2512071310.md",
     "agentPrompts/note2512051042.md",
     "agentPrompts/note2512050106.md",
@@ -184,9 +186,7 @@
     "agentPrompts/note2610291747.md",
     "agentPrompts/note2611012217.md",
     "agentPrompts/note2611241404.md",
-    "agentPrompts/scratchpad.md",
     "agentPrompts/note2611241312.md",
-    "inBox/spreadsheetStudySession.md",
     "inBox/無題のファイル 5.base",
     "inBox/無題のファイル 4.base",
     "inBox/無題のファイル 3.base",
